@@ -17,3 +17,11 @@ You can install the development version of `satpt` like so:
 #install.packages("remotes")
 remotes::install_github("deboonstra/satpt")
 ```
+
+## Useage
+
+``` r
+data(ein)
+satpt::satpt(ein$x, ein$y)
+satpt::satpt(y ~ x, data = ein)
+```
