@@ -22,6 +22,5 @@ remotes::install_github("deboonstra/satpt")
 
 ``` r
 data(ein)
-satpt::satpt(ein$x, ein$y)
-satpt::satpt(y ~ x, data = ein)
+satpt::satpt(y = ein$responses, by = ein$wave)
 ```
