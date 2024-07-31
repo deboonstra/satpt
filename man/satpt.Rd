@@ -2,19 +2,52 @@
 % Please edit documentation in R/satpt.R
 \name{satpt}
 \alias{satpt}
-\alias{satpt.default}
-\alias{satpt.formula}
-\alias{print.satpt}
 \title{Saturation point analysis}
 \usage{
-satpt(x, ...)
+satpt(
+  y,
+  by = NULL,
+  exclude = c(NA, NaN),
+  alpha = 0.05,
+  threshold = 0.05,
+  names = NULL
+)
+}
+\arguments{
+\item{y}{Vector of values to which determine if saturation has been achieved.}
 
-\method{satpt}{default}(...)
+\item{by}{Vector of values which indicate when \code{y} was collected.
+Default is \code{NULL}.}
 
-\method{satpt}{formula}(...)
+\item{exclude}{Vector of values that should be excluded in \code{y} and
+\code{by}. Generally, this should be used to denote missing values. Default
+is \code{NA} and \code{NaN}.}
 
-\method{print}{satpt}(object, digits = 3)
+\item{alpha}{Significance level for Pearson's \eqn{\chi^2} for independence.
+Default is \code{0.05}.}
+
+\item{threshold}{Saturation threshold applied to the standard errors. Default
+is \code{0.05}.}
+
+\item{names}{Character vector of names for \code{y} and \code{by} when
+displaying \code{ftable} created by \code{stats::ftable}. Default is
+\code{NULL}.}
 }
 \description{
-Saturation point analysis
+Saturation point analysis of multinomial responses from a
+survey using standard errors of the sample proportions for the responses.
+}
+\examples{
+data(ein)
+
+# Assuming response bias is not a possiblity
+satpt::satpt(y = ein$responses)
+
+# Examining saturation given data collected at different times and
+# response bias is possible.
+satpt::satpt(y = ein$responses, by = ein$wave)
+
+}
+\seealso{
+\code{\link{stats::ftable()}}
 }
