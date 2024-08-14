@@ -30,12 +30,51 @@ Default is \code{0.05}.}
 is \code{0.05}.}
 
 \item{names}{Character vector of names for \code{y} and \code{by} when
-displaying \code{ftable} created by \code{stats::ftable}. Default is
-\code{NULL}.}
+displaying the contingency table, sample proportions, and standard error
+matrices. Default is \code{NULL}. When \code{names} is specified the first entry should
+be name of \code{y} and the second entry should be name of \code{by}.}
+}
+\value{
+An object with \code{S3} class \code{"satpt"} containing
+\describe{
+\item{\code{saturation}}{A logical value indicating whether all response
+categories have achieved saturation given the defined \code{threshold}. The value
+of \code{TRUE} indicates that saturation has been achieved while a value of
+\code{FALSE} indicates that saturation was not achieved and more data is needed
+to achieve saturation.}
+\item{\code{counts}}{A \code{matrix} containing the observed cell counts of the
+contigency table created by \code{y} and \code{by} if provided.}
+\item{\code{phat}}{A \code{matrix} containing the row-wise sample proportions for the
+observed contigency table (\code{counts}).}
+\item{\code{se}}{A \code{matrix} containing the standard errors for the calculated
+sample proportions (\code{phat}).}
+\item{\code{test}}{A \code{htest} object produced by \code{\link[stats:chisq.test]{stats::chisq.test()}} containing
+the results from the \eqn{\chi^2} for independence.}
+\item{\code{total_obs}}{Total number of observations with a response provided.}
+\item{\code{total}}{A \code{data.frame} with 5 variables describing the overall
+collected sample. The \code{categories} variable provides the unique
+categories listed in \code{y}. While \code{counts}, \code{phat}, and \code{se} provide the
+overall cell counts, sample proportions, and standard errors for the
+categories, respectively. The standard errors reported for the overall
+sample proportions are calculated based on the presence of response bias,
+which is detailed above. Finally, the \code{saturation} variable is a logical
+variable denoting whether saturation was achieved for each individual
+category given the saturation \code{threshold} defined.}
+\item{\code{hindex}}{Heterogeneity index for the sample proportions calculated by
+mean absolute deviation.}
+}
 }
 \description{
 Saturation point analysis of multinomial responses from a
 survey using standard errors of the sample proportions for the responses.
+}
+\details{
+PLACE HOLDER
+}
+\note{
+The returned \code{satpt} object will contain \code{NULL} values for \code{test} and
+\code{hindex} when \code{by} is not specified. This is done because \code{satpt} assumes
+\code{by} is only specified when the data is collected in intervals.
 }
 \examples{
 data(ein)
@@ -49,5 +88,5 @@ satpt::satpt(y = ein$responses, by = ein$wave)
 
 }
 \seealso{
-\code{\link{stats::ftable()}}
+\code{\link[stats:ftable]{stats::ftable()}}, \code{\link[stats:chisq.test]{stats::chisq.test()}}
 }

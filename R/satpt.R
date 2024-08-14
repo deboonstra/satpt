@@ -4,20 +4,56 @@
 #' survey using standard errors of the sample proportions for the responses.
 #'
 #' @param y Vector of values to which determine if saturation has been achieved.
-#' @param by Vector of values which indicate when \code{y} was collected.
-#' Default is \code{NULL}.
-#' @param exclude Vector of values that should be excluded in \code{y} and
-#' \code{by}. Generally, this should be used to denote missing values. Default
-#' is \code{NA} and \code{NaN}.
+#' @param by Vector of values which indicate when `y` was collected.
+#' Default is `NULL`.
+#' @param exclude Vector of values that should be excluded in `y` and
+#' `by`. Generally, this should be used to denote missing values. Default
+#' is `NA` and `NaN`.
 #' @param alpha Significance level for Pearson's \eqn{\chi^2} for independence.
-#' Default is \code{0.05}.
+#' Default is `0.05`.
 #' @param threshold Saturation threshold applied to the standard errors. Default
 #' is \code{0.05}.
-#' @param names Character vector of names for \code{y} and \code{by} when
-#' displaying \code{ftable} created by \code{stats::ftable}. Default is
-#' \code{NULL}.
+#' @param names Character vector of names for `y` and `by` when
+#' displaying the contingency table, sample proportions, and standard error
+#' matrices. Default is `NULL`. When `names` is specified the first entry should
+#' be name of `y` and the second entry should be name of `by`.
 #'
-#' @seealso \code{\link{stats::ftable()}}
+#' @details PLACE HOLDER
+#'
+#' @return An object with `S3` class `"satpt"` containing
+#' \describe{
+#'  \item{`saturation`}{A logical value indicating whether all response
+#'  categories have achieved saturation given the defined `threshold`. The value
+#'  of `TRUE` indicates that saturation has been achieved while a value of
+#'  `FALSE` indicates that saturation was not achieved and more data is needed
+#'  to achieve saturation.}
+#'  \item{`counts`}{A `matrix` containing the observed cell counts of the
+#'  contigency table created by `y` and `by` if provided.}
+#'  \item{`phat`}{A `matrix` containing the row-wise sample proportions for the
+#'  observed contigency table (`counts`).}
+#'  \item{`se`}{A `matrix` containing the standard errors for the calculated
+#'  sample proportions (`phat`).}
+#'  \item{`test`}{A `htest` object produced by [stats::chisq.test()] containing
+#'  the results from the \eqn{\chi^2} for independence.}
+#'  \item{`total_obs`}{Total number of observations with a response provided.}
+#'  \item{`total`}{A `data.frame` with 5 variables describing the overall
+#'  collected sample. The `categories` variable provides the unique
+#'  categories listed in `y`. While `counts`, `phat`, and `se` provide the
+#'  overall cell counts, sample proportions, and standard errors for the
+#'  categories, respectively. The standard errors reported for the overall
+#'  sample proportions are calculated based on the presence of response bias,
+#'  which is detailed above. Finally, the `saturation` variable is a logical
+#'  variable denoting whether saturation was achieved for each individual
+#'  category given the saturation `threshold` defined.}
+#'  \item{`hindex`}{Heterogeneity index for the sample proportions calculated by
+#'  mean absolute deviation.}
+#' }
+#'
+#' @note The returned `satpt` object will contain `NULL` values for `test` and
+#' `hindex` when `by` is not specified. This is done because `satpt` assumes
+#' `by` is only specified when the data is collected in intervals.
+#'
+#' @seealso [stats::ftable()], [stats::chisq.test()]
 #'
 #' @examples
 #' data(ein)
@@ -63,9 +99,6 @@ satpt <- function(
     if (!is.character(names)) {
       stop("names must be a character vector.")
     }
-    if (length(names) == 2 && is.null(by)) {
-      stop("names must be of length one when by is not specified.")
-    }
     if (length(names) == 1 && !is.null(by)) {
       stop("names must be of length two when by is specified.")
     }
@@ -76,7 +109,7 @@ satpt <- function(
     counts <- stats::ftable(y, exclude = exclude)
     if (!is.null(names)) {
       tmp <- attributes(counts)
-      names(tmp$col.vars) <- names
+      names(tmp$col.vars) <- names[1]
       attributes(counts) <- tmp
     }
   } else {
@@ -88,14 +121,15 @@ satpt <- function(
       attributes(counts) <- tmp
     }
   }
+  ## Forcing ftable to be a matrix ####
+  counts <- as.matrix(counts)
 
   # Calculating row-wise sample proportions ####
-  phat <- base::prop.table(counts, margin = 1)
+  phat <- base::proportions(counts, margin = 1)
 
   # Calculating row-wise standard errors of sample proportions ####
   se <- phat
   nn <- rowSums(counts)
-  names(nn) <- unname(unlist(attributes(counts)$row.vars))
   for (i in seq_len(nrow(se))) {
     se[i, ] <- sqrt((phat[i, ] * (1 - phat[i, ])) / nn[i])
   }
@@ -115,7 +149,7 @@ satpt <- function(
 
   ## Initializing total matrix ####
   total <- data.frame(
-    categories = unname(unlist(attributes(counts)$col.vars)),
+    categories = dimnames(counts)[[2]],
     counts = NA,
     phat = NA,
     se = NA,
