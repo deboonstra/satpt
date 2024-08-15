@@ -7,7 +7,7 @@ output: github_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = "",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -24,13 +24,62 @@ The goal of satpt is to identify the saturation point of multinomial responses f
 
 You can install the development version of `satpt` like so:
 
-``` r
+```{r, eval = FALSE}
 #install.packages("remotes")
 remotes::install_github("deboonstra/satpt")
 ```
 
-## Useage
-``` r
+## Usage
+
+### Basic usage
+For basic usage of `satpt` simply specify the responses of the survey in `y` and the data collection period information in `by`, as seen below. 
+```{r, eval = FALSE}
 data(ein)
 satpt::satpt(y = ein$responses, by = ein$wave)
+```
+
+```{r, echo = FALSE}
+data(ein)
+satpt::satpt(y = ein$responses, by = ein$wave)
+```
+
+### Dimension names specification
+When specification of the dimension names of the contigency table, sample proportions, and standard error is wanted, use one of these two methods.
+
+#### Method 1
+```{r, eval = FALSE}
+res <- satpt::satpt(
+  y = ein$responses,
+  by = ein$wave,
+  dimnames = c("Responses to survey", "Collection period")
+)
+res$counts # accessing contingency table
+```
+
+```{r, echo = FALSE}
+res <- satpt::satpt(
+  y = ein$responses,
+  by = ein$wave,
+  dimnames = c("Responses to survey", "Collection period")
+)
+res$counts # accessing contingency table
+```
+
+#### Method 2
+```{r, eval = FALSE}
+res <- satpt::satpt(
+  y = ein$responses,
+  by = ein$wave,
+  dimnames = c("by" = "Collection period", "y" = "Responses to survey")
+)
+res$phat # accessing sample proportions table
+```
+
+```{r, echo = FALSE}
+res <- satpt::satpt(
+  y = ein$responses,
+  by = ein$wave,
+  dimnames = c("by" = "Collection period", "y" = "Responses to survey")
+)
+res$phat # accessing sample proportions table
 ```
