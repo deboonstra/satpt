@@ -136,7 +136,8 @@ satpt <- function(
     if (length(dimnames) == 1 && !is.null(by)) {
       stop("dimnames must be of length two when by is specified.")
     }
-    if (!is.null(names(dimnames)) && !(c("y", "by") %in% names(dimnames))) {
+    ndimns <- names(dimnames)
+    if (!is.null(ndimns) && !(all(c("y", "by") %in% ndimns))) {
       stop("For a named dimnames vector, 'y' and 'by' must be included.")
     }
   }
