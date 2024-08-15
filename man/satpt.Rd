@@ -10,7 +10,7 @@ satpt(
   exclude = c(NA, NaN),
   alpha = 0.05,
   threshold = 0.05,
-  names = NULL
+  dimnames = NULL
 )
 }
 \arguments{
@@ -23,16 +23,18 @@ Default is \code{NULL}.}
 \code{by}. Generally, this should be used to denote missing values. Default
 is \code{NA} and \code{NaN}.}
 
-\item{alpha}{Significance level for Pearson's \eqn{\chi^2} for independence.
-Default is \code{0.05}.}
+\item{alpha}{Significance level for Pearson's \eqn{\chi^2} test for
+independence. Default is \code{0.05}.}
 
-\item{threshold}{Saturation threshold applied to the standard errors. Default
-is \code{0.05}.}
+\item{threshold}{Saturation threshold applied to the standard errors of the
+sample proportions. Default is \code{0.05}.}
 
-\item{names}{Character vector of names for \code{y} and \code{by} when
+\item{dimnames}{Character vector of names for \code{y} and \code{by} when
 displaying the contingency table, sample proportions, and standard error
-matrices. Default is \code{NULL}. When \code{names} is specified the first entry should
-be name of \code{y} and the second entry should be name of \code{by}.}
+matrices. When \code{dimnames} is an unnamed vector the first entry should be name
+of \code{y} variable and the second entry should be name of \code{by} variable. If
+\code{dimnames} is a named vector, then order of the values do NOT matter, as long
+the elements are named with \code{"y"} and \code{"by"}. Default is \code{NULL}.}
 }
 \value{
 An object with \code{S3} class \code{"satpt"} containing
@@ -49,7 +51,7 @@ observed contigency table (\code{counts}).}
 \item{\code{se}}{A \code{matrix} containing the standard errors for the calculated
 sample proportions (\code{phat}).}
 \item{\code{test}}{A \code{htest} object produced by \code{\link[stats:chisq.test]{stats::chisq.test()}} containing
-the results from the \eqn{\chi^2} for independence.}
+the results from the \eqn{\chi^2} test for independence.}
 \item{\code{total_obs}}{Total number of observations with a response provided.}
 \item{\code{total}}{A \code{data.frame} with 5 variables describing the overall
 collected sample. The \code{categories} variable provides the unique
@@ -69,7 +71,39 @@ Saturation point analysis of multinomial responses from a
 survey using standard errors of the sample proportions for the responses.
 }
 \details{
-PLACE HOLDER
+The \code{by} argument should be specified when the responses collected
+in \code{y} are a by-product of the data collection mechanism defined by the \code{by}
+variable. When there is no a priori data collection mechanism defined, the
+\code{by} argument should not be defined. Generally, when the data is collected
+randomly or collected during the first data collection period, there is "no
+a priori data collection mechanism."
+
+Functionality of \code{satpt()} depends on the limited use of \code{\link[stats:ftable]{stats::ftable()}}.
+More specifically, \code{y}, \code{by}, and \code{exclude} are directly used with
+\code{\link[stats:ftable]{stats::ftable()}} to create the contingency table of the collected data. The
+contingency table created by \code{\link[stats:ftable]{stats::ftable()}} is converted to a \code{matrix} for
+easier use with other functions. When the \code{dimnames} argument is used, it
+manipulates the attributes of the created \code{ftable}, which impacts the
+dimension names of the resulting \code{matrix}.
+
+Specification of the \code{by} argument automatically calls for a Pearson's
+\eqn{\chi^2} test for independence and the heterogeneity index of the sample
+proportions to be calculated. The \eqn{\chi^2} test for independence is
+conducted to determine if response bias is present within the responses in
+\code{y} are due to the data collection periods (\code{by}). When response bias is
+present the pooled standard errors of the overall sample proportions for each
+response category is reported, the pooled standard errors account for the
+response bias. The heterogeneity index is defined as the mean
+absoluted difference of the sample proportions for each response category
+within each data collection period (\code{by}) relative to the overall sample
+proportions for each response category. This index reflects the average
+deviation of the data collection period proportions from the overall sample
+proportions. Smaller values indicate the sample proportions of the data
+collection periods are less dissimilar. This measure is of importance when
+response bias is present. When \code{by} is not specified the test for
+independence will not be conducted and the heterogeneity index will not be
+calculated. \code{satpt} assumes response is only possible when \code{by} is specified.
+Thus, there is no need to check for response bias when \code{by} is not specified.
 }
 \note{
 The returned \code{satpt} object will contain \code{NULL} values for \code{test} and
