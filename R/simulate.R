@@ -12,8 +12,8 @@
 #' @param categories Vector of values specifying the \emph{K} category labels to
 #' be represented. Default is `NULL`.
 #'
-#' @details Running in the backend is `stats::rmultinom()`. So, see the
-#' documentation for `stats::rmultinom()`for more information on how the
+#' @details Running in the backend is [stats::rmultinom()]. So, see the
+#' documentation for [stats::rmultinom()]for more information on how the
 #' multinomial responses are generated.
 #'
 #' The arguments `size` and `prob` are directly connect when it comes to
@@ -37,7 +37,7 @@
 #'  \eqn{k = 1, \ldots , K}}
 #' }
 #'
-#' @seealso `stats::rmultinom()`
+#' @seealso [stats::rmultinom()]
 #'
 #' @examples
 #' # Creating 10 simulated data sets of with a sample size of 100, where there

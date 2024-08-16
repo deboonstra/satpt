@@ -34,8 +34,8 @@ Simulating the data of multinomial responses collected during a
 survey.
 }
 \details{
-Running in the backend is \code{stats::rmultinom()}. So, see the
-documentation for \code{stats::rmultinom()}for more information on how the
+Running in the backend is \code{\link[stats:Multinom]{stats::rmultinom()}}. So, see the
+documentation for \code{\link[stats:Multinom]{stats::rmultinom()}}for more information on how the
 multinomial responses are generated.
 
 The arguments \code{size} and \code{prob} are directly connect when it comes to
@@ -66,5 +66,5 @@ simulate(n = 1, size = c(200, 100), prob = prob, categories = categories)
 
 }
 \seealso{
-\code{stats::rmultinom()}
+\code{\link[stats:Multinom]{stats::rmultinom()}}
 }
