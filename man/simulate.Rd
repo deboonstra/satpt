@@ -65,3 +65,6 @@ categories <- LETTERS[1:3]
 simulate(n = 1, size = c(200, 100), prob = prob, categories = categories)
 
 }
+\seealso{
+\code{stats::rmultinom()}
+}

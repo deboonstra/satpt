@@ -37,6 +37,8 @@
 #'  \eqn{k = 1, \ldots , K}}
 #' }
 #'
+#' @seealso `stats::rmultinom()`
+#'
 #' @examples
 #' # Creating 10 simulated data sets of with a sample size of 100, where there
 #' # are two possible response categories with a 50% chance of being selected.
