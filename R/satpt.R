@@ -188,6 +188,13 @@ satpt <- function(
     } else {
       test <- stats::chisq.test(x = counts, correct = FALSE)
     }
+
+    ## Assigning data.name to be based on y and by parameters ####
+    test$data.name <- paste0(
+      names(dimnames(counts))[2],
+      " given ",
+      names(dimnames(counts))[1]
+    )
   } else {
     test <- NULL
   }
@@ -214,7 +221,8 @@ satpt <- function(
 
   ## Calculating overall standard errors of sample proportions
   if (!is.null(test)) {
-    if (test$p.value <= alpha) {
+    pooled_se <- test$p.value <= alpha
+    if (pooled_se) {
       weights <- nn / sum(nn)
       for (j in seq_len(ncol(se))) {
         total$se[j] <- sqrt(sum(weights^2 * se[, j]^2))
@@ -223,6 +231,7 @@ satpt <- function(
       total$se <- sqrt((total$phat * (1 - total$phat)) / total_obs)
     }
   } else {
+    pooled_se <- FALSE
     total$se <- as.vector(se)
   }
 
@@ -248,47 +257,16 @@ satpt <- function(
 
   # Output ####
   out <- list()
+  out$threshold <- threshold
   out$saturation <- saturation
   out$counts <- counts
   out$phat <- phat
   out$se <- se
+  out$pooled_se <- pooled_se
+  out$alpha <- alpha
   out$test <- test
   out$N <- total_obs
   out$total <- total
   out$hindex <- hindex
   return(structure(out, class = "satpt"))
-}
-
-#' @export
-print.satpt <- function(x, digits = getOption("digits"), ...) {
-  # Check object type ####
-  if (!methods::is(x, "satpt")) {
-    stop("x must be of satpt type.")
-  }
-
-  # Creating printing object ####
-  phat <- x$total$phat
-  phat <- format(round(x = phat, digits = digits), nsmall = digits)
-  se <- x$total$se
-  se <- format(round(x = se, digits = digits), nsmall = digits)
-  print_table <- matrix(
-    data = as.numeric(c(phat, se)),
-    nrow = 2, ncol = length(phat),
-    byrow = TRUE,
-    dimnames = list(
-      c("Proportion", "SE"),
-      x$total$categories
-    )
-  )
-
-  # Printing results ####
-  cat(
-    "Saturation: ",
-    ifelse(test = x$saturation, yes = "Yes", no = "No"),
-    "\n"
-  )
-  cat("Overall Sample Proportions and Standard Errors\n")
-  cat("----------------------------------------------\n")
-  cat("----------------------------------------------\n")
-  print(x = print_table, ...)
 }
