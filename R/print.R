@@ -33,8 +33,8 @@ print.satpt <- function(x, digits = max(3, getOption("digits") - 3), ...) {
     "Saturation achieved? ",
     ifelse(
       test = x$saturation,
-      yes = "\033[0;32mYes\033[0m",
-      no = "\033[0;31mNo\033[0m"
+      yes = "Yes",
+      no = "No"
     ),
     "\n"
   )
@@ -198,18 +198,13 @@ print.summary.satpt <- function(x, ...) {
   # Printing saturation information ####
   cat("\nSaturation point analysis of sample proportions\n")
   cat("===============================================\n")
-  saturation <- ifelse(
-    test = x$saturation == "Yes",
-    yes = "\033[0;32mYes\033[0m",
-    no = "\033[0;31mNo\033[0m"
-  )
   cat(
     "\nSaturation achieved? ",
-    saturation,
+    x$saturation,
     "\nSaturation threshold of ",
-    paste0("\033[0;34m", x$threshold, "\033[0m"),
+    x$threshold,
     "\nResponses collected from a sample size of ",
-    paste0("\033[0;34m", x$N, "\033[0m\n\n"),
+    paste0(x$N, "\n\n"),
     sep = ""
   )
 
@@ -234,8 +229,8 @@ print.summary.satpt <- function(x, ...) {
     "\nPooled standard errors? ",
     ifelse(
       test = x$pooled_se,
-      yes = "\033[0;32mYes\033[0m",
-      no = "\033[0;31mNo\033[0m"
+      yes = "Yes",
+      no = "No"
     ),
     "\n"
   )
@@ -247,11 +242,11 @@ print.summary.satpt <- function(x, ...) {
       "Response bias present? ",
       ifelse(
         test = x$pooled_se,
-        yes = "\033[0;32mYes\033[0m\n",
-        no = "\033[0;31mNo\033[0m\n"
+        yes = "Yes",
+        no = "No"
       ),
       "Significance level: ",
-      paste0("\033[0;34m", x$alpha, "\033[0m\n"),
+      paste0(x$alpha, "\n"),
       sep = ""
     )
   }
