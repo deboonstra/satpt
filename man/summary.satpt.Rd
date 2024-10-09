@@ -25,8 +25,8 @@ Default is \code{max(3, getOption("digits") - 3)}.}
 }
 \description{
 \code{summary} summarizes the saturation point analysis performed by
-\code{satpt::satpt()}.
+\code{\link[=satpt]{satpt()}}.
 
 \code{print} prints the summary of the saturation point analysis
-produced by \code{summary.satpt}.
+produced by \code{\link[=summary.satpt]{summary.satpt()}}.
 }

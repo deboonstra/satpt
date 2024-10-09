@@ -19,5 +19,5 @@ Default is \code{max(3, getOption("digits") - 3)}.}
   }}
 }
 \description{
-\code{print} prints \code{satpt} objects created by \code{satpt::satpt()}.
+\code{print} prints \code{satpt} objects created by \code{\link[=satpt]{satpt()}}.
 }

@@ -1,5 +1,5 @@
 #' @title Print saturation point analysis
-#' @description `print` prints `satpt` objects created by `satpt::satpt()`.
+#' @description `print` prints `satpt` objects created by [satpt::satpt()].
 #'
 #' @param x `satpt` object to be printed.
 #' @param digits Minimal number of *significant digits*.
@@ -46,7 +46,7 @@ print.satpt <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 #' @title Saturation point analysis summary
 #'
 #' @description `summary` summarizes the saturation point analysis performed by
-#' `satpt::satpt()`.
+#' [satpt::satpt()].
 #'
 #' @param object `satpt` object to be summarized.
 #' @param digits Minimal number of *significant digits*.
@@ -182,7 +182,7 @@ summary.satpt <- function(
 #' @title Print summary of saturation point analysis
 #'
 #' @description `print` prints the summary of the saturation point analysis
-#' produced by `summary.satpt`.
+#' produced by [satpt::summary.satpt()].
 #'
 #' @param x `summary.satpt` object to be printed.
 #' @inheritDotParams base::print

@@ -69,7 +69,7 @@
 #'  sample proportions (`phat`).}
 #'  \item{`test`}{A `htest` object produced by [stats::chisq.test()] containing
 #'  the results from the \eqn{\chi^2} test for independence.}
-#'  \item{`total_obs`}{Total number of observations with a response provided.}
+#'  \item{`N`}{Total number of observations with a response provided.}
 #'  \item{`total`}{A `data.frame` with 5 variables describing the overall
 #'  collected sample. The `categories` variable provides the unique
 #'  categories listed in `y`. While `counts`, `phat`, and `se` provide the
