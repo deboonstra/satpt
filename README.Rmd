@@ -18,11 +18,11 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of satpt is to identify the saturation point of multinomial responses from a survey using standard errors of sample proportions
+The goal of `satpt` *R* package is to identify the saturation point of multinomial responses from a survey using standard errors of sample proportions
 
 ## Installation
 
-You can install the development version of `satpt` like so:
+You can install the development version of `satpt` by
 
 ```{r, eval = FALSE}
 #install.packages("remotes")

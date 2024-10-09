@@ -6,12 +6,13 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of satpt is to identify the saturation point of multinomial
-responses from a survey using standard errors of sample proportions
+The goal of `satpt` *R* package is to identify the saturation point of
+multinomial responses from a survey using standard errors of sample
+proportions
 
 ## Installation
 
-You can install the development version of `satpt` like so:
+You can install the development version of `satpt` by
 
 ``` r
 #install.packages("remotes")
@@ -30,13 +31,12 @@ data(ein)
 satpt::satpt(y = ein$responses, by = ein$wave)
 ```
 
-    Saturation:  Yes 
+    Saturation achieved?  Yes 
     Overall Sample Proportions and Standard Errors
-    ----------------------------------------------
-    ----------------------------------------------
-               Not at all      Once    Rarely Sometimes     Often
-    Proportion  0.2531250 0.0375000 0.3687500 0.2656250 0.0750000
-    SE          0.0171871 0.0075098 0.0190711 0.0174584 0.0104115
+    ==============================================
+               Not at all   Once Rarely Sometimes  Often
+    Proportion     0.2531 0.0375 0.3688    0.2656 0.0750
+    SE             0.0172 0.0075 0.0191    0.0175 0.0104
 
 ### Dimension names specification
 
