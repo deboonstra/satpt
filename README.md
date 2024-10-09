@@ -34,9 +34,10 @@ satpt::satpt(y = ein$responses, by = ein$wave)
     Saturation achieved?  Yes 
     Overall Sample Proportions and Standard Errors
     ==============================================
-               Not at all   Once Rarely Sometimes  Often
-    Proportion     0.2531 0.0375 0.3688    0.2656 0.0750
-    SE             0.0172 0.0075 0.0191    0.0175 0.0104
+                y
+    Statistics   Not at all   Once Rarely Sometimes  Often
+      Proportion     0.2531 0.0375 0.3688    0.2656 0.0750
+      SE             0.0172 0.0075 0.0191    0.0175 0.0104
 
 ### Dimension names specification
 

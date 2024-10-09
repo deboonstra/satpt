@@ -27,6 +27,7 @@ print.satpt <- function(x, digits = max(3, getOption("digits") - 3), ...) {
       x$total$categories
     )
   )
+  names(dimnames(print_table)) <- c("Statistics", names(dimnames(x$phat))[2])
 
   # Printing results ####
   cat(
