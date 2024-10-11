@@ -32,12 +32,13 @@ fit <- satpt::satpt(
 
 # plotting standard errors
 graphics::par(oma = c(0, 0, 0, 8))
-plot(fit, threshold = TRUE, main = "")
+plot(fit, threshold = TRUE)
 
 # adding legend
-legend_top(
-  legend = "Saturation threshold",
-  col = "firebrick", lty = 3, lwd = 2
+legend_right(
+  legend = "Saturation\nthreshold",
+  col = "firebrick", lty = 3, lwd = 2,
+  cex = 0.75
 )
 
 }
