@@ -22,11 +22,11 @@
 #'
 #' # plotting standard errors
 #' graphics::par(oma = c(0, 0, 0, 8))
-#' plot(fit, threshold = TRUE)
+#' plot(fit, threshold = TRUE, main = "")
 #'
 #' # adding legend
-#' legend_right(
-#'   legend = "Saturation\nthreshold",
+#' legend_top(
+#'   legend = "Saturation threshold",
 #'   col = "firebrick", lty = 3, lwd = 2
 #' )
 #'
