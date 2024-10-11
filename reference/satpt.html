@@ -184,7 +184,7 @@ Thus, there is no need to check for response bias when <code>by</code> is not sp
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ein</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Assuming response bias is not a possiblity</span></span></span>
-<span class="r-in"><span><span class="fu">satpt</span><span class="fu">::</span><span class="fu">satpt</span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">responses</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">satpt</span><span class="fu">::</span><span class="fu">satpt</span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation achieved?  Yes </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overall Sample Proportions and Standard Errors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ==============================================</span>
@@ -195,7 +195,7 @@ Thus, there is no need to check for response bias when <code>by</code> is not sp
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Examining saturation given data collected at different times and</span></span></span>
 <span class="r-in"><span><span class="co"># response bias is possible.</span></span></span>
-<span class="r-in"><span><span class="fu">satpt</span><span class="fu">::</span><span class="fu">satpt</span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">responses</span>, by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">satpt</span><span class="fu">::</span><span class="fu">satpt</span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation achieved?  Yes </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overall Sample Proportions and Standard Errors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ==============================================</span>
