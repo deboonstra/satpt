@@ -93,11 +93,11 @@
 #' data(ein)
 #'
 #' # Assuming response bias is not a possiblity
-#' satpt::satpt(y = ein$responses)
+#' satpt::satpt(y = ein$q2)
 #'
 #' # Examining saturation given data collected at different times and
 #' # response bias is possible.
-#' satpt::satpt(y = ein$responses, by = ein$wave)
+#' satpt::satpt(y = ein$q2, by = ein$wave)
 #'
 #' @rdname satpt
 #' @export

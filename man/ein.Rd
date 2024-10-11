@@ -7,23 +7,39 @@
 \format{
 \subsection{\code{ein}}{
 
-A \code{data.frame} with 643 observations and 2 columns.
+A \code{data.frame} with 643 observations and 3 variables.
 \describe{
-\item{\code{responses}}{The responses to how often within the past two years
+\item{\code{wave}}{The data collect period the responses were collected
+during.}
+\item{\code{q1}}{The responses to the types of advanced molecular
+diagnostic tests that have been ordered or used. This is an example of
+responses based on select that all apply data collection process. Possible
+values are \emph{Broad range 16S rRNA gene sequencing} (\code{Broadrange}), \emph{Whole
+genome sequencing} (\code{Wholegenome}), \emph{Metagenomic next-generation sequencing}
+(\code{MNGS}), \emph{None of the above} (\code{None}), and \emph{Other} (\code{Other}), where the
+data values are listed within the parentheses. When multiple responses are
+present the data values are separated by \code{"|"}.}
+\item{\code{q2}}{The responses to how often within the past two years
 advanced molecular diagnostic testing was performed. Possible values are
 \emph{Not at all}, \emph{Once}, \emph{Rarely} (quarterly or less often), \emph{Sometimes}
-(monthly), and \emph{Often} (weekly).}
-\item{\code{wave}}{The data collect interval the responses were collected
-during.}
+(monthly), and \emph{Often} (weekly). This is an example of where the responses
+collected come from the multinomial distribution.}
 }
 }
+}
+\source{
+\href{https://ein.idsociety.org/surveys/survey/166/}{Difficult Diagnoses}
 }
 \usage{
 data(ein)
 }
 \description{
-Responses to a survey question about advanced molecular
+Responses to survey questions about advanced molecular
 diagnostic testing for infectious diseases presented to medical personnel
 who are members of EIN.
+}
+\examples{
+data(ein)
+str(ein)
 }
 \keyword{datasets}

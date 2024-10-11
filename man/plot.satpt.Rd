@@ -23,9 +23,9 @@ saturation point anlaysis performed by \code{\link[=satpt]{satpt()}}.
 data(ein)
 
 # performing saturation point analysis
-fit1 <- satpt::satpt(y = ein$responses)
+fit1 <- satpt::satpt(y = ein$q2)
 fit2 <- satpt::satpt(
-  y = ein$responses,
+  y = ein$q2,
   by = ein$wave,
   dimnames = c("Response collected", "Collection period")
 )

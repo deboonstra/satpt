@@ -28,7 +28,7 @@ For basic usage of `satpt` simply specify the responses of the survey in
 
 ``` r
 data(ein)
-satpt::satpt(y = ein$responses, by = ein$wave)
+satpt::satpt(y = ein$q2, by = ein$wave)
 ```
 
     Saturation achieved?  Yes 
@@ -49,7 +49,7 @@ methods.
 
 ``` r
 res <- satpt::satpt(
-  y = ein$responses,
+  y = ein$q2,
   by = ein$wave,
   dimnames = c("Responses to survey", "Collection period")
 )
@@ -66,7 +66,7 @@ res$counts # accessing contingency table
 
 ``` r
 res <- satpt::satpt(
-  y = ein$responses,
+  y = ein$q2,
   by = ein$wave,
   dimnames = c("by" = "Collection period", "y" = "Responses to survey")
 )

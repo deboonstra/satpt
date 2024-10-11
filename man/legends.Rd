@@ -25,7 +25,7 @@ data(ein)
 
 # performing saturation point analysis
 fit <- satpt::satpt(
-  y = ein$responses,
+  y = ein$q2,
   by = ein$wave,
   dimnames = c("Response collected", "Collection period")
 )
