@@ -4,11 +4,12 @@
 # satpt
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/deboonstra/satpt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/deboonstra/satpt/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of `satpt` *R* package is to identify the saturation point of
-multinomial responses from a survey using standard errors of sample
-proportions
+This *R* package identifies the saturation point of multinomial
+responses from a survey using standard errors of sample proportions
 
 ## Installation
 
