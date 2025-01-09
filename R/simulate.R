@@ -40,9 +40,9 @@
 #' @seealso [stats::rmultinom()]
 #'
 #' @examples
-#' # Creating 10 simulated data sets of with a sample size of 100, where there
+#' # Creating 5 simulated data sets of with a sample size of 10, where there
 #' # are two possible response categories with a 50% chance of being selected.
-#' simulate(n = 10, size = 100, prob = c(0.5, 0.5))
+#' simulate(n = 5, size = 10, prob = c(0.5, 0.5))
 #'
 #' # Creating 1 simulated data set for two data collection periods, where there
 #' # are three possible response categories that are labeled.
@@ -51,7 +51,7 @@
 #'  nrow = 2, ncol = 3, byrow = TRUE
 #' )
 #' categories <- LETTERS[1:3]
-#' simulate(n = 1, size = c(200, 100), prob = prob, categories = categories)
+#' simulate(n = 1, size = c(20, 10), prob = prob, categories = categories)
 #'
 #' @export
 simulate <- function(n, size, prob, categories = NULL) {
