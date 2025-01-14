@@ -19,7 +19,8 @@
 #' fit2 <- satpt::satpt(
 #'   y = ein$q2,
 #'   by = ein$wave,
-#'   dimnames = c("Response collected", "Collection period")
+#'   dimnames = c("Response collected", "Collection period"),
+#'   threshold = 0.015
 #' )
 #'
 #' # plotting standard errors

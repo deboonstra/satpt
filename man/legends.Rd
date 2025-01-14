@@ -35,7 +35,7 @@ graphics::par(oma = c(0, 0, 0, 8))
 plot(fit, threshold = TRUE)
 
 # adding legend
-legend_right(
+satpt::legend_right(
   legend = "Saturation\nthreshold",
   col = "firebrick", lty = 3, lwd = 2,
   cex = 0.75

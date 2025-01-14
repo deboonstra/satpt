@@ -42,7 +42,7 @@
 #' @examples
 #' # Creating 5 simulated data sets of with a sample size of 10, where there
 #' # are two possible response categories with a 50% chance of being selected.
-#' simulate(n = 5, size = 10, prob = c(0.5, 0.5))
+#' satpt::simulate(n = 5, size = 10, prob = c(0.5, 0.5))
 #'
 #' # Creating 1 simulated data set for two data collection periods, where there
 #' # are three possible response categories that are labeled.
@@ -50,8 +50,8 @@
 #'  data = c(0.4, 0.4, 0.2, 0.1, 0.1, 0.8),
 #'  nrow = 2, ncol = 3, byrow = TRUE
 #' )
-#' categories <- LETTERS[1:3]
-#' simulate(n = 1, size = c(20, 10), prob = prob, categories = categories)
+#' catg <- LETTERS[1:3]
+#' satpt::simulate(n = 1, size = c(20, 10), prob = prob, categories = catg)
 #'
 #' @export
 simulate <- function(n, size, prob, categories = NULL) {

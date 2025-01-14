@@ -246,7 +246,7 @@ print.summary.satpt <- function(x, ...) {
         yes = "Yes",
         no = "No"
       ),
-      "Significance level: ",
+      "\nSignificance level: ",
       paste0(x$alpha, "\n"),
       sep = ""
     )
