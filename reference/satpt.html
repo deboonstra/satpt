@@ -91,7 +91,11 @@ the elements are named with <code>"y"</code> and <code>"by"</code>. Default is <
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object with <code>S3</code> class <code>"satpt"</code> containing</p><dl><dt><code>saturation</code></dt>
+    <p>An object with <code>S3</code> class <code>"satpt"</code> containing 11 elements.</p><dl><dt><code>threshold</code></dt>
+<dd><p>Saturation threshold applied to the standard errors of
+thesample proportions.</p></dd>
+
+<dt><code>saturation</code></dt>
 <dd><p>A logical value indicating whether all response
 categories have achieved saturation given the defined <code>threshold</code>. The value
 of <code>TRUE</code> indicates that saturation has been achieved while a value of
@@ -109,6 +113,14 @@ observed contigency table (<code>counts</code>).</p></dd>
 <dt><code>se</code></dt>
 <dd><p>A <code>matrix</code> containing the standard errors for the calculated
 sample proportions (<code>phat</code>).</p></dd>
+
+<dt><code>pooled_se</code></dt>
+<dd><p>A logical value indicating whether pooled standard errors
+were calculated due to the presence of response bias.</p></dd>
+
+<dt><code>alpha</code></dt>
+<dd><p>Significance level for Pearson's \(\chi^2\) test for
+independence.</p></dd>
 
 <dt><code>test</code></dt>
 <dd><p>A <code>htest</code> object produced by <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code> containing
@@ -165,8 +177,9 @@ proportions. Smaller values indicate the sample proportions of the data
 collection periods are less dissimilar. This measure is of importance when
 response bias is present. When <code>by</code> is not specified the test for
 independence will not be conducted and the heterogeneity index will not be
-calculated. <code>satpt</code> assumes response is only possible when <code>by</code> is specified.
-Thus, there is no need to check for response bias when <code>by</code> is not specified.</p>
+calculated. <code>satpt</code> assumes response bias is only possible when <code>by</code> is
+specified. Thus, there is no need to check for response bias when <code>by</code> is
+not specified.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>

@@ -54,68 +54,53 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of <code>satpt</code> by</p>
+<p>You can install the current released version of <code>satpt</code> from <a href="https://cran.r-project.org" class="external-link">CRAN</a> with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#install.packages("remotes")</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"satpt"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
+</h3>
+<p>To get a bug fix or to use a feature from the development version, you can install the development version of <code>satpt</code> from <a href="https://github.com/deboonstra/satpt" class="external-link">GitHub</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"deboonstra/satpt"</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<div class="section level3">
-<h3 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
-</h3>
 <p>For basic usage of <code>satpt</code> simply specify the responses of the survey in <code>y</code> and the data collection period information in <code>by</code>, as seen below.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ein</span><span class="op">)</span></span>
-<span><span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="reference/satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>Saturation achieved?  Yes </span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>Overall Sample Proportions and Standard Errors</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="sc">==</span><span class="er">============================================</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>            y</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>Statistics   Not at all   Once Rarely Sometimes  Often</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  Proportion     <span class="fl">0.2531</span> <span class="fl">0.0375</span> <span class="fl">0.3688</span>    <span class="fl">0.2656</span> <span class="fl">0.0750</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  SE             <span class="fl">0.0172</span> <span class="fl">0.0075</span> <span class="fl">0.0191</span>    <span class="fl">0.0175</span> <span class="fl">0.0104</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="dimension-names-specification">Dimension names specification<a class="anchor" aria-label="anchor" href="#dimension-names-specification"></a>
-</h3>
-<p>When specification of the dimension names of the contigency table, sample proportions, and standard error is wanted, use one of these two methods.</p>
-<div class="section level4">
-<h4 id="method-1">Method 1<a class="anchor" aria-label="anchor" href="#method-1"></a>
-</h4>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="reference/satpt.html">satpt</a></span><span class="op">(</span></span>
-<span>  y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>,</span>
-<span>  by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span>,</span>
-<span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Responses to survey"</span>, <span class="st">"Collection period"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">res</span><span class="op">$</span><span class="va">counts</span> <span class="co"># accessing contingency table</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>                 Responses to survey</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>Collection period Not at all Once Rarely Sometimes Often</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                <span class="dv">1</span>         <span class="dv">85</span>   <span class="dv">15</span>    <span class="dv">109</span>        <span class="dv">88</span>    <span class="dv">27</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>                <span class="dv">2</span>         <span class="dv">37</span>    <span class="dv">5</span>     <span class="dv">59</span>        <span class="dv">34</span>    <span class="dv">11</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>                <span class="dv">3</span>         <span class="dv">40</span>    <span class="dv">4</span>     <span class="dv">68</span>        <span class="dv">48</span>    <span class="dv">10</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="method-2">Method 2<a class="anchor" aria-label="anchor" href="#method-2"></a>
-</h4>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="reference/satpt.html">satpt</a></span><span class="op">(</span></span>
-<span>  y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>,</span>
-<span>  by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span>,</span>
-<span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"by"</span> <span class="op">=</span> <span class="st">"Collection period"</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="st">"Responses to survey"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">res</span><span class="op">$</span><span class="va">phat</span> <span class="co"># accessing sample proportions table</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>                 Responses to survey</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>Collection period Not at all       Once    Rarely Sometimes      Often</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                <span class="dv">1</span>  <span class="fl">0.2623457</span> <span class="fl">0.04629630</span> <span class="fl">0.3364198</span> <span class="fl">0.2716049</span> <span class="fl">0.08333333</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>                <span class="dv">2</span>  <span class="fl">0.2534247</span> <span class="fl">0.03424658</span> <span class="fl">0.4041096</span> <span class="fl">0.2328767</span> <span class="fl">0.07534247</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>                <span class="dv">3</span>  <span class="fl">0.2352941</span> <span class="fl">0.02352941</span> <span class="fl">0.4000000</span> <span class="fl">0.2823529</span> <span class="fl">0.05882353</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://deboonstra.github.io/satpt/">satpt</a></span><span class="op">)</span> <span class="co"># load package</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ein</span><span class="op">)</span> <span class="co"># load example ein data</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="reference/satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#&gt; Saturation achieved?  Yes </span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; Overall Sample Proportions and Standard Errors</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; ==============================================</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;             y</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; Statistics   Not at all   Once Rarely Sometimes  Often</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;   Proportion     0.2531 0.0375 0.3688    0.2656 0.0750</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt;   SE             0.0172 0.0075 0.0191    0.0175 0.0104</span></span></code></pre></div>
+<p>Saturation of each individual response category may be examined graphically while comparing the standard errors to the saturation threshold.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>oma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span><span class="co"># adding legend</span></span>
+<span><span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="reference/legends.html">legend_right</a></span><span class="op">(</span></span>
+<span>  legend <span class="op">=</span> <span class="st">"Saturation\nthreshold"</span>,</span>
+<span>  col <span class="op">=</span> <span class="st">"firebrick"</span>, lty <span class="op">=</span> <span class="fl">3</span>, lwd <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  cex <span class="op">=</span> <span class="fl">0.75</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
 </div>
 </div>
+<div class="section level1">
+<h1 id="methodology">Methodology<a class="anchor" aria-label="anchor" href="#methodology"></a>
+</h1>
+<p>A paper explaining the methodology of this package is currently being written. When it is published, a link to that paper will be provided here.</p>
 </div>
-</div>
+
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
