@@ -6,10 +6,11 @@ Authors@R:
     person(
       "D. Erik", "Boonstra", role = c("aut", "cre"),
       email = "daniel-boonstra@uiowa.edu",
-      comment = c(ORCID = "0009-0005-1599-1809")     
+      comment = c(ORCID = "0009-0005-1599-1809")
     ),
     person(
-      "Joseph E. Cavanaugh", role = c("aut")
+      "Joseph E.", "Cavanaugh", role = c("aut"),
+      comment = c(ORCID = "0000-0002-0514-7664")
     )
   )
 Description: Identify the saturation point of multinomial responses from a survey using standard errors of sample proportions.
