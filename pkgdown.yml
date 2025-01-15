@@ -3,7 +3,8 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   satpt: satpt.html
-last_built: 2025-01-15T22:06Z
+  select_all_apply: select_all_apply.html
+last_built: 2025-01-15T23:15Z
 urls:
   reference: https://deboonstra.github.io/satpt/reference
   article: https://deboonstra.github.io/satpt/articles
