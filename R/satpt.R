@@ -111,13 +111,13 @@
 #'
 #' ## Simulating data
 #' prob <- matrix(
-#'  data = c(0.4, 0.4, 0.2, 0.1, 0.1, 0.8),
-#'  nrow = 2, ncol = 3, byrow = TRUE
+#'   data = c(0.4, 0.4, 0.2, 0.1, 0.1, 0.8),
+#'   nrow = 2, ncol = 3, byrow = TRUE
 #' )
 #' catg <- LETTERS[1:3]
 #' set.seed(123)
 #' dat <- satpt::simulate(
-#'  n = 1, size = c(200, 100), prob = prob, categories = catg
+#'   n = 1, size = c(200, 100), prob = prob, categories = catg
 #' )
 #'
 #' ## Determining saturation with response bias
@@ -126,10 +126,8 @@
 #' @rdname satpt
 #' @export
 satpt <- function(
-  y, by = NULL, exclude = c(NA, NaN), alpha = 0.05, threshold = 0.05,
-  dimnames = NULL
-) {
-
+    y, by = NULL, exclude = c(NA, NaN), alpha = 0.05, threshold = 0.05,
+    dimnames = NULL) {
   # Checking parameter types ####
   valid_classes <- c("character", "factor", "numeric", "logical", "integer")
   if (!(class(y) %in% valid_classes)) {

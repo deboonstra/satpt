@@ -132,13 +132,13 @@ satpt::satpt(y = ein$q2, by = ein$wave)
 
 ## Simulating data
 prob <- matrix(
- data = c(0.4, 0.4, 0.2, 0.1, 0.1, 0.8),
- nrow = 2, ncol = 3, byrow = TRUE
+  data = c(0.4, 0.4, 0.2, 0.1, 0.1, 0.8),
+  nrow = 2, ncol = 3, byrow = TRUE
 )
 catg <- LETTERS[1:3]
 set.seed(123)
 dat <- satpt::simulate(
- n = 1, size = c(200, 100), prob = prob, categories = catg
+  n = 1, size = c(200, 100), prob = prob, categories = catg
 )
 
 ## Determining saturation with response bias

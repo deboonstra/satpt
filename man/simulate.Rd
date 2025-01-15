@@ -58,8 +58,8 @@ satpt::simulate(n = 5, size = 10, prob = c(0.5, 0.5))
 # Creating 1 simulated data set for two data collection periods, where there
 # are three possible response categories that are labeled.
 prob <- matrix(
- data = c(0.4, 0.4, 0.2, 0.1, 0.1, 0.8),
- nrow = 2, ncol = 3, byrow = TRUE
+  data = c(0.4, 0.4, 0.2, 0.1, 0.1, 0.8),
+  nrow = 2, ncol = 3, byrow = TRUE
 )
 catg <- LETTERS[1:3]
 satpt::simulate(n = 1, size = c(20, 10), prob = prob, categories = catg)

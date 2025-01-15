@@ -47,8 +47,8 @@
 #' # Creating 1 simulated data set for two data collection periods, where there
 #' # are three possible response categories that are labeled.
 #' prob <- matrix(
-#'  data = c(0.4, 0.4, 0.2, 0.1, 0.1, 0.8),
-#'  nrow = 2, ncol = 3, byrow = TRUE
+#'   data = c(0.4, 0.4, 0.2, 0.1, 0.1, 0.8),
+#'   nrow = 2, ncol = 3, byrow = TRUE
 #' )
 #' catg <- LETTERS[1:3]
 #' satpt::simulate(n = 1, size = c(20, 10), prob = prob, categories = catg)
@@ -108,7 +108,6 @@ simulate <- function(n, size, prob, categories = NULL) {
 
   ### Simulating ####
   for (k in seq_along(size)) {
-
     #### Creating temporary data set ####
     tmp <- data.frame(matrix(data = NA, nrow = size[k], ncol = n + 1))
     colnames(tmp) <- c("period", paste0("responses", seq_len(n)))
