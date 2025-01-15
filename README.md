@@ -13,69 +13,63 @@ responses from a survey using standard errors of sample proportions
 
 ## Installation
 
-You can install the development version of `satpt` by
+You can install the current released version of `satpt` from
+[CRAN](https://cran.r-project.org) with
 
 ``` r
-#install.packages("remotes")
+install.packages("satpt")
+```
+
+### Development version
+
+To get a bug fix or to use a feature from the development version, you
+can install the development version of `satpt` from
+[GitHub](https://github.com/deboonstra/satpt).
+
+``` r
+# install.packages("remotes")
 remotes::install_github("deboonstra/satpt")
 ```
 
 ## Usage
 
-### Basic usage
-
 For basic usage of `satpt` simply specify the responses of the survey in
 `y` and the data collection period information in `by`, as seen below.
 
 ``` r
-data(ein)
-satpt::satpt(y = ein$q2, by = ein$wave)
+library(satpt) # load package
+data(ein) # load example ein data
+res <- satpt::satpt(y = ein$q2, by = ein$wave)
+print(res)
 ```
 
-    Saturation achieved?  Yes 
-    Overall Sample Proportions and Standard Errors
-    ==============================================
-                y
-    Statistics   Not at all   Once Rarely Sometimes  Often
-      Proportion     0.2531 0.0375 0.3688    0.2656 0.0750
-      SE             0.0172 0.0075 0.0191    0.0175 0.0104
+    #> Saturation achieved?  Yes 
+    #> Overall Sample Proportions and Standard Errors
+    #> ==============================================
+    #>             y
+    #> Statistics   Not at all   Once Rarely Sometimes  Often
+    #>   Proportion     0.2531 0.0375 0.3688    0.2656 0.0750
+    #>   SE             0.0172 0.0075 0.0191    0.0175 0.0104
 
-### Dimension names specification
-
-When specification of the dimension names of the contigency table,
-sample proportions, and standard error is wanted, use one of these two
-methods.
-
-#### Method 1
+Saturation of each individual response category may be examined
+graphically while comparing the standard errors to the saturation
+threshold.
 
 ``` r
-res <- satpt::satpt(
-  y = ein$q2,
-  by = ein$wave,
-  dimnames = c("Responses to survey", "Collection period")
+graphics::par(oma = c(0, 0, 0, 8))
+plot(res)
+# adding legend
+satpt::legend_right(
+  legend = "Saturation\nthreshold",
+  col = "firebrick", lty = 3, lwd = 2,
+  cex = 0.75
 )
-res$counts # accessing contingency table
 ```
 
-                     Responses to survey
-    Collection period Not at all Once Rarely Sometimes Often
-                    1         85   15    109        88    27
-                    2         37    5     59        34    11
-                    3         40    4     68        48    10
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
-#### Method 2
+# Methodology
 
-``` r
-res <- satpt::satpt(
-  y = ein$q2,
-  by = ein$wave,
-  dimnames = c("by" = "Collection period", "y" = "Responses to survey")
-)
-res$phat # accessing sample proportions table
-```
-
-                     Responses to survey
-    Collection period Not at all       Once    Rarely Sometimes      Often
-                    1  0.2623457 0.04629630 0.3364198 0.2716049 0.08333333
-                    2  0.2534247 0.03424658 0.4041096 0.2328767 0.07534247
-                    3  0.2352941 0.02352941 0.4000000 0.2823529 0.05882353
+A paper explaining the methodology of this package is currently being
+written. When it is published, a link to that paper will be provided
+here.
