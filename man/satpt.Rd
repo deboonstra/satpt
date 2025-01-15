@@ -37,8 +37,10 @@ of \code{y} variable and the second entry should be name of \code{by} variable. 
 the elements are named with \code{"y"} and \code{"by"}. Default is \code{NULL}.}
 }
 \value{
-An object with \code{S3} class \code{"satpt"} containing
+An object with \code{S3} class \code{"satpt"} containing 11 elements.
 \describe{
+\item{\code{threshold}}{Saturation threshold applied to the standard errors of
+thesample proportions.}
 \item{\code{saturation}}{A logical value indicating whether all response
 categories have achieved saturation given the defined \code{threshold}. The value
 of \code{TRUE} indicates that saturation has been achieved while a value of
@@ -50,6 +52,10 @@ contigency table created by \code{y} and \code{by} if provided.}
 observed contigency table (\code{counts}).}
 \item{\code{se}}{A \code{matrix} containing the standard errors for the calculated
 sample proportions (\code{phat}).}
+\item{\code{pooled_se}}{A logical value indicating whether pooled standard errors
+were calculated due to the presence of response bias.}
+\item{\code{alpha}}{Significance level for Pearson's \eqn{\chi^2} test for
+independence.}
 \item{\code{test}}{A \code{htest} object produced by \code{\link[stats:chisq.test]{stats::chisq.test()}} containing
 the results from the \eqn{\chi^2} test for independence.}
 \item{\code{N}}{Total number of observations with a response provided.}
@@ -102,8 +108,9 @@ proportions. Smaller values indicate the sample proportions of the data
 collection periods are less dissimilar. This measure is of importance when
 response bias is present. When \code{by} is not specified the test for
 independence will not be conducted and the heterogeneity index will not be
-calculated. \code{satpt} assumes response is only possible when \code{by} is specified.
-Thus, there is no need to check for response bias when \code{by} is not specified.
+calculated. \code{satpt} assumes response bias is only possible when \code{by} is
+specified. Thus, there is no need to check for response bias when \code{by} is
+not specified.
 }
 \note{
 The returned \code{satpt} object will contain \code{NULL} values for \code{test} and

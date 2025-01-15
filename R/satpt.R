@@ -51,11 +51,14 @@
 #' collection periods are less dissimilar. This measure is of importance when
 #' response bias is present. When `by` is not specified the test for
 #' independence will not be conducted and the heterogeneity index will not be
-#' calculated. `satpt` assumes response is only possible when `by` is specified.
-#' Thus, there is no need to check for response bias when `by` is not specified.
+#' calculated. `satpt` assumes response bias is only possible when `by` is
+#' specified. Thus, there is no need to check for response bias when `by` is
+#' not specified.
 #'
-#' @return An object with `S3` class `"satpt"` containing
+#' @return An object with `S3` class `"satpt"` containing 11 elements.
 #' \describe{
+#'  \item{`threshold`}{Saturation threshold applied to the standard errors of
+#'  thesample proportions.}
 #'  \item{`saturation`}{A logical value indicating whether all response
 #'  categories have achieved saturation given the defined `threshold`. The value
 #'  of `TRUE` indicates that saturation has been achieved while a value of
@@ -67,6 +70,10 @@
 #'  observed contigency table (`counts`).}
 #'  \item{`se`}{A `matrix` containing the standard errors for the calculated
 #'  sample proportions (`phat`).}
+#'  \item{`pooled_se`}{A logical value indicating whether pooled standard errors
+#'  were calculated due to the presence of response bias.}
+#'  \item{`alpha`}{Significance level for Pearson's \eqn{\chi^2} test for
+#'  independence.}
 #'  \item{`test`}{A `htest` object produced by [stats::chisq.test()] containing
 #'  the results from the \eqn{\chi^2} test for independence.}
 #'  \item{`N`}{Total number of observations with a response provided.}
@@ -274,7 +281,11 @@ satpt <- function(
   }
 
   # Output ####
-  out <- list()
+  out <- vector(mode = "list", length = 11)
+  names(out) <- c(
+    "threshold", "saturation", "counts", "phat", "se", "pooled_se", "alpha",
+    "test", "N", "total", "hindex"
+  )
   out$threshold <- threshold
   out$saturation <- saturation
   out$counts <- counts
@@ -282,9 +293,13 @@ satpt <- function(
   out$se <- se
   out$pooled_se <- pooled_se
   out$alpha <- alpha
-  out$test <- test
+  if (!is.null(test)) {
+    out$test <- test
+  }
   out$N <- total_obs
   out$total <- total
-  out$hindex <- hindex
+  if (!is.null(hindex)) {
+    out$hindex <- hindex
+  }
   return(structure(out, class = "satpt"))
 }
