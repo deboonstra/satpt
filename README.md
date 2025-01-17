@@ -66,10 +66,13 @@ satpt::legend_right(
 )
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-basic-plot.svg" width="100%" />
 
 # Methodology
 
-A paper explaining the methodology of this package is currently being
-written. When it is published, a link to that paper will be provided
-here.
+Presented below is a simplified version of the algorithm that is
+employed in `satpt` to determine whether saturation of the responses has
+been achieved and whether pooled standard errors should be calculated to
+account for response bias.
+
+<img src="man/figures/README-satpt-algorithm.png" width="100%" />
