@@ -9,6 +9,7 @@ satpt(
   by = NULL,
   exclude = c(NA, NaN),
   alpha = 0.05,
+  correct = FALSE,
   threshold = 0.05,
   dimnames = NULL
 )
@@ -25,6 +26,11 @@ is \code{NA} and \code{NaN}.}
 
 \item{alpha}{Significance level for Pearson's \eqn{\chi^2} test for
 independence. Default is \code{0.05}.}
+
+\item{correct}{Logical indicating whether to apply continuity correction
+when computing the test statistic for 2 by 2 tables: one half is subtracted
+from all ∣O−E∣ differences; however, the correction will not be bigger than
+the differences themselves.}
 
 \item{threshold}{Saturation threshold applied to the standard errors of the
 sample proportions. Default is \code{0.05}.}

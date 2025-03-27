@@ -11,6 +11,10 @@
 #' is `NA` and `NaN`.
 #' @param alpha Significance level for Pearson's \eqn{\chi^2} test for
 #' independence. Default is `0.05`.
+#' @param correct Logical indicating whether to apply continuity correction
+#' when computing the test statistic for 2 by 2 tables: one half is subtracted
+#' from all ∣O−E∣ differences; however, the correction will not be bigger than
+#' the differences themselves.
 #' @param threshold Saturation threshold applied to the standard errors of the
 #' sample proportions. Default is \code{0.05}.
 #' @param dimnames Character vector of names for `y` and `by` when
@@ -127,8 +131,8 @@
 #' @rdname satpt
 #' @export
 satpt <- function(
-    y, by = NULL, exclude = c(NA, NaN), alpha = 0.05, threshold = 0.05,
-    dimnames = NULL) {
+    y, by = NULL, exclude = c(NA, NaN), alpha = 0.05, correct = FALSE,
+    threshold = 0.05, dimnames = NULL) {
   # Checking parameter types ####
   valid_classes <- c("character", "factor", "numeric", "logical", "integer")
   if (!(class(y) %in% valid_classes)) {
@@ -207,11 +211,7 @@ satpt <- function(
 
   # Conducting test of independence ####
   if (all(dim(counts) >= 2)) {
-    if (all(dim(counts) == 2)) {
-      test <- stats::chisq.test(x = counts, correct = TRUE)
-    } else {
-      test <- stats::chisq.test(x = counts, correct = FALSE)
-    }
+    test <- stats::chisq.test(x = counts, correct = correct)
 
     ## Assigning data.name to be based on y and by parameters ####
     test$data.name <- paste0(

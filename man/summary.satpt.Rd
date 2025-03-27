@@ -15,7 +15,7 @@
 \item{digits}{Minimal number of \emph{significant digits}.
 Default is \code{max(3, getOption("digits") - 3)}.}
 
-\item{...}{Additionally, arguments passed to \code{\link[base:print]{base::print()}}}
+\item{...}{Additionally, arguments passed to \code{\link[base:print]{base::print()}}.}
 
 \item{x}{\code{summary.satpt} object to be printed.}
 }
