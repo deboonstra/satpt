@@ -7,7 +7,7 @@
 #' @param x `summary.satpt` object to be printed.
 #' @param digits Minimal number of *significant digits*.
 #' Default is `max(3, getOption("digits") - 3)`.
-#' @param ... Additionally, arguments passed to [base::print()]
+#' @param ... Additionally, arguments passed to [base::print()].
 #'
 #' @details For printing `summary.satpt` objects, the `digits` parameter does
 #' not need to be specified in `print` as [satpt::summary()] already takes
