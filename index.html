@@ -31,19 +31,20 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="articles/satpt.html">Get started</a></li>
-<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/select_all_apply.html">Select All that Apply Questions</a></li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-learn-more" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Learn more</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-learn-more">
+<li><a class="dropdown-item" href="articles/getting-started.html">Getting started with satpt</a></li>
+    <li><a class="dropdown-item" href="articles/select-all-apply.html">Implementing with select all that apply questions</a></li>
   </ul>
 </li>
+<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/deboonstra/satpt/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -69,7 +70,7 @@
 <p>To get a bug fix or to use a feature from the development version, you can install the development version of <code>satpt</code> from <a href="https://github.com/deboonstra/satpt" class="external-link">GitHub</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"deboonstra/satpt"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"deboonstra/satpt"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -108,14 +109,15 @@
 <p><img src="reference/figures/README-satpt-algorithm.png" width="100%"></p>
 </div>
 
-  </main><aside class="col-md-3"><div class="license">
-<h2 data-toc-skip>License</h2>
+  </main><aside class="col-md-3"><div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small>GPL (&gt;= 3)</small></li>
+<li>
+<a href="https://github.com/deboonstra" class="external-link">D. Erik Boonstra</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0005-1599-1809" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="https://www.public-health.uiowa.edu/people/joseph-cavanaugh/" class="external-link">Joseph E. Cavanaugh</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-0514-7664" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
-
 
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
@@ -124,11 +126,11 @@
 </ul>
 </div>
 
-<div class="developers">
-<h2 data-toc-skip>Developers</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>D. Erik Boonstra <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0005-1599-1809" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Joseph E. Cavanaugh <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-0514-7664" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small>GPL (&gt;= 3)</small></li>
 </ul>
 </div>
 
@@ -144,7 +146,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by D. Erik Boonstra, Joseph E. Cavanaugh.</p>
+  <p>Developed by <a href="https://github.com/deboonstra" class="external-link">D. Erik Boonstra</a>, <a href="https://www.public-health.uiowa.edu/people/joseph-cavanaugh/" class="external-link">Joseph E. Cavanaugh</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -1,9 +1,9 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://deboonstra.github.io/satpt/404.html</loc></url>
 <url><loc>https://deboonstra.github.io/satpt/LICENSE.html</loc></url>
+<url><loc>https://deboonstra.github.io/satpt/articles/getting-started.html</loc></url>
 <url><loc>https://deboonstra.github.io/satpt/articles/index.html</loc></url>
-<url><loc>https://deboonstra.github.io/satpt/articles/satpt.html</loc></url>
-<url><loc>https://deboonstra.github.io/satpt/articles/select_all_apply.html</loc></url>
+<url><loc>https://deboonstra.github.io/satpt/articles/select-all-apply.html</loc></url>
 <url><loc>https://deboonstra.github.io/satpt/authors.html</loc></url>
 <url><loc>https://deboonstra.github.io/satpt/index.html</loc></url>
 <url><loc>https://deboonstra.github.io/satpt/reference/ein.html</loc></url>
@@ -11,6 +11,7 @@
 <url><loc>https://deboonstra.github.io/satpt/reference/legends.html</loc></url>
 <url><loc>https://deboonstra.github.io/satpt/reference/plot.satpt.html</loc></url>
 <url><loc>https://deboonstra.github.io/satpt/reference/print.satpt.html</loc></url>
+<url><loc>https://deboonstra.github.io/satpt/reference/satpt-package.html</loc></url>
 <url><loc>https://deboonstra.github.io/satpt/reference/satpt.html</loc></url>
 <url><loc>https://deboonstra.github.io/satpt/reference/simulate.html</loc></url>
 <url><loc>https://deboonstra.github.io/satpt/reference/summary.satpt.html</loc></url>
