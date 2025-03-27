@@ -51,6 +51,7 @@ survey using standard errors of the sample proportions for the responses.</p>
 <span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  exclude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NaN</span><span class="op">)</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  correct <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  threshold <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  dimnames <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -78,6 +79,13 @@ is <code>NA</code> and <code>NaN</code>.</p></dd>
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
 <dd><p>Significance level for Pearson's \(\chi^2\) test for
 independence. Default is <code>0.05</code>.</p></dd>
+
+
+<dt id="arg-correct">correct<a class="anchor" aria-label="anchor" href="#arg-correct"></a></dt>
+<dd><p>Logical indicating whether to apply continuity correction
+when computing the test statistic for 2 by 2 tables: one half is subtracted
+from all ∣O−E∣ differences; however, the correction will not be bigger than
+the differences themselves.</p></dd>
 
 
 <dt id="arg-threshold">threshold<a class="anchor" aria-label="anchor" href="#arg-threshold"></a></dt>
