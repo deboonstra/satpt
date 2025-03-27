@@ -1,8 +1,8 @@
 ---
-title: "satpt"
+title: "Getting started with satpt"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{satpt}
+  %\VignetteIndexEntry{Getting started with satpt}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
