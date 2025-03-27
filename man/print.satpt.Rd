@@ -21,3 +21,15 @@ Default is \code{max(3, getOption("digits") - 3)}.}
 \description{
 \code{print} prints \code{satpt} objects created by \code{\link[=satpt]{satpt()}}.
 }
+\examples{
+data(ein)
+
+# Examining saturation given data collected at different times and
+# response bias is possible. For this example, response bias is not present,
+# so the standard errors will be the same.
+
+# Saving analysis as R object and printing
+res <- satpt::satpt(y = ein$q2, by = ein$wave)
+print(x = res, digits = 3)
+
+}

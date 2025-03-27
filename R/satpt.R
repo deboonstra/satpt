@@ -123,6 +123,7 @@
 #' ## Determining saturation with response bias
 #' res <- satpt::satpt(y = dat$responses1, by = dat$period)
 #' summary(res)
+#'
 #' @rdname satpt
 #' @export
 satpt <- function(

@@ -144,6 +144,7 @@ dat <- satpt::simulate(
 ## Determining saturation with response bias
 res <- satpt::satpt(y = dat$responses1, by = dat$period)
 summary(res)
+
 }
 \seealso{
 \code{\link[stats:ftable]{stats::ftable()}}, \code{\link[stats:chisq.test]{stats::chisq.test()}}
