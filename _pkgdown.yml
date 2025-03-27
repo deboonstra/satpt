@@ -1,5 +1,28 @@
 url: https://deboonstra.github.io/satpt/
+
 template:
   bootstrap: 5
   math-rendering: mathjax
 
+home:
+  sidebar:
+    structure: [authors, citation, license, dev]
+
+authors:
+  D. Erik Boonstra:
+    href: https://github.com/deboonstra
+  Joseph E. Cavanaugh:
+    href: https://www.public-health.uiowa.edu/people/joseph-cavanaugh/
+
+navbar:
+  structure:
+    left: [articles, reference]
+    right: [search, github]
+  components:
+    articles:
+      text: Learn more
+      menu:
+      - text: Getting started with satpt
+        href: articles/getting-started.html
+      - text: Implementing with select all that apply questions
+        href: articles/select-all-apply.html
