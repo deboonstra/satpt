@@ -132,14 +132,13 @@
 #' @rdname satpt
 #' @export
 satpt <- function(
-  y,
-  by = NULL,
-  exclude = c(NA, NaN),
-  alpha = 0.05,
-  threshold = 0.025,
-  dimnames = NULL,
-  ...
-) {
+    y,
+    by = NULL,
+    exclude = c(NA, NaN),
+    alpha = 0.05,
+    threshold = 0.025,
+    dimnames = NULL,
+    ...) {
   # Checking parameter types ####
   valid_classes <- c("character", "factor", "numeric", "logical", "integer")
   if (!(class(y) %in% valid_classes)) {
