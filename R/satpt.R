@@ -11,18 +11,19 @@
 #' is `NA` and `NaN`.
 #' @param alpha Significance level for Pearson's \eqn{\chi^2} test for
 #' independence. Default is `0.05`.
-#' @param correct Logical indicating whether to apply continuity correction
-#' when computing the test statistic for 2 by 2 tables: one half is subtracted
-#' from all ∣O−E∣ differences; however, the correction will not be bigger than
-#' the differences themselves.
 #' @param threshold Saturation threshold applied to the standard errors of the
-#' sample proportions. Default is \code{0.05}.
+#' sample proportions. Default is `0.025`.
 #' @param dimnames Character vector of names for `y` and `by` when
 #' displaying the contingency table, sample proportions, and standard error
 #' matrices. When `dimnames` is an unnamed vector the first entry should be name
 #' of `y` variable and the second entry should be name of `by` variable. If
 #' `dimnames` is a named vector, then order of the values do NOT matter, as long
 #' the elements are named with `"y"` and `"by"`. Default is `NULL`.
+#' @param ... Additional arguments passed to [stats::chisq.test()] for more
+#' control over the \eqn{\chi^2} test for independence. `x` and `y` arguments
+#' from [stats::chisq.test()] should **not** be spectified because the
+#' `by` and `y` from arguments above will create a contingency matrix to
+#' perform the test of independence on.
 #'
 #' @details The `by` argument should be specified when the responses collected
 #' in `y` are a by-product of the data collection mechanism defined by the `by`
@@ -121,7 +122,7 @@
 #' catg <- LETTERS[1:3]
 #' set.seed(123)
 #' dat <- satpt::simulate(
-#'   n = 1, size = c(200, 100), prob = prob, categories = catg
+#'   n = 1, size = c(250, 100), prob = prob, categories = catg
 #' )
 #'
 #' ## Determining saturation with response bias
@@ -131,8 +132,14 @@
 #' @rdname satpt
 #' @export
 satpt <- function(
-    y, by = NULL, exclude = c(NA, NaN), alpha = 0.05, correct = FALSE,
-    threshold = 0.05, dimnames = NULL) {
+  y,
+  by = NULL,
+  exclude = c(NA, NaN),
+  alpha = 0.05,
+  threshold = 0.025,
+  dimnames = NULL,
+  ...
+) {
   # Checking parameter types ####
   valid_classes <- c("character", "factor", "numeric", "logical", "integer")
   if (!(class(y) %in% valid_classes)) {
@@ -149,16 +156,16 @@ satpt <- function(
     stop("y and by must be of the same length.")
   }
 
-  if (!is.numeric(alpha)) {
-    stop("alpha must be numeric.")
+  if (!methods::is(object = alpha, class2 = "numeric") || alpha >= 1) {
+    stop("alpha must be numeric less than 1.")
   }
 
-  if (!is.numeric(threshold)) {
-    stop("threshold must be numeric.")
+  if (!methods::is(object = threshold, class2 = "numeric") || threshold >= 1) {
+    stop("threshold must be numeric less than 1.")
   }
 
   if (!is.null(dimnames)) {
-    if (!is.character(dimnames)) {
+    if (!methods::is(object = dimnames, class2 = "character")) {
       stop("dimnames must be a character vector.")
     }
     if (length(dimnames) == 1 && !is.null(by)) {
@@ -211,7 +218,30 @@ satpt <- function(
 
   # Conducting test of independence ####
   if (all(dim(counts) >= 2)) {
-    test <- stats::chisq.test(x = counts, correct = correct)
+    # Specifying default testing paremters ####
+
+    ## Specifying testing parameters ####
+    test_args <- list(
+      x = counts
+    )
+
+    ## Pulling additional testing parameters from user ####
+    new_test_args <- list(...)
+
+    ### Removing x or y from new parameters ####
+    w_args <- which(names(new_test_args) %in% c("x", "y"))
+
+    if (length(w_args) > 0) {
+      new_test_args <- new_test_args[[-w_args]]
+    }
+
+    ## Updating default testing parameters ####
+    if (length(new_test_args)) {
+      test_args[names(new_test_args)] <- new_test_args
+    }
+
+    # Running test for independence ####
+    test <- do.call(what = "chisq.test", args = test_args)
 
     ## Assigning data.name to be based on y and by parameters ####
     test$data.name <- paste0(
@@ -282,8 +312,17 @@ satpt <- function(
   # Output ####
   out <- vector(mode = "list", length = 11)
   names(out) <- c(
-    "threshold", "saturation", "counts", "phat", "se", "pooled_se", "alpha",
-    "test", "N", "total", "hindex"
+    "threshold",
+    "saturation",
+    "counts",
+    "phat",
+    "se",
+    "pooled_se",
+    "alpha",
+    "test",
+    "N",
+    "total",
+    "hindex"
   )
   out$threshold <- threshold
   out$saturation <- saturation

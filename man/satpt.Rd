@@ -9,9 +9,9 @@ satpt(
   by = NULL,
   exclude = c(NA, NaN),
   alpha = 0.05,
-  correct = FALSE,
-  threshold = 0.05,
-  dimnames = NULL
+  threshold = 0.025,
+  dimnames = NULL,
+  ...
 )
 }
 \arguments{
@@ -27,13 +27,8 @@ is \code{NA} and \code{NaN}.}
 \item{alpha}{Significance level for Pearson's \eqn{\chi^2} test for
 independence. Default is \code{0.05}.}
 
-\item{correct}{Logical indicating whether to apply continuity correction
-when computing the test statistic for 2 by 2 tables: one half is subtracted
-from all ∣O−E∣ differences; however, the correction will not be bigger than
-the differences themselves.}
-
 \item{threshold}{Saturation threshold applied to the standard errors of the
-sample proportions. Default is \code{0.05}.}
+sample proportions. Default is \code{0.025}.}
 
 \item{dimnames}{Character vector of names for \code{y} and \code{by} when
 displaying the contingency table, sample proportions, and standard error
@@ -41,6 +36,12 @@ matrices. When \code{dimnames} is an unnamed vector the first entry should be na
 of \code{y} variable and the second entry should be name of \code{by} variable. If
 \code{dimnames} is a named vector, then order of the values do NOT matter, as long
 the elements are named with \code{"y"} and \code{"by"}. Default is \code{NULL}.}
+
+\item{...}{Additional arguments passed to \code{\link[stats:chisq.test]{stats::chisq.test()}} for more
+control over the \eqn{\chi^2} test for independence. \code{x} and \code{y} arguments
+from \code{\link[stats:chisq.test]{stats::chisq.test()}} should \strong{not} be spectified because the
+\code{by} and \code{y} from arguments above will create a contingency matrix to
+perform the test of independence on.}
 }
 \value{
 An object with \code{S3} class \code{"satpt"} containing 11 elements.
@@ -144,7 +145,7 @@ prob <- matrix(
 catg <- LETTERS[1:3]
 set.seed(123)
 dat <- satpt::simulate(
-  n = 1, size = c(200, 100), prob = prob, categories = catg
+  n = 1, size = c(250, 100), prob = prob, categories = catg
 )
 
 ## Determining saturation with response bias
