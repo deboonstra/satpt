@@ -272,8 +272,8 @@ satpt <- function(
         out <- stats::ftable(out ~ by_sort, exclude = exclude)
 
         # Providing dimension names when provided ####
+        tmp <- attributes(out)
         if (!is.null(dimnames)) {
-          tmp <- attributes(out)
           if (is.null(ndimns)) {
             names(tmp$col.vars) <- paste0("y: ", dimnames[1])
             names(tmp$row.vars) <- paste0("by: ", dimnames[2])
