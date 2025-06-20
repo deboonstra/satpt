@@ -23,22 +23,19 @@
 #'  of `"Yes"` indicates that saturation has been achieved while a value of
 #'  `"No"` indicates that saturation was not achieved and more data is needed
 #'  to achieve saturation.}
-#'  \item{`saturation_catg`}{A `data.frame` of character values indicating
-#'  whether saturation has been achieved for each of response categories given
-#'  the defined `threshold`. The value of `"Yes"` indicates that saturation has
-#'  been achieved while a value of `"No"` indicates that saturation was not
-#'  achieved and more data is needed to achieve saturation.}
-#'  \item{`N`}{Total number of observations with a response provided.}
+#'  \item{`which_saturation`}{A character value indicating which collection of
+#'  responses within `y` determined saturation achievement. Generally, this is
+#'  only of importance when examining select all apply questions.}
+#'  \item{`n`}{Total number of observations with a response provided.}
 #'  \item{`phat`}{A `matrix` containing the row-wise sample proportions for the
 #'  observed contigency table. The values are formatted by `digits`.}
 #'  \item{`se`}{A `matrix` containing the standard errors for the calculated
 #'  sample proportions (`phat`). The values are formatted by `digits`.}
 #'  \item{`pooled_se`}{A logical value indicating whether pooled standard errors
 #'  were calculated due to the presence of response bias.}
-#'  \item{`alpha`}{Significance level for Pearson's \eqn{\chi^2} test for
-#'  independence.}
+#'  \item{`alpha`}{Significance level for test forindependence.}
 #'  \item{`test`}{A `htest` object produced by [stats::chisq.test()] containing
-#'  the results from the \eqn{\chi^2} test for independence.}
+#'  the results from the test for independence.}
 #'  \item{`hindex`}{Heterogeneity index for the sample proportions calculated by
 #'  mean absolute deviation. The values are formatted by `digits` if `hindex`
 #'  is not `NULL` in `object`.}
@@ -67,20 +64,23 @@
 #' @rdname summary.satpt
 #' @export
 summary.satpt <- function(
-    object, digits = max(3, getOption("digits") - 3), ...) {
+  object,
+  digits = max(3, getOption("digits") - 3),
+  ...
+) {
   # Check object type ####
   if (!methods::is(object, "satpt")) {
     stop("object must be of satpt type.")
   }
 
   # Sample proportions ####
-  if (nrow(object$phat) != 1) {
-    phat <- object$phat
+  if (nrow(object$phat[[object$which_saturation]]) != 1) {
+    phat <- object$phat[[object$which_saturation]]
 
     ## Combining overall sample proportion with interval sample proportions ####
-    phat <- rbind(phat, object$total[, 3])
+    phat <- rbind(phat, object$total[[object$which_saturation]][, 3])
 
-    ## Rounding
+    ## Rounding ####
     phat <- apply(
       X = phat,
       MARGIN = 2,
@@ -90,11 +90,16 @@ summary.satpt <- function(
     )
 
     ### Adjusting dimension names ####
-    row.names(phat) <- c(row.names(object$phat), "Overall")
-    colnames(phat) <- colnames(object$phat)
-    names(dimnames(phat)) <- names(dimnames(object$phat))
+    row.names(phat) <- c(
+      row.names(object$phat[[object$which_saturation]]),
+      "Overall"
+    )
+    colnames(phat) <- colnames(object$phat[[object$which_saturation]])
+    names(dimnames(phat)) <- names(
+      x = dimnames(object$phat[[object$which_saturation]])
+    )
   } else {
-    phat <- object$phat
+    phat <- object$phat[[object$which_saturation]]
 
     ## Rounding
     phat <- apply(
@@ -110,16 +115,19 @@ summary.satpt <- function(
 
     ### Adjusting dimension names ####
     row.names(phat) <- "Overall"
-    colnames(phat) <- colnames(object$phat)
-    names(dimnames(phat)) <- c("", names(dimnames(object$phat))[2])
+    colnames(phat) <- colnames(object$phat[[object$which_saturation]])
+    names(dimnames(phat)) <- c(
+      "",
+      names(dimnames(object$phat[[object$which_saturation]]))[2]
+    )
   }
 
-  if (nrow(object$se) != 1) {
+  if (nrow(object$se[[object$which_saturation]]) != 1) {
     # Sample standard errors ####
-    se <- object$se
+    se <- object$se[[object$which_saturation]]
 
     ## Combining overall standard errors with interval standard errors ####
-    se <- rbind(se, object$total[, 4])
+    se <- rbind(se, object$total[[object$which_saturation]][, 4])
 
     ## Rounding
     se <- apply(
@@ -131,11 +139,14 @@ summary.satpt <- function(
     )
 
     ### Adjusting dimension names ####
-    row.names(se) <- c(row.names(object$se), "Overall")
-    colnames(se) <- colnames(object$se)
-    names(dimnames(se)) <- names(dimnames(object$se))
+    row.names(se) <- c(
+      row.names(object$se[[object$which_saturation]]),
+      "Overall"
+    )
+    colnames(se) <- colnames(object$se[[object$which_saturation]])
+    names(dimnames(se)) <- names(dimnames(object$se[[object$which_saturation]]))
   } else {
-    se <- object$se
+    se <- object$se[[object$which_saturation]]
 
     ## Rounding
     se <- apply(
@@ -151,25 +162,22 @@ summary.satpt <- function(
 
     ### Adjusting dimension names ####
     row.names(se) <- "Overall"
-    colnames(se) <- colnames(object$se)
-    names(dimnames(se)) <- c("", names(dimnames(object$se))[2])
+    colnames(se) <- colnames(object$se[[object$which_saturation]])
+    names(dimnames(se)) <- c(
+      "",
+      names(dimnames(object$se[[object$which_saturation]]))[2]
+    )
   }
-
-  # Saturation by category ####
-  saturation_catg <- object$total[, c(1, 5)]
-  saturation_catg$saturation <- ifelse(
-    test = saturation_catg$saturation,
-    yes = "Yes",
-    no = "No"
-  )
-  colnames(saturation_catg) <- c("Categories", "Saturation")
 
   # Heterogeneity index ####
   if (!is.null(object$hindex)) {
     hindex <- data.frame(
-      categories = names(object$hindex),
+      categories = names(object$hindex[[object$which_saturation]]),
       index = as.numeric(
-        format(round(x = object$hindex, digits = digits), nsmall = digits)
+        format(
+          round(x = object$hindex[[object$which_saturation]], digits = digits),
+          nsmall = digits
+        )
       )
     )
   } else {
@@ -180,13 +188,17 @@ summary.satpt <- function(
   out <- list()
   out$threshold <- object$threshold
   out$saturation <- ifelse(test = object$saturation, yes = "Yes", no = "No")
-  out$saturation_catg <- saturation_catg
-  out$N <- object$N
+  out$which_saturation <- object$which_saturation
+  out$n <- object$n[names(object$n) == object$which_saturation]
   out$phat <- phat
   out$se <- se
-  out$pooled_se <- object$pooled_se
+  out$pooled_se <- object$pooled_se[names(object$n) == object$which_saturation]
   out$alpha <- object$alpha
-  out$test <- object$test
+  if (!is.null(object$test)) {
+    out$test <- object$test[[object$which_saturation]]
+  } else {
+    out$test <- object$test
+  }
   out$hindex <- hindex
   return(structure(out, class = "summary.satpt"))
 }
@@ -195,20 +207,21 @@ summary.satpt <- function(
 #' @export
 print.summary.satpt <- function(x, ...) {
   # Check object type ####
-  if (!methods::is(x, "summary.satpt")) {
+  if (!methods::is(object = x, class2 = "summary.satpt")) {
     stop("x must be of summary.satpt type.")
   }
 
   # Printing saturation information ####
   cat("\nSaturation point analysis of sample proportions\n")
   cat("===============================================\n")
+  cat("\nAnalysis based on:", x$which_saturation, "\n")
   cat(
-    "\nSaturation achieved? ",
+    "Saturation achieved? ",
     x$saturation,
     "\nSaturation threshold of ",
     x$threshold,
     "\nResponses collected from a sample size of ",
-    paste0(x$N, "\n\n"),
+    paste0(x$n, "\n\n"),
     sep = ""
   )
 

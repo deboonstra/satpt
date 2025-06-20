@@ -28,27 +28,32 @@
 #' plot(fit2)
 #'
 #' @export
+#'
 plot.satpt <- function(x, threshold = TRUE, ...) {
   # Check object type ####
-  if (!methods::is(x, "satpt")) {
+  if (!methods::is(object = x, class2 = "satpt")) {
     stop("x must be of satpt type.")
   }
 
   # Specifying default plotting parameters ####
+  x$total[[x$which_saturation]]
 
   ## Determining limit of y-axis ####
   se_max <- signif(
-    abs(signif(max(x$total$se), digits = 1) - max(x$total$se)) +
-      signif(max(x$total$se), digits = 1),
+    abs(
+      signif(max(x$total[[x$which_saturation]]$se), digits = 1) -
+        max(x$total[[x$which_saturation]]$se)
+    ) +
+      signif(max(x$total[[x$which_saturation]]$se), digits = 1),
     digits = 1
   )
   ylim_max <- max(x$threshold, se_max)
 
   ## Sepcifying plotting parameter ####
   barplot_args <- list(
-    height = x$total$se,
-    names = x$total$categories,
-    xlab = names(dimnames(x$phat))[2],
+    height = x$total[[x$which_saturation]]$se,
+    names = x$total[[x$which_saturation]]$categories,
+    xlab = names(dimnames(x$phat[[x$which_saturation]]))[2],
     ylab = "Standard errors",
     ylim = c(0, ylim_max),
     main = "Standard errors of overall sample proportions",

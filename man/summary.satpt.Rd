@@ -30,22 +30,19 @@ categories have achieved saturation given the defined \code{threshold}. The valu
 of \code{"Yes"} indicates that saturation has been achieved while a value of
 \code{"No"} indicates that saturation was not achieved and more data is needed
 to achieve saturation.}
-\item{\code{saturation_catg}}{A \code{data.frame} of character values indicating
-whether saturation has been achieved for each of response categories given
-the defined \code{threshold}. The value of \code{"Yes"} indicates that saturation has
-been achieved while a value of \code{"No"} indicates that saturation was not
-achieved and more data is needed to achieve saturation.}
-\item{\code{N}}{Total number of observations with a response provided.}
+\item{\code{which_saturation}}{A character value indicating which collection of
+responses within \code{y} determined saturation achievement. Generally, this is
+only of importance when examining select all apply questions.}
+\item{\code{n}}{Total number of observations with a response provided.}
 \item{\code{phat}}{A \code{matrix} containing the row-wise sample proportions for the
 observed contigency table. The values are formatted by \code{digits}.}
 \item{\code{se}}{A \code{matrix} containing the standard errors for the calculated
 sample proportions (\code{phat}). The values are formatted by \code{digits}.}
 \item{\code{pooled_se}}{A logical value indicating whether pooled standard errors
 were calculated due to the presence of response bias.}
-\item{\code{alpha}}{Significance level for Pearson's \eqn{\chi^2} test for
-independence.}
+\item{\code{alpha}}{Significance level for test forindependence.}
 \item{\code{test}}{A \code{htest} object produced by \code{\link[stats:chisq.test]{stats::chisq.test()}} containing
-the results from the \eqn{\chi^2} test for independence.}
+the results from the test for independence.}
 \item{\code{hindex}}{Heterogeneity index for the sample proportions calculated by
 mean absolute deviation. The values are formatted by \code{digits} if \code{hindex}
 is not \code{NULL} in \code{object}.}

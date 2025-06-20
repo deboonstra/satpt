@@ -21,27 +21,32 @@
 #' @export
 print.satpt <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   # Check object type ####
-  if (!methods::is(x, "satpt")) {
+  if (!methods::is(object = x, class2 = "satpt")) {
     stop("x must be of satpt type.")
   }
 
   # Creating printing object ####
-  phat <- x$total$phat
+  phat <- x$total[[x$which_saturation]]$phat
   phat <- format(round(x = phat, digits = digits), nsmall = digits)
-  se <- x$total$se
+  se <- x$total[[x$which_saturation]]$se
   se <- format(round(x = se, digits = digits), nsmall = digits)
   print_table <- matrix(
     data = as.numeric(c(phat, se)),
-    nrow = 2, ncol = length(phat),
+    nrow = 2,
+    ncol = length(phat),
     byrow = TRUE,
     dimnames = list(
       c("Proportion", "SE"),
-      x$total$categories
+      x$total[[x$which_saturation]]$categories
     )
   )
-  names(dimnames(print_table)) <- c("Statistics", names(dimnames(x$phat))[2])
+  names(dimnames(print_table)) <- c(
+    "Statistics",
+    names(dimnames(x$phat[[x$which_saturation]]))[2]
+  )
 
   # Printing results ####
+  cat("Analysis based on:", x$which_saturation, "\n")
   cat(
     "Saturation achieved? ",
     ifelse(
@@ -49,7 +54,7 @@ print.satpt <- function(x, digits = max(3, getOption("digits") - 3), ...) {
       yes = "Yes",
       no = "No"
     ),
-    "\n"
+    "\n\n"
   )
   cat("Overall Sample Proportions and Standard Errors\n")
   cat("==============================================\n")
