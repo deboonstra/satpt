@@ -6,7 +6,7 @@
 \usage{
 satpt(
   y,
-  by = NULL,
+  by,
   exclude = c(NA, NaN),
   alpha = 0.05,
   threshold = 0.025,
@@ -15,68 +15,74 @@ satpt(
 )
 }
 \arguments{
-\item{y}{Vector of values to which determine if saturation has been achieved.}
+\item{y}{Multinomial responses collected and being examined for saturation.
+See the \emph{Details} section for valid \emph{R} data objects and how
+they are handled.}
 
-\item{by}{Vector of values which indicate when \code{y} was collected.
-Default is \code{NULL}.}
+\item{by}{Values indicating when the multinomial responses (\code{y}) were
+collected. See the \emph{Details} section for when to specify this argument.}
 
 \item{exclude}{Vector of values that should be excluded in \code{y} and
 \code{by}. Generally, this should be used to denote missing values. Default
 is \code{NA} and \code{NaN}.}
 
-\item{alpha}{Significance level for Pearson's \eqn{\chi^2} test for
-independence. Default is \code{0.05}.}
+\item{alpha}{Significance level for test for independence by \code{y} and \code{by}.
+Default is \code{0.05}.}
 
-\item{threshold}{Saturation threshold applied to the standard errors of the
-sample proportions. Default is \code{0.025}.}
+\item{threshold}{Saturation threshold applied to the maximum standard error
+of the sample proportions. Default is \code{0.025}.}
 
 \item{dimnames}{Character vector of names for \code{y} and \code{by} when
 displaying the contingency table, sample proportions, and standard error
 matrices. When \code{dimnames} is an unnamed vector the first entry should be name
 of \code{y} variable and the second entry should be name of \code{by} variable. If
-\code{dimnames} is a named vector, then order of the values do NOT matter, as long
-the elements are named with \code{"y"} and \code{"by"}. Default is \code{NULL}.}
+\code{dimnames} is a named vector, then order of the values does NOT matter, as
+long the elements are named with \code{"y"} and \code{"by"}. Default is \code{NULL}.}
 
-\item{...}{Additional arguments passed to \code{\link[stats:chisq.test]{stats::chisq.test()}} for more
-control over the \eqn{\chi^2} test for independence. \code{x} and \code{y} arguments
-from \code{\link[stats:chisq.test]{stats::chisq.test()}} should \strong{not} be spectified because the
-\code{by} and \code{y} from arguments above will create a contingency matrix to
-perform the test of independence on.}
+\item{...}{Additional arguments passed to \code{\link[stats:chisq.test]{stats::chisq.test()}} or
+\code{\link[stats:fisher.test]{stats::fisher.test()}} for more control over the test for independence.
+\code{x} and \code{y} arguments from \code{\link[stats:chisq.test]{stats::chisq.test()}} or \code{\link[stats:fisher.test]{stats::fisher.test()}}
+should \strong{not} be spectified because the \code{by} and \code{y} from arguments above
+will create a contingency matrix to perform the test of independence on.}
 }
 \value{
-An object with \code{S3} class \code{"satpt"} containing 11 elements.
+An object with \code{S3} class \code{"satpt"} containing 12 elements. Multiple
+elemnts in \code{satpt} are \code{list} objects that are named after the elements in
+\code{y}. These named \code{list} objects are of most importance when examining select
+all apply questions.
 \describe{
 \item{\code{threshold}}{Saturation threshold applied to the standard errors of
 thesample proportions.}
-\item{\code{saturation}}{A logical value indicating whether all response
-categories have achieved saturation given the defined \code{threshold}. The value
-of \code{TRUE} indicates that saturation has been achieved while a value of
-\code{FALSE} indicates that saturation was not achieved and more data is needed
-to achieve saturation.}
-\item{\code{counts}}{A \code{matrix} containing the observed cell counts of the
-contigency table created by \code{y} and \code{by} if provided.}
-\item{\code{phat}}{A \code{matrix} containing the row-wise sample proportions for the
-observed contigency table (\code{counts}).}
-\item{\code{se}}{A \code{matrix} containing the standard errors for the calculated
-sample proportions (\code{phat}).}
+\item{\code{saturation}}{A logical value indicating whether response category
+with the largest standard error has achieved saturation given the defined
+\code{threshold}. The value of \code{TRUE} indicates that saturation has been achieved
+while a value of \code{FALSE} indicates that saturation was not achieved and more
+data is needed to achieve saturation.}
+\item{\code{which_saturation}}{A character value indicating which collection of
+responses within \code{y} determined saturation achievement. Generally, this is
+only of importance when examining select all apply questions.}
+\item{\code{counts}}{A \code{list} of \code{matrix} objects containing the observed cell
+counts of the contigency table created by \code{y} and \code{by} if provided.}
+\item{\code{phat}}{A \code{list} of \code{matrix} objects containing the row-wise sample
+proportions for the observed contigency table (\code{counts}).}
+\item{\code{se}}{A \code{list} of \code{matrix} objects containing the standard errors for
+the calculated sample proportions (\code{phat}).}
 \item{\code{pooled_se}}{A logical value indicating whether pooled standard errors
 were calculated due to the presence of response bias.}
-\item{\code{alpha}}{Significance level for Pearson's \eqn{\chi^2} test for
+\item{\code{alpha}}{Significance level for the test for independence.}
+\item{\code{test}}{A \code{list} of \code{htest} objects produced by \code{\link[stats:chisq.test]{stats::chisq.test()}}
+or \code{\link[stats:fisher.test]{stats::fisher.test()}} containing the results from the test for
 independence.}
-\item{\code{test}}{A \code{htest} object produced by \code{\link[stats:chisq.test]{stats::chisq.test()}} containing
-the results from the \eqn{\chi^2} test for independence.}
-\item{\code{N}}{Total number of observations with a response provided.}
-\item{\code{total}}{A \code{data.frame} with 5 variables describing the overall
-collected sample. The \code{categories} variable provides the unique
+\item{\code{n}}{Total number of observations with a response provided.}
+\item{\code{total}}{A \code{list} of \code{data.frame} objects with 4 variables describing
+the overall collected sample. The \code{categories} variable provides the unique
 categories listed in \code{y}. While \code{counts}, \code{phat}, and \code{se} provide the
 overall cell counts, sample proportions, and standard errors for the
 categories, respectively. The standard errors reported for the overall
 sample proportions are calculated based on the presence of response bias,
-which is detailed above. Finally, the \code{saturation} variable is a logical
-variable denoting whether saturation was achieved for each individual
-category given the saturation \code{threshold} defined.}
-\item{\code{hindex}}{Heterogeneity index for the sample proportions calculated by
-mean absolute deviation.}
+which is detailed above.}
+\item{\code{hindex}}{A \code{list} of heterogeneity index values for the sample
+proportions calculated by mean absolute deviation.}
 }
 }
 \description{
@@ -91,6 +97,20 @@ variable. When there is no a priori data collection mechanism defined, the
 randomly or collected during the first data collection period, there is "no
 a priori data collection mechanism."
 
+The parameters \code{y} and \code{by} maybe a \code{vector}, \code{factor}, \code{matrix},
+\code{data.frame}, \code{data.table}, \code{tibble}, or \code{list}. When the parameters are a
+\code{list} object, each element of the object should be of equal length.
+Otherwise missing values will be appended to the end of each element based on
+the element that has the longest length. If \code{y} or \code{by} are \code{factor}s the
+underlying order of the factor will be ignored when the contingency table is
+created. The \code{\link[=char_matrix]{char_matrix()}} function is used within \code{satpt()} to
+coerce the values of \code{y} and \code{by} to be character values to have consistency
+of value types.
+
+Generally, \code{y} should only have more than 1 column when select all apply
+questions are being examined. See the \code{select-all-apply} vignette for more
+information.
+
 Functionality of \code{satpt()} depends on the limited use of \code{\link[stats:ftable]{stats::ftable()}}.
 More specifically, \code{y}, \code{by}, and \code{exclude} are directly used with
 \code{\link[stats:ftable]{stats::ftable()}} to create the contingency table of the collected data. The
@@ -99,25 +119,35 @@ easier use with other functions. When the \code{dimnames} argument is used, it
 manipulates the attributes of the created \code{ftable}, which impacts the
 dimension names of the resulting \code{matrix}.
 
-Specification of the \code{by} argument automatically calls for a Pearson's
-\eqn{\chi^2} test for independence and the heterogeneity index of the sample
-proportions to be calculated. The \eqn{\chi^2} test for independence is
-conducted to determine if response bias is present within the responses in
-\code{y} are due to the data collection periods (\code{by}). When response bias is
-present the pooled standard errors of the overall sample proportions for each
-response category is reported, the pooled standard errors account for the
-response bias. The heterogeneity index is defined as the mean
-absoluted difference of the sample proportions for each response category
-within each data collection period (\code{by}) relative to the overall sample
-proportions for each response category. This index reflects the average
-deviation of the data collection period proportions from the overall sample
-proportions. Smaller values indicate the sample proportions of the data
-collection periods are less dissimilar. This measure is of importance when
-response bias is present. When \code{by} is not specified the test for
-independence will not be conducted and the heterogeneity index will not be
-calculated. \code{satpt} assumes response bias is only possible when \code{by} is
+Specification of the \code{by} argument automatically calls for a test for
+independence and the heterogeneity index of the sample proportions to be
+calculated. The test for independence is conducted to determine if response
+bias is present within the responses in \code{y} are due to the data collection
+periods (\code{by}). Fisher's Exact Test or the \eqn{I \times J} variant is
+implemented when the more than 20\% of the expected cell counts are less than
+5. Otherwise Pearsons' \eqn{\chi^2} Test for Independence is implemented.
+
+When response bias is present the pooled standard errors of the overall
+sample proportions for each response category is reported, the pooled
+standard errors account for the response bias. The heterogeneity index is
+defined as the mean absoluted difference of the sample proportions for each
+response category within each data collection period (\code{by}) relative to the
+overall sample proportions for each response category. This index reflects
+the average deviation of the data collection period proportions from the
+overall sample proportions. Smaller values indicate the sample proportions of
+the data collection periods are less dissimilar. This measure is of
+importance when response bias is present. When \code{by} is not specified the test
+for independence will not be conducted and the heterogeneity index will not
+be calculated. \code{satpt} assumes response bias is only possible when \code{by} is
 specified. Thus, there is no need to check for response bias when \code{by} is
 not specified.
+
+Determination of saturation is based on the the response category and/or
+collection of responses that has the largest standard error. If this largest
+standard error achieves saturation then all other categories or responses
+will achieve saturation. For select all apply questions, the collection of
+responses that have the largest standard error (i.e., a sample proportion
+closest to 0.5) will be used to determine saturation of all responses.
 }
 \note{
 The returned \code{satpt} object will contain \code{NULL} values for \code{test} and
