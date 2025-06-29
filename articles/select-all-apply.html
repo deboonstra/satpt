@@ -171,59 +171,86 @@ response fields.</p>
 <span><span class="co"># Turning indicator functions in factor</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">q1</span><span class="op">[</span>, <span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">q1</span><span class="op">[</span>, <span class="va">j</span><span class="op">]</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"No"</span>, <span class="st">"Yes"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="co"># Add data collection period variable to data</span></span>
-<span><span class="va">q1</span><span class="op">$</span><span class="va">wave</span> <span class="op">&lt;-</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span></span></code></pre></div>
+<span><span class="op">}</span></span></code></pre></div>
 <p>The “select all that apply” response are now transformed into a
 collection of indicator functions, where the value <code>"Yes"</code>
 denotes that response field was selected and <code>"No"</code> denotes
 the response field was <strong>not</strong> selected. These responses
 were collected in different data collection periods due to non-response
-of previous collection periods. The <code>"wave"</code> variable was
-added to the data, so we may conduct saturation point analysis on each
-of the response fields while controlling for potiental response
-bias.</p>
+of previous collection periods. Thus, we must use the <code>wave</code>
+variable in the <code>ein</code> data, so we may conduct saturation
+point analysis on each of the response fields while controlling for
+potiental response bias.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    643 obs. of  6 variables:</span></span>
+<span><span class="co">#&gt; 'data.frame':    643 obs. of  5 variables:</span></span>
 <span><span class="co">#&gt;  $ broadrange : Factor w/ 2 levels "No","Yes": 2 2 2 2 1 2 2 2 2 2 ...</span></span>
 <span><span class="co">#&gt;  $ wholegenome: Factor w/ 2 levels "No","Yes": 2 2 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">#&gt;  $ mngs       : Factor w/ 2 levels "No","Yes": 2 2 2 1 2 1 1 1 2 2 ...</span></span>
 <span><span class="co">#&gt;  $ none       : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">#&gt;  $ other      : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 2 1 1 1 1 ...</span></span>
-<span><span class="co">#&gt;  $ wave       : num  2 3 3 2 2 3 3 3 2 3 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  $ other      : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 2 1 1 1 1 ...</span></span></code></pre></div>
 <p>Using the <a href="https://deboonstra.github.io/satpt/reference/satpt.html"><code>satpt::satpt()</code></a>
 function on each of the indicator functions of the responses field, we
 will perform the saturation point analysis.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">res</span><span class="op">[[</span><span class="va">j</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span></span>
-<span>    y <span class="op">=</span> <span class="va">q1</span><span class="op">[</span>, <span class="va">j</span><span class="op">]</span>,</span>
-<span>    by <span class="op">=</span> <span class="va">q1</span><span class="op">$</span><span class="va">wave</span>,</span>
-<span>    dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>      <span class="st">"by"</span> <span class="op">=</span> <span class="st">"Data collection period"</span>,</span>
-<span>      <span class="st">"y"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Responses to survey: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span></span>
+<span>  y <span class="op">=</span> <span class="va">q1</span>,</span>
+<span>  by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span>,</span>
+<span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"by"</span> <span class="op">=</span> <span class="st">"Data collection period"</span>,</span>
+<span>    <span class="st">"y"</span> <span class="op">=</span> <span class="st">"Responses to survey"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Finally, in the results below, we see that each response field from
 the “select all that apply” question achieved saturation with a
-saturation threshold of 0.05. Thus, this question has achieved
+saturation threshold of 0.025. Thus, this question has achieved
 saturation.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">saturation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span></span>
-<span>  X <span class="op">=</span> <span class="va">res</span>,</span>
-<span>  FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">saturation</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">saturation</span></span>
-<span><span class="co">#&gt;  broadrange wholegenome        mngs        none       other </span></span>
-<span><span class="co">#&gt;        TRUE        TRUE        TRUE        TRUE        TRUE</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Saturation point analysis of sample proportions</span></span>
+<span><span class="co">#&gt; ===============================================</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Analysis based on: mngs </span></span>
+<span><span class="co">#&gt; Saturation achieved? Yes</span></span>
+<span><span class="co">#&gt; Saturation threshold of 0.025</span></span>
+<span><span class="co">#&gt; Responses collected from a sample size of 640</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Data interval and overall sample proportions</span></span>
+<span><span class="co">#&gt; ============================================</span></span>
+<span><span class="co">#&gt;                           y: Responses to survey</span></span>
+<span><span class="co">#&gt; by: Data collection period     No    Yes</span></span>
+<span><span class="co">#&gt;                    1       0.5586 0.4414</span></span>
+<span><span class="co">#&gt;                    2       0.5890 0.4110</span></span>
+<span><span class="co">#&gt;                    3       0.6000 0.4000</span></span>
+<span><span class="co">#&gt;                    Overall 0.5766 0.4234</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Data interval and overall standard errors</span></span>
+<span><span class="co">#&gt; =========================================</span></span>
+<span><span class="co">#&gt;                           y: Responses to survey</span></span>
+<span><span class="co">#&gt; by: Data collection period     No    Yes</span></span>
+<span><span class="co">#&gt;                    1       0.0276 0.0276</span></span>
+<span><span class="co">#&gt;                    2       0.0407 0.0407</span></span>
+<span><span class="co">#&gt;                    3       0.0376 0.0376</span></span>
+<span><span class="co">#&gt;                    Overall 0.0195 0.0195</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Pooled standard errors?  No </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Pearson's Chi-squared test</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  y: Responses to survey given by: Data collection period</span></span>
+<span><span class="co">#&gt; X-squared = 0.90182, df = 2, p-value = 0.637</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response bias present? No</span></span>
+<span><span class="co">#&gt; Significance level: 0.05</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Heterogeneity index</span></span>
+<span><span class="co">#&gt; ====================</span></span>
+<span><span class="co">#&gt;  Categories  Index</span></span>
+<span><span class="co">#&gt;          No 0.0179</span></span>
+<span><span class="co">#&gt;         Yes 0.0179</span></span></code></pre></div>
   </main>
 </div>
 
@@ -234,7 +261,7 @@ saturation.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

@@ -125,24 +125,26 @@ function <code><a href="../reference/satpt.html">satpt::satpt()</a></code>. You 
 of <code>satpt::satpt()</code></a> for a detailed description of all the
 elements of a <code>satpt</code> object.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, threshold <span class="op">=</span> <span class="fl">0.02</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, threshold <span class="op">=</span> <span class="fl">0.025</span><span class="op">)</span></span></code></pre></div>
 <p>For a basic examination of the saturation point analysis, you may
 simply print the results object. This will provide information of
 whether all the standard errors of the response categories are less than
 or equal to the saturation threshold along with sample proportions and
 standard errors of the response categories. In this example, the
-saturation threshold was 0.02, the default value used in <a href="https://deboonstra.github.io/satpt/reference/satpt.html"><code>satpt::satpt()</code></a>
-is 0.05, and all the standard errors are less than 0.02. Thus,
+saturation threshold was 0.025, the default value used in <a href="https://deboonstra.github.io/satpt/reference/satpt.html"><code>satpt::satpt()</code></a>
+is 0.05, and all the standard errors are less than 0.025. Thus,
 saturation of the response categories is achieved.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis based on: y </span></span>
 <span><span class="co">#&gt; Saturation achieved?  Yes </span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall Sample Proportions and Standard Errors</span></span>
 <span><span class="co">#&gt; ==============================================</span></span>
-<span><span class="co">#&gt;             y</span></span>
-<span><span class="co">#&gt; Statistics   Not at all   Once Rarely Sometimes  Often</span></span>
-<span><span class="co">#&gt;   Proportion     0.2531 0.0375 0.3688    0.2656 0.0750</span></span>
-<span><span class="co">#&gt;   SE             0.0172 0.0075 0.0191    0.0175 0.0104</span></span></code></pre></div>
+<span><span class="co">#&gt;             y: y</span></span>
+<span><span class="co">#&gt; Statistics   Not at all  Often   Once Rarely Sometimes</span></span>
+<span><span class="co">#&gt;   Proportion     0.2531 0.0750 0.0375 0.3688    0.2656</span></span>
+<span><span class="co">#&gt;   SE             0.0172 0.0104 0.0075 0.0191    0.0175</span></span></code></pre></div>
 <p>When a more detailed look at the analysis is warranted, simply call
 <a href="https://deboonstra.github.io/satpt/reference/satpt.html"><code>summary()</code></a>
 on the returned <code>satpt</code> object, as seen below.</p>
@@ -152,24 +154,25 @@ on the returned <code>satpt</code> object, as seen below.</p>
 <span><span class="co">#&gt; Saturation point analysis of sample proportions</span></span>
 <span><span class="co">#&gt; ===============================================</span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Analysis based on: y </span></span>
 <span><span class="co">#&gt; Saturation achieved? Yes</span></span>
-<span><span class="co">#&gt; Saturation threshold of 0.02</span></span>
+<span><span class="co">#&gt; Saturation threshold of 0.025</span></span>
 <span><span class="co">#&gt; Responses collected from a sample size of 640</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall sample proportions</span></span>
 <span><span class="co">#&gt; ============================================</span></span>
-<span><span class="co">#&gt;          y</span></span>
-<span><span class="co">#&gt;           Not at all   Once Rarely Sometimes Often</span></span>
-<span><span class="co">#&gt;   Overall     0.2531 0.0375 0.3688    0.2656 0.075</span></span>
+<span><span class="co">#&gt;          y: y</span></span>
+<span><span class="co">#&gt;           Not at all Often   Once Rarely Sometimes</span></span>
+<span><span class="co">#&gt;   Overall     0.2531 0.075 0.0375 0.3688    0.2656</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall standard errors</span></span>
 <span><span class="co">#&gt; =========================================</span></span>
-<span><span class="co">#&gt;          y</span></span>
-<span><span class="co">#&gt;           Not at all   Once Rarely Sometimes  Often</span></span>
-<span><span class="co">#&gt;   Overall     0.0172 0.0075 0.0191    0.0175 0.0104</span></span>
+<span><span class="co">#&gt;          y: y</span></span>
+<span><span class="co">#&gt;           Not at all  Often   Once Rarely Sometimes</span></span>
+<span><span class="co">#&gt;   Overall     0.0172 0.0104 0.0075 0.0191    0.0175</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Pooled standard errors?  No</span></span></code></pre></div>
+<span><span class="co">#&gt; Pooled standard errors?</span></span></code></pre></div>
 <p>The goal of <a href="https://deboonstra.github.io/satpt/reference/satpt.html"><code>summary()</code></a>
 is to provide a conditional comphrensive overview of the saturation
 point analysis similar in style to results produced by <em>SAS</em>
@@ -208,7 +211,7 @@ data collection <code>wave</code>.</p>
 <span><span class="co">#&gt;   324 147 172</span></span></code></pre></div>
 <p>So, we are going to examine the responses collected in each wave for
 saturation, where the previous wave of responses will be included in the
-current wave and the <em>saturation threshold is 0.02</em>.</p>
+current wave and the <em>saturation threshold is 0.025</em>.</p>
 <div class="section level4">
 <h4 id="first-data-collection-period">First data collection period<a class="anchor" aria-label="anchor" href="#first-data-collection-period"></a>
 </h4>
@@ -223,17 +226,19 @@ wave, as there was no “previous” data collected.</p>
 <span><span class="co"># Performing saturation point analysis</span></span>
 <span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span></span>
 <span>  y <span class="op">=</span> <span class="va">ein1</span><span class="op">$</span><span class="va">q2</span>,</span>
-<span>  threshold <span class="op">=</span> <span class="fl">0.02</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">0.025</span>,</span>
 <span>  dimnames <span class="op">=</span> <span class="st">"Responses to survey"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis based on: y </span></span>
 <span><span class="co">#&gt; Saturation achieved?  No </span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall Sample Proportions and Standard Errors</span></span>
 <span><span class="co">#&gt; ==============================================</span></span>
-<span><span class="co">#&gt;             Responses to survey</span></span>
-<span><span class="co">#&gt; Statistics   Not at all   Once Rarely Sometimes  Often</span></span>
-<span><span class="co">#&gt;   Proportion     0.2623 0.0463 0.3364    0.2716 0.0833</span></span>
-<span><span class="co">#&gt;   SE             0.0244 0.0117 0.0262    0.0247 0.0154</span></span></code></pre></div>
+<span><span class="co">#&gt;             y: Responses to survey</span></span>
+<span><span class="co">#&gt; Statistics   Not at all  Often   Once Rarely Sometimes</span></span>
+<span><span class="co">#&gt;   Proportion     0.2623 0.0833 0.0463 0.3364    0.2716</span></span>
+<span><span class="co">#&gt;   SE             0.0244 0.0154 0.0117 0.0262    0.0247</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="second-data-collection-period">Second data collection period<a class="anchor" aria-label="anchor" href="#second-data-collection-period"></a>
@@ -256,17 +261,19 @@ from <em>EIN</em> members who did not respond previously.</p>
 <span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span></span>
 <span>  y <span class="op">=</span> <span class="va">ein2</span><span class="op">$</span><span class="va">q2</span>,</span>
 <span>  by <span class="op">=</span> <span class="va">ein2</span><span class="op">$</span><span class="va">wave</span>,</span>
-<span>  threshold <span class="op">=</span> <span class="fl">0.02</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">0.025</span>,</span>
 <span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"by"</span> <span class="op">=</span> <span class="st">"Data collection period"</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="st">"Responses to survey"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Saturation achieved?  No </span></span>
+<span><span class="co">#&gt; Analysis based on: y </span></span>
+<span><span class="co">#&gt; Saturation achieved?  Yes </span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall Sample Proportions and Standard Errors</span></span>
 <span><span class="co">#&gt; ==============================================</span></span>
-<span><span class="co">#&gt;             Responses to survey</span></span>
-<span><span class="co">#&gt; Statistics   Not at all   Once Rarely Sometimes  Often</span></span>
-<span><span class="co">#&gt;   Proportion     0.2596 0.0426 0.3574    0.2596 0.0809</span></span>
-<span><span class="co">#&gt;   SE             0.0202 0.0093 0.0221    0.0202 0.0126</span></span></code></pre></div>
+<span><span class="co">#&gt;             y: Responses to survey</span></span>
+<span><span class="co">#&gt; Statistics   Not at all  Often   Once Rarely Sometimes</span></span>
+<span><span class="co">#&gt;   Proportion     0.2596 0.0809 0.0426 0.3574    0.2596</span></span>
+<span><span class="co">#&gt;   SE             0.0202 0.0126 0.0093 0.0221    0.0202</span></span></code></pre></div>
 <p>With the inclusion of the responses from the second data collection,
 saturation is almost achieved. However, more data is needed to achieve
 saturation. Before examining all the data for saturation, we will
@@ -275,15 +282,17 @@ the first and second data collection periods.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Chi-squared test for independence</span></span>
 <span><span class="va">res2</span><span class="op">$</span><span class="va">test</span></span>
+<span><span class="co">#&gt; $y</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Pearson's Chi-squared test</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; data:  Responses to survey given Data collection period</span></span>
+<span><span class="co">#&gt; data:  y: Responses to survey given by: Data collection period</span></span>
 <span><span class="co">#&gt; X-squared = 2.3255, df = 4, p-value = 0.6761</span></span>
 <span></span>
 <span><span class="co"># Was pooled standard errors calculated?</span></span>
 <span><span class="va">res2</span><span class="op">$</span><span class="va">pooled_se</span></span>
-<span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
+<span><span class="co">#&gt;     y </span></span>
+<span><span class="co">#&gt; FALSE</span></span></code></pre></div>
 <p>The above Pearson’s <span class="math inline">\(\chi^{2}\)</span>
 test for independence shows that responses bias was not present with a
 non-significant p-value. Thus, signifying the responses collected during
@@ -300,11 +309,11 @@ pooled.</p>
 <span></span>
 <span><span class="co"># Printing standard errors from summary of results</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sum_res2</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                       Responses to survey</span></span>
-<span><span class="co">#&gt; Data collection period Not at all   Once Rarely Sometimes  Often</span></span>
-<span><span class="co">#&gt;                1           0.0244 0.0117 0.0262    0.0247 0.0154</span></span>
-<span><span class="co">#&gt;                2           0.0360 0.0151 0.0406    0.0350 0.0218</span></span>
-<span><span class="co">#&gt;                Overall     0.0202 0.0093 0.0221    0.0202 0.0126</span></span></code></pre></div>
+<span><span class="co">#&gt;                           y: Responses to survey</span></span>
+<span><span class="co">#&gt; by: Data collection period Not at all  Often   Once Rarely Sometimes</span></span>
+<span><span class="co">#&gt;                    1           0.0244 0.0154 0.0117 0.0262    0.0247</span></span>
+<span><span class="co">#&gt;                    2           0.0360 0.0218 0.0151 0.0406    0.0350</span></span>
+<span><span class="co">#&gt;                    Overall     0.0202 0.0126 0.0093 0.0221    0.0202</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="all-data-collection-periods">All data collection periods<a class="anchor" aria-label="anchor" href="#all-data-collection-periods"></a>
@@ -319,7 +328,7 @@ responses.</p>
 <code class="sourceCode R"><span><span class="va">res3</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span></span>
 <span>  y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>,</span>
 <span>  by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span>,</span>
-<span>  threshold <span class="op">=</span> <span class="fl">0.02</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">0.025</span>,</span>
 <span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"by"</span> <span class="op">=</span> <span class="st">"Collection period"</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="st">"Responses to survey"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res3</span><span class="op">)</span></span>
@@ -327,34 +336,35 @@ responses.</p>
 <span><span class="co">#&gt; Saturation point analysis of sample proportions</span></span>
 <span><span class="co">#&gt; ===============================================</span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Analysis based on: y </span></span>
 <span><span class="co">#&gt; Saturation achieved? Yes</span></span>
-<span><span class="co">#&gt; Saturation threshold of 0.02</span></span>
+<span><span class="co">#&gt; Saturation threshold of 0.025</span></span>
 <span><span class="co">#&gt; Responses collected from a sample size of 640</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Data interval and overall sample proportions</span></span>
 <span><span class="co">#&gt; ============================================</span></span>
-<span><span class="co">#&gt;                  Responses to survey</span></span>
-<span><span class="co">#&gt; Collection period Not at all   Once Rarely Sometimes  Often</span></span>
-<span><span class="co">#&gt;           1           0.2623 0.0463 0.3364    0.2716 0.0833</span></span>
-<span><span class="co">#&gt;           2           0.2534 0.0342 0.4041    0.2329 0.0753</span></span>
-<span><span class="co">#&gt;           3           0.2353 0.0235 0.4000    0.2824 0.0588</span></span>
-<span><span class="co">#&gt;           Overall     0.2531 0.0375 0.3688    0.2656 0.0750</span></span>
+<span><span class="co">#&gt;                      y: Responses to survey</span></span>
+<span><span class="co">#&gt; by: Collection period Not at all  Often   Once Rarely Sometimes</span></span>
+<span><span class="co">#&gt;               1           0.2623 0.0833 0.0463 0.3364    0.2716</span></span>
+<span><span class="co">#&gt;               2           0.2534 0.0753 0.0342 0.4041    0.2329</span></span>
+<span><span class="co">#&gt;               3           0.2353 0.0588 0.0235 0.4000    0.2824</span></span>
+<span><span class="co">#&gt;               Overall     0.2531 0.0750 0.0375 0.3688    0.2656</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Data interval and overall standard errors</span></span>
 <span><span class="co">#&gt; =========================================</span></span>
-<span><span class="co">#&gt;                  Responses to survey</span></span>
-<span><span class="co">#&gt; Collection period Not at all   Once Rarely Sometimes  Often</span></span>
-<span><span class="co">#&gt;           1           0.0244 0.0117 0.0262    0.0247 0.0154</span></span>
-<span><span class="co">#&gt;           2           0.0360 0.0151 0.0406    0.0350 0.0218</span></span>
-<span><span class="co">#&gt;           3           0.0325 0.0116 0.0376    0.0345 0.0180</span></span>
-<span><span class="co">#&gt;           Overall     0.0172 0.0075 0.0191    0.0175 0.0104</span></span>
+<span><span class="co">#&gt;                      y: Responses to survey</span></span>
+<span><span class="co">#&gt; by: Collection period Not at all  Often   Once Rarely Sometimes</span></span>
+<span><span class="co">#&gt;               1           0.0244 0.0154 0.0117 0.0262    0.0247</span></span>
+<span><span class="co">#&gt;               2           0.0360 0.0218 0.0151 0.0406    0.0350</span></span>
+<span><span class="co">#&gt;               3           0.0325 0.0180 0.0116 0.0376    0.0345</span></span>
+<span><span class="co">#&gt;               Overall     0.0172 0.0104 0.0075 0.0191    0.0175</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Pooled standard errors?  No </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Pearson's Chi-squared test</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; data:  Responses to survey given Collection period</span></span>
+<span><span class="co">#&gt; data:  y: Responses to survey given by: Collection period</span></span>
 <span><span class="co">#&gt; X-squared = 5.4861, df = 8, p-value = 0.7046</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Response bias present? No</span></span>
@@ -365,10 +375,10 @@ responses.</p>
 <span><span class="co">#&gt; ====================</span></span>
 <span><span class="co">#&gt;  Categories  Index</span></span>
 <span><span class="co">#&gt;  Not at all 0.0091</span></span>
+<span><span class="co">#&gt;       Often 0.0083</span></span>
 <span><span class="co">#&gt;        Once 0.0087</span></span>
 <span><span class="co">#&gt;      Rarely 0.0330</span></span>
-<span><span class="co">#&gt;   Sometimes 0.0185</span></span>
-<span><span class="co">#&gt;       Often 0.0083</span></span></code></pre></div>
+<span><span class="co">#&gt;   Sometimes 0.0185</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -383,7 +393,7 @@ responses.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

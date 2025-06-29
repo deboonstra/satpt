@@ -54,7 +54,7 @@ survey using standard errors of the sample proportions for the responses.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">satpt</span><span class="op">(</span></span>
 <span>  <span class="va">y</span>,</span>
-<span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">by</span>,</span>
 <span>  exclude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NaN</span><span class="op">)</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  threshold <span class="op">=</span> <span class="fl">0.025</span>,</span>
@@ -68,12 +68,14 @@ survey using standard errors of the sample proportions for the responses.</p>
 
 
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Vector of values to which determine if saturation has been achieved.</p></dd>
+<dd><p>Multinomial responses collected and being examined for saturation.
+See the <em>Details</em> section for valid <em>R</em> data objects and how
+they are handled.</p></dd>
 
 
 <dt id="arg-by">by<a class="anchor" aria-label="anchor" href="#arg-by"></a></dt>
-<dd><p>Vector of values which indicate when <code>y</code> was collected.
-Default is <code>NULL</code>.</p></dd>
+<dd><p>Values indicating when the multinomial responses (<code>y</code>) were
+collected. See the <em>Details</em> section for when to specify this argument.</p></dd>
 
 
 <dt id="arg-exclude">exclude<a class="anchor" aria-label="anchor" href="#arg-exclude"></a></dt>
@@ -83,13 +85,13 @@ is <code>NA</code> and <code>NaN</code>.</p></dd>
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
-<dd><p>Significance level for Pearson's \(\chi^2\) test for
-independence. Default is <code>0.05</code>.</p></dd>
+<dd><p>Significance level for test for independence by <code>y</code> and <code>by</code>.
+Default is <code>0.05</code>.</p></dd>
 
 
 <dt id="arg-threshold">threshold<a class="anchor" aria-label="anchor" href="#arg-threshold"></a></dt>
-<dd><p>Saturation threshold applied to the standard errors of the
-sample proportions. Default is <code>0.025</code>.</p></dd>
+<dd><p>Saturation threshold applied to the maximum standard error
+of the sample proportions. Default is <code>0.025</code>.</p></dd>
 
 
 <dt id="arg-dimnames">dimnames<a class="anchor" aria-label="anchor" href="#arg-dimnames"></a></dt>
@@ -97,72 +99,78 @@ sample proportions. Default is <code>0.025</code>.</p></dd>
 displaying the contingency table, sample proportions, and standard error
 matrices. When <code>dimnames</code> is an unnamed vector the first entry should be name
 of <code>y</code> variable and the second entry should be name of <code>by</code> variable. If
-<code>dimnames</code> is a named vector, then order of the values do NOT matter, as long
-the elements are named with <code>"y"</code> and <code>"by"</code>. Default is <code>NULL</code>.</p></dd>
+<code>dimnames</code> is a named vector, then order of the values does NOT matter, as
+long the elements are named with <code>"y"</code> and <code>"by"</code>. Default is <code>NULL</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code> for more
-control over the \(\chi^2\) test for independence. <code>x</code> and <code>y</code> arguments
-from <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code> should <strong>not</strong> be spectified because the
-<code>by</code> and <code>y</code> from arguments above will create a contingency matrix to
-perform the test of independence on.</p></dd>
+<dd><p>Additional arguments passed to <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code> or
+<code><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">stats::fisher.test()</a></code> for more control over the test for independence.
+<code>x</code> and <code>y</code> arguments from <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code> or <code><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">stats::fisher.test()</a></code>
+should <strong>not</strong> be spectified because the <code>by</code> and <code>y</code> from arguments above
+will create a contingency matrix to perform the test of independence on.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object with <code>S3</code> class <code>"satpt"</code> containing 11 elements.</p><dl><dt><code>threshold</code></dt>
+    <p>An object with <code>S3</code> class <code>"satpt"</code> containing 12 elements. Multiple
+elemnts in <code>satpt</code> are <code>list</code> objects that are named after the elements in
+<code>y</code>. These named <code>list</code> objects are of most importance when examining select
+all apply questions.</p><dl><dt><code>threshold</code></dt>
 <dd><p>Saturation threshold applied to the standard errors of
 thesample proportions.</p></dd>
 
 <dt><code>saturation</code></dt>
-<dd><p>A logical value indicating whether all response
-categories have achieved saturation given the defined <code>threshold</code>. The value
-of <code>TRUE</code> indicates that saturation has been achieved while a value of
-<code>FALSE</code> indicates that saturation was not achieved and more data is needed
-to achieve saturation.</p></dd>
+<dd><p>A logical value indicating whether response category
+with the largest standard error has achieved saturation given the defined
+<code>threshold</code>. The value of <code>TRUE</code> indicates that saturation has been achieved
+while a value of <code>FALSE</code> indicates that saturation was not achieved and more
+data is needed to achieve saturation.</p></dd>
+
+<dt><code>which_saturation</code></dt>
+<dd><p>A character value indicating which collection of
+responses within <code>y</code> determined saturation achievement. Generally, this is
+only of importance when examining select all apply questions.</p></dd>
 
 <dt><code>counts</code></dt>
-<dd><p>A <code>matrix</code> containing the observed cell counts of the
-contigency table created by <code>y</code> and <code>by</code> if provided.</p></dd>
+<dd><p>A <code>list</code> of <code>matrix</code> objects containing the observed cell
+counts of the contigency table created by <code>y</code> and <code>by</code> if provided.</p></dd>
 
 <dt><code>phat</code></dt>
-<dd><p>A <code>matrix</code> containing the row-wise sample proportions for the
-observed contigency table (<code>counts</code>).</p></dd>
+<dd><p>A <code>list</code> of <code>matrix</code> objects containing the row-wise sample
+proportions for the observed contigency table (<code>counts</code>).</p></dd>
 
 <dt><code>se</code></dt>
-<dd><p>A <code>matrix</code> containing the standard errors for the calculated
-sample proportions (<code>phat</code>).</p></dd>
+<dd><p>A <code>list</code> of <code>matrix</code> objects containing the standard errors for
+the calculated sample proportions (<code>phat</code>).</p></dd>
 
 <dt><code>pooled_se</code></dt>
 <dd><p>A logical value indicating whether pooled standard errors
 were calculated due to the presence of response bias.</p></dd>
 
 <dt><code>alpha</code></dt>
-<dd><p>Significance level for Pearson's \(\chi^2\) test for
-independence.</p></dd>
+<dd><p>Significance level for the test for independence.</p></dd>
 
 <dt><code>test</code></dt>
-<dd><p>A <code>htest</code> object produced by <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code> containing
-the results from the \(\chi^2\) test for independence.</p></dd>
+<dd><p>A <code>list</code> of <code>htest</code> objects produced by <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code>
+or <code><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">stats::fisher.test()</a></code> containing the results from the test for
+independence.</p></dd>
 
-<dt><code>N</code></dt>
+<dt><code>n</code></dt>
 <dd><p>Total number of observations with a response provided.</p></dd>
 
 <dt><code>total</code></dt>
-<dd><p>A <code>data.frame</code> with 5 variables describing the overall
-collected sample. The <code>categories</code> variable provides the unique
+<dd><p>A <code>list</code> of <code>data.frame</code> objects with 4 variables describing
+the overall collected sample. The <code>categories</code> variable provides the unique
 categories listed in <code>y</code>. While <code>counts</code>, <code>phat</code>, and <code>se</code> provide the
 overall cell counts, sample proportions, and standard errors for the
 categories, respectively. The standard errors reported for the overall
 sample proportions are calculated based on the presence of response bias,
-which is detailed above. Finally, the <code>saturation</code> variable is a logical
-variable denoting whether saturation was achieved for each individual
-category given the saturation <code>threshold</code> defined.</p></dd>
+which is detailed above.</p></dd>
 
 <dt><code>hindex</code></dt>
-<dd><p>Heterogeneity index for the sample proportions calculated by
-mean absolute deviation.</p></dd>
+<dd><p>A <code>list</code> of heterogeneity index values for the sample
+proportions calculated by mean absolute deviation.</p></dd>
 
 
 </dl></div>
@@ -174,6 +182,18 @@ variable. When there is no a priori data collection mechanism defined, the
 <code>by</code> argument should not be defined. Generally, when the data is collected
 randomly or collected during the first data collection period, there is "no
 a priori data collection mechanism."</p>
+<p>The parameters <code>y</code> and <code>by</code> maybe a <code>vector</code>, <code>factor</code>, <code>matrix</code>,
+<code>data.frame</code>, <code>data.table</code>, <code>tibble</code>, or <code>list</code>. When the parameters are a
+<code>list</code> object, each element of the object should be of equal length.
+Otherwise missing values will be appended to the end of each element based on
+the element that has the longest length. If <code>y</code> or <code>by</code> are <code>factor</code>s the
+underlying order of the factor will be ignored when the contingency table is
+created. The <code><a href="char_matrix.html">char_matrix()</a></code> function is used within <code>satpt()</code> to
+coerce the values of <code>y</code> and <code>by</code> to be character values to have consistency
+of value types.</p>
+<p>Generally, <code>y</code> should only have more than 1 column when select all apply
+questions are being examined. See the <code>select-all-apply</code> vignette for more
+information.</p>
 <p>Functionality of <code>satpt()</code> depends on the limited use of <code><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">stats::ftable()</a></code>.
 More specifically, <code>y</code>, <code>by</code>, and <code>exclude</code> are directly used with
 <code><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">stats::ftable()</a></code> to create the contingency table of the collected data. The
@@ -181,25 +201,33 @@ contingency table created by <code><a href="https://rdrr.io/r/stats/ftable.html"
 easier use with other functions. When the <code>dimnames</code> argument is used, it
 manipulates the attributes of the created <code>ftable</code>, which impacts the
 dimension names of the resulting <code>matrix</code>.</p>
-<p>Specification of the <code>by</code> argument automatically calls for a Pearson's
-\(\chi^2\) test for independence and the heterogeneity index of the sample
-proportions to be calculated. The \(\chi^2\) test for independence is
-conducted to determine if response bias is present within the responses in
-<code>y</code> are due to the data collection periods (<code>by</code>). When response bias is
-present the pooled standard errors of the overall sample proportions for each
-response category is reported, the pooled standard errors account for the
-response bias. The heterogeneity index is defined as the mean
-absoluted difference of the sample proportions for each response category
-within each data collection period (<code>by</code>) relative to the overall sample
-proportions for each response category. This index reflects the average
-deviation of the data collection period proportions from the overall sample
-proportions. Smaller values indicate the sample proportions of the data
-collection periods are less dissimilar. This measure is of importance when
-response bias is present. When <code>by</code> is not specified the test for
-independence will not be conducted and the heterogeneity index will not be
-calculated. <code>satpt</code> assumes response bias is only possible when <code>by</code> is
+<p>Specification of the <code>by</code> argument automatically calls for a test for
+independence and the heterogeneity index of the sample proportions to be
+calculated. The test for independence is conducted to determine if response
+bias is present within the responses in <code>y</code> are due to the data collection
+periods (<code>by</code>). Fisher's Exact Test or the \(I \times J\) variant is
+implemented when the more than 20% of the expected cell counts are less than
+5. Otherwise Pearsons' \(\chi^2\) Test for Independence is implemented.</p>
+<p>When response bias is present the pooled standard errors of the overall
+sample proportions for each response category is reported, the pooled
+standard errors account for the response bias. The heterogeneity index is
+defined as the mean absoluted difference of the sample proportions for each
+response category within each data collection period (<code>by</code>) relative to the
+overall sample proportions for each response category. This index reflects
+the average deviation of the data collection period proportions from the
+overall sample proportions. Smaller values indicate the sample proportions of
+the data collection periods are less dissimilar. This measure is of
+importance when response bias is present. When <code>by</code> is not specified the test
+for independence will not be conducted and the heterogeneity index will not
+be calculated. <code>satpt</code> assumes response bias is only possible when <code>by</code> is
 specified. Thus, there is no need to check for response bias when <code>by</code> is
 not specified.</p>
+<p>Determination of saturation is based on the the response category and/or
+collection of responses that has the largest standard error. If this largest
+standard error achieves saturation then all other categories or responses
+will achieve saturation. For select all apply questions, the collection of
+responses that have the largest standard error (i.e., a sample proportion
+closest to 0.5) will be used to determine saturation of all responses.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -218,25 +246,29 @@ not specified.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Assuming response bias is not a possiblity</span></span></span>
 <span class="r-in"><span><span class="fu">satpt</span><span class="fu">::</span><span class="fu">satpt</span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Analysis based on: y </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation achieved?  Yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overall Sample Proportions and Standard Errors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ==============================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Statistics   Not at all   Once Rarely Sometimes  Often</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Proportion     0.2531 0.0375 0.3688    0.2656 0.0750</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   SE             0.0172 0.0075 0.0191    0.0175 0.0104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             y: y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Statistics   Not at all  Often   Once Rarely Sometimes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Proportion     0.2531 0.0750 0.0375 0.3688    0.2656</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   SE             0.0172 0.0104 0.0075 0.0191    0.0175</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Examining saturation given data collected at different times and</span></span></span>
 <span class="r-in"><span><span class="co"># response bias is possible. For this example, response bias is not present,</span></span></span>
 <span class="r-in"><span><span class="co"># so the standard errors will be the same.</span></span></span>
 <span class="r-in"><span><span class="fu">satpt</span><span class="fu">::</span><span class="fu">satpt</span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Analysis based on: y </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation achieved?  Yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overall Sample Proportions and Standard Errors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ==============================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Statistics   Not at all   Once Rarely Sometimes  Often</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Proportion     0.2531 0.0375 0.3688    0.2656 0.0750</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   SE             0.0172 0.0075 0.0191    0.0175 0.0104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             y: y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Statistics   Not at all  Often   Once Rarely Sometimes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Proportion     0.2531 0.0750 0.0375 0.3688    0.2656</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   SE             0.0172 0.0104 0.0075 0.0191    0.0175</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Creating an example, where response bias is present.</span></span></span>
 <span class="r-in"><span></span></span>
@@ -258,14 +290,15 @@ not specified.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation point analysis of sample proportions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ===============================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Analysis based on: y </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation achieved? Yes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation threshold of 0.025</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Responses collected from a sample size of 350</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data interval and overall sample proportions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ============================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> by             A      B      C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          y: y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> by: by         A      B      C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1       0.3840 0.4120 0.2040</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2       0.1500 0.0500 0.8000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Overall 0.3171 0.3086 0.3743</span>
@@ -273,8 +306,8 @@ not specified.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data interval and overall standard errors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> =========================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> by             A      B      C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          y: y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> by: by         A      B      C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1       0.0308 0.0311 0.0255</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2       0.0357 0.0218 0.0400</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Overall 0.0242 0.0231 0.0215</span>
@@ -283,7 +316,7 @@ not specified.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Pearson's Chi-squared test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> data:  y given by</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> data:  y: y given by: by</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X-squared = 110.46, df = 2, p-value &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Response bias present? Yes</span>
@@ -308,7 +341,7 @@ not specified.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
