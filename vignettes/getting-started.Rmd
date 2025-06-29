@@ -54,10 +54,10 @@ levels(ein$q2)
 The `res` object below is a `satpt` object that contains the results of the saturation point analysis and is structurely a *R* `list` with eleven elements produced by main function `satpt::satpt()`. You may see the [documentation of `satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) for a detailed description of all the elements of a `satpt` object.
 
 ```{r}
-res <- satpt::satpt(y = ein$q2, threshold = 0.02)
+res <- satpt::satpt(y = ein$q2, threshold = 0.025)
 ```
 
-For a basic examination of the saturation point analysis, you may simply print the results object. This will provide information of whether all the standard errors of the response categories are less than or equal to the saturation threshold along with sample proportions and standard errors of the response categories. In this example, the saturation threshold was 0.02, the default value used in [`satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) is 0.05, and all the standard errors are less than 0.02. Thus, saturation of the response categories is achieved. 
+For a basic examination of the saturation point analysis, you may simply print the results object. This will provide information of whether all the standard errors of the response categories are less than or equal to the saturation threshold along with sample proportions and standard errors of the response categories. In this example, the saturation threshold was 0.025, the default value used in [`satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) is 0.05, and all the standard errors are less than 0.025. Thus, saturation of the response categories is achieved. 
 
 ```{r}
 print(res)
@@ -92,7 +92,7 @@ There will be times the data collection process leads to responss with the potie
 stats::ftable(x = ein$wave)
 ```
 
-So, we are going to examine the responses collected in each wave for saturation, where the previous wave of responses will be included in the current wave and the *saturation threshold is 0.02*.
+So, we are going to examine the responses collected in each wave for saturation, where the previous wave of responses will be included in the current wave and the *saturation threshold is 0.025*.
 
 ### First data collection period
 
@@ -105,7 +105,7 @@ ein1 <- subset(x = ein, subset = wave == 1)
 # Performing saturation point analysis
 res1 <- satpt::satpt(
   y = ein1$q2,
-  threshold = 0.02,
+  threshold = 0.025,
   dimnames = "Responses to survey"
 )
 print(res1)
@@ -124,7 +124,7 @@ ein2 <- subset(x = ein, subset = wave %in% c(1, 2))
 res2 <- satpt::satpt(
   y = ein2$q2,
   by = ein2$wave,
-  threshold = 0.02,
+  threshold = 0.025,
   dimnames = c("by" = "Data collection period", "y" = "Responses to survey")
 )
 print(res2)
@@ -157,7 +157,7 @@ The addition of the data from the second collection period did not help to achie
 res3 <- satpt::satpt(
   y = ein$q2,
   by = ein$wave,
-  threshold = 0.02,
+  threshold = 0.025,
   dimnames = c("by" = "Collection period", "y" = "Responses to survey")
 )
 summary(res3)

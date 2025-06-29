@@ -32,6 +32,12 @@ char_matrix <- function(x = x) {
 
   # Capture variable name as string for fallback column name ####
   var_name <- deparse(expr = substitute(expr = x))
+  var_name <- gsub(
+    x = var_name,
+    pattern = ".*\\$",
+    replacement = "",
+    perl = FALSE
+  )
 
   # Handle factor or character vector ####
   if (is.factor(x = x)) {

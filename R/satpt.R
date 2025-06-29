@@ -185,7 +185,10 @@ satpt <- function(
 
   if (!missing(by)) {
     # by is transformed into a vector for ease of use
-    tmp <- try(expr = by <- as.character(char_matrix(x = by)), silent = TRUE)
+    tmp <- try(
+      expr = by <- as.character(x = char_matrix(x = by)),
+      silent = TRUE
+    )
     if (inherits(x = tmp, what = "try-error")) {
       stop(
         paste0(
@@ -194,9 +197,11 @@ satpt <- function(
         )
       )
     }
+  } else {
+    by <- NULL
   }
 
-  if (!missing(by) && (nrow(y) != length(by))) {
+  if (!is.null(by) && (nrow(y) != length(by))) {
     stop("y and by must have the same number of observations.")
   }
 
@@ -216,7 +221,7 @@ satpt <- function(
     if (!inherits(x = dimnames, what = "character")) {
       stop("dimnames must be a character vector.")
     }
-    if (length(dimnames) == 1 && !missing(by)) {
+    if (length(dimnames) == 1 && !is.null(by)) {
       stop("dimnames must be of length two when by is specified.")
     }
     ndimns <- names(dimnames)
@@ -232,7 +237,7 @@ satpt <- function(
   }
 
   # Obtaining counts for each column of y ####
-  if (missing(by)) {
+  if (is.null(by)) {
     counts <- lapply(
       X = seq_len(ncol(y)),
       FUN = function(j) {
@@ -243,13 +248,15 @@ satpt <- function(
         out <- stats::ftable(y = out)
 
         # Providing dimension names when provided ####
+        tmp <- attributes(out)
         if (!is.null(dimnames)) {
-          tmp <- attributes(out)
           if (is.null(ndimns)) {
             names(tmp$col.vars) <- paste0("y: ", dimnames[1])
           } else {
             names(tmp$col.vars) <- paste0("y: ", unname(dimnames["y"]))
           }
+        } else {
+          names(tmp$col.vars) <- paste0("y: ", colnames(y)[j])
         }
         attributes(out) <- tmp
 
@@ -282,8 +289,16 @@ satpt <- function(
             names(tmp$row.vars) <- paste0("by: ", unname(dimnames["by"]))
           }
         } else {
-          names(tmp$col.vars) <- "y"
-          names(tmp$row.vars) <- "by"
+          names(tmp$col.vars) <- paste0("y: ", colnames(y)[j])
+          names(tmp$row.vars) <- paste0(
+            "by: ",
+            gsub(
+              x = deparse(expr = substitute(expr = by)),
+              pattern = ".*\\$",
+              replacement = "",
+              perl = FALSE
+            )
+          )
         }
         attributes(out) <- tmp
 
@@ -383,14 +398,19 @@ satpt <- function(
       }
     )
   } else {
-    test <- NULL
+    test <- vector(mode = "list", length = length(counts))
   }
 
   # Determing whether pooled SE are needed ####
   pooled_se <- lapply(
     X = test,
     FUN = function(tt) {
-      out <- tt$p.value <= alpha
+      if (!is.null(tt)) {
+        out <- tt$p.value <= alpha
+      } else {
+        out <- NULL
+      }
+
       return(out)
     }
   )
@@ -454,7 +474,7 @@ satpt <- function(
 
   # Calculating heterogeneity index for each column of y ####
   # Mean absolute deviation away from overall sample proportions
-  if (!is.null(test)) {
+  if (all(!sapply(X = test, FUN = is.null))) {
     hindex <- Map(
       f = function(cc, pp, tt) {
         # Initializing hindex output object ####
@@ -510,8 +530,10 @@ satpt <- function(
   out$se <- se
   out$pooled_se <- unlist(pooled_se)
   out$alpha <- alpha
-  if (!is.null(test)) {
+  if (all(!sapply(X = test, FUN = is.null))) {
     out$test <- test
+  } else {
+    out$test <- NULL
   }
   out$n <- total_obs
   out$total <- total

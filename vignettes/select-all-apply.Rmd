@@ -86,12 +86,9 @@ q1 <- do.call(what = "rbind", args = q1)
 for (j in seq_len(ncol(q1))) {
   q1[, j] <- factor(x = q1[, j], levels = c(0, 1), labels = c("No", "Yes"))
 }
-
-# Add data collection period variable to data
-q1$wave <- ein$wave
 ```
 
-The "select all that apply" response are now transformed into a collection of indicator functions, where the value `"Yes"` denotes that response field was selected and `"No"` denotes the response field was **not** selected. These responses were collected in different data collection periods due to non-response of previous collection periods. The `"wave"` variable was added to the data, so we may conduct saturation point analysis on each of the response fields while controlling for potiental response bias.
+The "select all that apply" response are now transformed into a collection of indicator functions, where the value `"Yes"` denotes that response field was selected and `"No"` denotes the response field was **not** selected. These responses were collected in different data collection periods due to non-response of previous collection periods. Thus, we must use the `wave` variable in the `ein` data, so we may conduct saturation point analysis on each of the response fields while controlling for potiental response bias.
 
 ```{r}
 str(q1)
@@ -99,29 +96,18 @@ str(q1)
 
 Using the [`satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) function on each of the indicator functions of the responses field, we will perform the saturation point analysis.
 ```{r}
-res <- vector(mode = "list", length = ncol(q1) - 1)
-names(res) <- colnames(q1)[-ncol(q1)]
-for (j in seq_len(ncol(q1) - 1)) {
-  res[[j]] <- satpt::satpt(
-    y = q1[, j],
-    by = q1$wave,
-    dimnames = c(
-      "by" = "Data collection period",
-      "y" = paste0("Responses to survey: ", colnames(q1)[j])
-    )
+res <- satpt::satpt(
+  y = q1,
+  by = ein$wave,
+  dimnames = c(
+    "by" = "Data collection period",
+    "y" = "Responses to survey"
   )
-}
+)
 ```
 
-Finally, in the results below, we see that each response field from the "select all that apply" question achieved saturation with a saturation threshold of 0.05. Thus, this question has achieved saturation.
+Finally, in the results below, we see that each response field from the "select all that apply" question achieved saturation with a saturation threshold of 0.025. Thus, this question has achieved saturation.
 
 ```{r}
-saturation <- sapply(
-  X = res,
-  FUN = function(x) {
-    out <- x$saturation
-    return(out)
-  }
-)
-saturation
+summary(res)
 ```
