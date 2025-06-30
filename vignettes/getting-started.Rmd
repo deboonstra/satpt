@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.align = "center"
 )
 ```
 
@@ -37,7 +38,10 @@ library(satpt)
 ```
 
 # Examples
-With the package installed and loaded into the current *R* environment, we may begin exploring the functionality of this package. To start, we will load in the example [*EIN*](https://deboonstra.github.io/satpt/reference/ein.html) data to work with.
+With the package installed and loaded into the current *R* environment, we may begin exploring the functionality of this package. 
+
+## Basic usage of `satpt`
+To start, we will load in the example [*EIN*](https://deboonstra.github.io/satpt/reference/ein.html) data to work with.
 
 ```{r}
 # Load EIN data
@@ -51,13 +55,13 @@ We will start by examining whether the responses collected in the second questio
 levels(ein$q2)
 ```
 
-The `res` object below is a `satpt` object that contains the results of the saturation point analysis and is structurely a *R* `list` with eleven elements produced by main function `satpt::satpt()`. You may see the [documentation of `satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) for a detailed description of all the elements of a `satpt` object.
+The `res` object below is a `satpt` object that contains the results of the saturation point analysis and is structurely a *R* `list` with twelve elements produced by main function `satpt::satpt()`. You may see the [documentation of `satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) for a detailed description of all the elements of a `satpt` object.
 
 ```{r}
 res <- satpt::satpt(y = ein$q2, threshold = 0.025)
 ```
 
-For a basic examination of the saturation point analysis, you may simply print the results object. This will provide information of whether all the standard errors of the response categories are less than or equal to the saturation threshold along with sample proportions and standard errors of the response categories. In this example, the saturation threshold was 0.025, the default value used in [`satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) is 0.05, and all the standard errors are less than 0.025. Thus, saturation of the response categories is achieved. 
+For a basic examination of the saturation point analysis, you may simply print the results object. This will provide information of whether the maximum standard errors of the response categories are less than or equal to the saturation threshold along with sample proportions and standard errors of the response categories. In this example, the default saturation threshold of 0.025 was used and the maximum standard error was less than 0.025. Thus, saturation of the response categories is achieved. 
 
 ```{r}
 print(res)
@@ -86,7 +90,7 @@ satpt::legend_right(
 
 ## Possibility of response bias
 
-There will be times the data collection process leads to responss with the potiental of having response bias. Thus, when performing saturation point analysis we must test for response bias and if response bias is present, we must account for that bias in the saturation point analysis. One example where response could be present is collecting data in waves based on non-responses in the previous waves. The *EIN* data previously explored was collected in this manner. Presented below is the number of responses collected for the second question for each data collection `wave`.
+There will be times the data collection process leads to responss with the potential of having response bias. Thus, when performing saturation point analysis we must test for response bias and if response bias is present, we must account for that bias in the saturation point analysis. One example where response could be present is collecting data in waves based on non-responses in the previous waves. The *EIN* data previously explored was collected in this manner. Presented below is the number of responses collected for the second question for each data collection `wave`.
 
 ```{r}
 stats::ftable(x = ein$wave)
@@ -113,7 +117,7 @@ print(res1)
 
 ### Second data collection period
 
-The results from the first data collection period show that saturation was not achieved, as not all of the standard errors for the response categories are less than or equal to the saturation threshold. So, we'll examine the data collected during the first and second data collection period for saturation of responses. For this analysis, we must account for the possibility of response bias by specifying the `by` argument in [`satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) because the responses collected during the second wave include responses from *EIN* members who did not respond previously.
+The results from the first data collection period show that saturation was not achieved, as the maximum standard error of the response items was not less than or equal to the saturation threshold. So, we'll examine the data collected during the first and second data collection period for saturation of responses. For this analysis, we must account for the possibility of response bias by specifying the `by` argument in [`satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) because the responses collected during the second wave include responses from *EIN* members who did not respond previously.
 
 ```{r}
 # Subsetting the data to only include data collected during the first and second
@@ -130,35 +134,43 @@ res2 <- satpt::satpt(
 print(res2)
 ```
 
-With the inclusion of the responses from the second data collection, saturation is almost achieved. However, more data is needed to achieve saturation. Before examining all the data for saturation, we will examine whether response bias was present when including responses from the first and second data collection periods.
+With the inclusion of the responses from the second data collection, saturation is achieved. We can take a look at the summary of the analysis, including the test of independence of the responses.
 
 ```{r}
-# Chi-squared test for independence
-res2$test
-
-# Was pooled standard errors calculated?
-res2$pooled_se
+summary(res2)
 ```
 
-The above Pearson's $\chi^{2}$ test for independence shows that responses bias was not present with a non-significant p-value. Thus, signifying the responses collected during the first and second data collection waves are not statistically different. With no response bias being present, traditional standard errors for the overall sample proportions of the response categories were calculated. The `FALSE` logical *R* value returned by `pooled_se` indicates the standard errors reported for the overall sampled proportions are **not** pooled.
+The above Pearson's $\chi^{2}$ test for independence shows that responses bias was not present with a non-significant p-value. Thus, signifying the responses collected during the first and second data collection waves are not statistically different. With no response bias being present, traditional standard errors for the overall sample proportions of the response categories were calculated.
 
-```{r}
-# Summarizing results
-sum_res2 <- summary(res2)
+# Saturation thresholds
 
-# Printing standard errors from summary of results
-print(sum_res2$se)
-```
+The default saturation threshold in [`satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) is 0.025 because this threshold for standard errors leads to a confidence interval width of 0.1 around the sample proportions. More specifically, for a $95\%$ confidence interval around the sample proportions that has a margin of error (**ME**) of approximately
 
-### All data collection periods
-The addition of the data from the second collection period did not help to achieve saturation of the responses. So, we are going to examine all the responses collected while adjusting for the potiential of response bias. The results presented below show that saturation was finally achieved and response bias was not present among the collected responses.
+$$
+ME = 1.96 \times \hat{\sigma}^{(w)}_{j} = 0.05
+$$
 
-```{r}
-res3 <- satpt::satpt(
-  y = ein$q2,
-  by = ein$wave,
-  threshold = 0.025,
-  dimnames = c("by" = "Collection period", "y" = "Responses to survey")
+and a total width of 0.1, the *saturation threshold*, should be defined as 0.025. The table below provides more *saturation thresholds* based on confidence intervals that have a width of 0.1.
+
+```{r, echo = FALSE}
+library(kableExtra)
+dat <- data.frame(
+  ci_level = c("90%", "95%", "99%"),
+  threshold = c(0.038, 0.025, 0.21)
 )
-summary(res3)
+tab <- knitr::kable(
+  x = dat,
+  format = "html",
+  digits = 3,
+  col.names = c("Confidence level", "Saturation threshold"),
+  align = "cc"
+)
+kableExtra::kable_styling(
+  kable_input = tab,
+  bootstrap_options = c("hover"),
+  full_width = FALSE,
+  position = "center"
+)
 ```
+
+The saturation threshold may be as small or as large as one wants. However, the threshold must never exceed 0.25 or be lower than 0 because the maximum standard error for any sample proportion is 0.25 when the sample proportion is 0.5.
