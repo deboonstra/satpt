@@ -9,7 +9,7 @@
 <!-- badges: end -->
 
 This *R* package identifies the saturation point of multinomial
-responses from a survey using standard errors of sample proportions
+responses from a survey using standard errors of sample proportions.
 
 ## Installation
 
@@ -43,13 +43,15 @@ res <- satpt::satpt(y = ein$q2, by = ein$wave)
 print(res)
 ```
 
+    #> Analysis based on: y 
     #> Saturation achieved?  Yes 
+    #> 
     #> Overall Sample Proportions and Standard Errors
     #> ==============================================
-    #>             y
-    #> Statistics   Not at all   Once Rarely Sometimes  Often
-    #>   Proportion     0.2531 0.0375 0.3688    0.2656 0.0750
-    #>   SE             0.0172 0.0075 0.0191    0.0175 0.0104
+    #>             y: y
+    #> Statistics   Not at all  Often   Once Rarely Sometimes
+    #>   Proportion     0.2531 0.0750 0.0375 0.3688    0.2656
+    #>   SE             0.0172 0.0104 0.0075 0.0191    0.0175
 
 Saturation of each individual response category may be examined
 graphically while comparing the standard errors to the saturation
@@ -68,7 +70,7 @@ satpt::legend_right(
 
 <img src="man/figures/README-basic-plot.svg" width="100%" />
 
-# Methodology
+## Methodology
 
 Presented below is a simplified version of the algorithm that is
 employed in `satpt` to determine whether saturation of the responses has
@@ -76,3 +78,12 @@ been achieved and whether pooled standard errors should be calculated to
 account for response bias.
 
 <img src="man/figures/README-satpt-algorithm.png" width="100%" />
+
+## Learn more
+
+To get started, first read the [*Getting started with
+satpt*](https://deboonstra.github.io/satpt/articles/getting-started.html)
+vignette. Then, read more about how `satpt` may handle *Select All
+Apply* question in the [*Impelementing with select all apply
+questions*](https://deboonstra.github.io/satpt/articles/select-all-apply.html)
+vignette.

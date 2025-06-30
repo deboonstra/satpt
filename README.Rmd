@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/deboonstra/satpt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/deboonstra/satpt/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-This *R* package identifies the saturation point of multinomial responses from a survey using standard errors of sample proportions
+This *R* package identifies the saturation point of multinomial responses from a survey using standard errors of sample proportions.
 
 ## Installation
 You can install the current released version of `satpt` from [CRAN](https://cran.r-project.org) with
@@ -67,8 +67,12 @@ satpt::legend_right(
 
 <img src="man/figures/README-basic-plot.svg" width="100%" />
 
-# Methodology
+## Methodology
 
 Presented below is a simplified version of the algorithm that is employed in `satpt` to determine whether saturation of the responses has been achieved and whether pooled standard errors should be calculated to account for response bias.
 
 <img src="man/figures/README-satpt-algorithm.png" width="100%" />
+
+## Learn more
+
+To get started, first read the [*Getting started with satpt*](https://deboonstra.github.io/satpt/articles/getting-started.html) vignette. Then, read more about how `satpt` may handle *Select All Apply* question in the [*Impelementing with select all apply questions*](https://deboonstra.github.io/satpt/articles/select-all-apply.html) vignette.
