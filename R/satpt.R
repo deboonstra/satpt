@@ -14,7 +14,8 @@
 #' @param alpha Significance level for test for independence by `y` and `by`.
 #' Default is `0.05`.
 #' @param threshold Saturation threshold applied to the maximum standard error
-#' of the sample proportions. Default is `0.025`.
+#' of the sample proportions. Default is `0.025` and the threshold must be less
+#' or equal to 0.25.
 #' @param dimnames Character vector of names for `y` and `by` when
 #' displaying the contingency table, sample proportions, and standard error
 #' matrices. When `dimnames` is an unnamed vector the first entry should be name
@@ -211,7 +212,7 @@ satpt <- function(
 
   if (
     !inherits(x = threshold, what = "numeric") ||
-      threshold >= 1 ||
+      threshold >= 0.25 ||
       threshold <= 0
   ) {
     stop("threshold must be numeric between 0 and 1.")

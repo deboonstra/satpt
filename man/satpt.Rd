@@ -30,7 +30,8 @@ is \code{NA} and \code{NaN}.}
 Default is \code{0.05}.}
 
 \item{threshold}{Saturation threshold applied to the maximum standard error
-of the sample proportions. Default is \code{0.025}.}
+of the sample proportions. Default is \code{0.025} and the threshold must be less
+or equal to 0.25.}
 
 \item{dimnames}{Character vector of names for \code{y} and \code{by} when
 displaying the contingency table, sample proportions, and standard error
