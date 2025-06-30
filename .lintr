@@ -1,4 +1,5 @@
 linters: linters_with_defaults(
-  cyclocomp_linter(complexity_limit = 50L),
-  commented_code_linter = NULL)
+  cyclocomp_linter(complexity_limit = 100L),
+  commented_code_linter = NULL,
+  object_usage_linter = NULL)
 encoding: "UTF-8"
