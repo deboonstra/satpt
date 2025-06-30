@@ -64,9 +64,10 @@
 #' @rdname summary.satpt
 #' @export
 summary.satpt <- function(
-    object,
-    digits = max(3, getOption("digits") - 3),
-    ...) {
+  object,
+  digits = max(3, getOption("digits") - 3),
+  ...
+) {
   # Check object type ####
   if (!methods::is(object, "satpt")) {
     stop("object must be of satpt type.")
@@ -241,18 +242,18 @@ print.summary.satpt <- function(x, ...) {
   }
   cat("=========================================\n")
   print(x$se, ...)
-  cat(
-    "\nPooled standard errors? ",
-    ifelse(
-      test = x$pooled_se,
-      yes = "Yes",
-      no = "No"
-    ),
-    "\n"
-  )
 
   # Test for independence ####
   if (!is.null(x$test)) {
+    cat(
+      "\nPooled standard errors? ",
+      ifelse(
+        test = x$pooled_se,
+        yes = "Yes",
+        no = "No"
+      ),
+      "\n"
+    )
     print(x$test, ...)
     cat(
       "Response bias present? ",
