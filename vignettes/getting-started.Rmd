@@ -153,24 +153,26 @@ $$
 and a total width of 0.1, the *saturation threshold*, should be defined as 0.025. The table below provides more *saturation thresholds* based on confidence intervals that have a width of 0.1.
 
 ```{r, echo = FALSE}
-library(kableExtra)
-dat <- data.frame(
-  ci_level = c("90%", "95%", "99%"),
-  threshold = c(0.038, 0.025, 0.21)
-)
-tab <- knitr::kable(
-  x = dat,
-  format = "html",
-  digits = 3,
-  col.names = c("Confidence level", "Saturation threshold"),
-  align = "cc"
-)
-kableExtra::kable_styling(
-  kable_input = tab,
-  bootstrap_options = c("hover"),
-  full_width = FALSE,
-  position = "center"
-)
+if (requireNamespace("kableExtra", quietly = TRUE)) {
+  library(kableExtra)
+  dat <- data.frame(
+    ci_level = c("90%", "95%", "99%"),
+    threshold = c(0.038, 0.025, 0.21)
+  )
+  tab <- knitr::kable(
+    x = dat,
+    format = "html",
+    digits = 3,
+    col.names = c("Confidence level", "Saturation threshold"),
+    align = "cc"
+  )
+  kableExtra::kable_styling(
+    kable_input = tab,
+    bootstrap_options = c("hover"),
+    full_width = FALSE,
+    position = "center"
+  )
+}
 ```
 
 The saturation threshold may be as small or as large as one wants. However, the threshold must never exceed 0.25 or be lower than 0 because the maximum standard error for any sample proportion is 0.25 when the sample proportion is 0.5.

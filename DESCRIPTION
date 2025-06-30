@@ -27,6 +27,7 @@ Depends:
 LazyData: true
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    kableExtra
 VignetteBuilder: knitr
 URL: https://deboonstra.github.io/satpt/, https://github.com/deboonstra/satpt
