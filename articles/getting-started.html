@@ -58,7 +58,7 @@
 
 
 
-
+<script src="getting-started_files/kePrint-0.0.1/kePrint.js"></script><link href="getting-started_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
@@ -101,8 +101,12 @@ obtain all the functionality of the package.</p>
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <p>With the package installed and loaded into the current <em>R</em>
-environment, we may begin exploring the functionality of this package.
-To start, we will load in the example <a href="https://deboonstra.github.io/satpt/reference/ein.html"><em>EIN</em></a>
+environment, we may begin exploring the functionality of this
+package.</p>
+<div class="section level3">
+<h3 id="basic-usage-of-satpt">Basic usage of <code>satpt</code><a class="anchor" aria-label="anchor" href="#basic-usage-of-satpt"></a>
+</h3>
+<p>To start, we will load in the example <a href="https://deboonstra.github.io/satpt/reference/ein.html"><em>EIN</em></a>
 data to work with.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load EIN data</span></span>
@@ -120,7 +124,7 @@ saturation.</p>
 <span><span class="co">#&gt; [1] "Not at all" "Once"       "Rarely"     "Sometimes"  "Often"</span></span></code></pre></div>
 <p>The <code>res</code> object below is a <code>satpt</code> object that
 contains the results of the saturation point analysis and is structurely
-a <em>R</em> <code>list</code> with eleven elements produced by main
+a <em>R</em> <code>list</code> with twelve elements produced by main
 function <code><a href="../reference/satpt.html">satpt::satpt()</a></code>. You may see the <a href="https://deboonstra.github.io/satpt/reference/satpt.html">documentation
 of <code>satpt::satpt()</code></a> for a detailed description of all the
 elements of a <code>satpt</code> object.</p>
@@ -128,12 +132,12 @@ elements of a <code>satpt</code> object.</p>
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, threshold <span class="op">=</span> <span class="fl">0.025</span><span class="op">)</span></span></code></pre></div>
 <p>For a basic examination of the saturation point analysis, you may
 simply print the results object. This will provide information of
-whether all the standard errors of the response categories are less than
-or equal to the saturation threshold along with sample proportions and
-standard errors of the response categories. In this example, the
-saturation threshold was 0.025, the default value used in <a href="https://deboonstra.github.io/satpt/reference/satpt.html"><code>satpt::satpt()</code></a>
-is 0.05, and all the standard errors are less than 0.025. Thus,
-saturation of the response categories is achieved.</p>
+whether the maximum standard errors of the response categories are less
+than or equal to the saturation threshold along with sample proportions
+and standard errors of the response categories. In this example, the
+default saturation threshold of 0.025 was used and the maximum standard
+error was less than 0.025. Thus, saturation of the response categories
+is achieved.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Analysis based on: y </span></span>
@@ -191,12 +195,13 @@ that we have achieved saturation for these responses.</p>
 <span>  col <span class="op">=</span> <span class="st">"firebrick"</span>, lty <span class="op">=</span> <span class="fl">3</span>, lwd <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  cex <span class="op">=</span> <span class="fl">0.75</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p><img src="getting-started_files/figure-html/unnamed-chunk-10-1.png" width="700" style="display: block; margin: auto;"></p>
+</div>
 <div class="section level3">
 <h3 id="possibility-of-response-bias">Possibility of response bias<a class="anchor" aria-label="anchor" href="#possibility-of-response-bias"></a>
 </h3>
 <p>There will be times the data collection process leads to responss
-with the potiental of having response bias. Thus, when performing
+with the potential of having response bias. Thus, when performing
 saturation point analysis we must test for response bias and if response
 bias is present, we must account for that bias in the saturation point
 analysis. One example where response could be present is collecting data
@@ -244,8 +249,8 @@ wave, as there was no “previous” data collected.</p>
 <h4 id="second-data-collection-period">Second data collection period<a class="anchor" aria-label="anchor" href="#second-data-collection-period"></a>
 </h4>
 <p>The results from the first data collection period show that
-saturation was not achieved, as not all of the standard errors for the
-response categories are less than or equal to the saturation threshold.
+saturation was not achieved, as the maximum standard error of the
+response items was not less than or equal to the saturation threshold.
 So, we’ll examine the data collected during the first and second data
 collection period for saturation of responses. For this analysis, we
 must account for the possibility of response bias by specifying the
@@ -275,63 +280,10 @@ from <em>EIN</em> members who did not respond previously.</p>
 <span><span class="co">#&gt;   Proportion     0.2596 0.0809 0.0426 0.3574    0.2596</span></span>
 <span><span class="co">#&gt;   SE             0.0202 0.0126 0.0093 0.0221    0.0202</span></span></code></pre></div>
 <p>With the inclusion of the responses from the second data collection,
-saturation is almost achieved. However, more data is needed to achieve
-saturation. Before examining all the data for saturation, we will
-examine whether response bias was present when including responses from
-the first and second data collection periods.</p>
+saturation is achieved. We can take a look at the summary of the
+analysis, including the test of independence of the responses.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Chi-squared test for independence</span></span>
-<span><span class="va">res2</span><span class="op">$</span><span class="va">test</span></span>
-<span><span class="co">#&gt; $y</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Pearson's Chi-squared test</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; data:  y: Responses to survey given by: Data collection period</span></span>
-<span><span class="co">#&gt; X-squared = 2.3255, df = 4, p-value = 0.6761</span></span>
-<span></span>
-<span><span class="co"># Was pooled standard errors calculated?</span></span>
-<span><span class="va">res2</span><span class="op">$</span><span class="va">pooled_se</span></span>
-<span><span class="co">#&gt;     y </span></span>
-<span><span class="co">#&gt; FALSE</span></span></code></pre></div>
-<p>The above Pearson’s <span class="math inline">\(\chi^{2}\)</span>
-test for independence shows that responses bias was not present with a
-non-significant p-value. Thus, signifying the responses collected during
-the first and second data collection waves are not statistically
-different. With no response bias being present, traditional standard
-errors for the overall sample proportions of the response categories
-were calculated. The <code>FALSE</code> logical <em>R</em> value
-returned by <code>pooled_se</code> indicates the standard errors
-reported for the overall sampled proportions are <strong>not</strong>
-pooled.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Summarizing results</span></span>
-<span><span class="va">sum_res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Printing standard errors from summary of results</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sum_res2</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                           y: Responses to survey</span></span>
-<span><span class="co">#&gt; by: Data collection period Not at all  Often   Once Rarely Sometimes</span></span>
-<span><span class="co">#&gt;                    1           0.0244 0.0154 0.0117 0.0262    0.0247</span></span>
-<span><span class="co">#&gt;                    2           0.0360 0.0218 0.0151 0.0406    0.0350</span></span>
-<span><span class="co">#&gt;                    Overall     0.0202 0.0126 0.0093 0.0221    0.0202</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="all-data-collection-periods">All data collection periods<a class="anchor" aria-label="anchor" href="#all-data-collection-periods"></a>
-</h4>
-<p>The addition of the data from the second collection period did not
-help to achieve saturation of the responses. So, we are going to examine
-all the responses collected while adjusting for the potiential of
-response bias. The results presented below show that saturation was
-finally achieved and response bias was not present among the collected
-responses.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res3</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span></span>
-<span>  y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>,</span>
-<span>  by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span>,</span>
-<span>  threshold <span class="op">=</span> <span class="fl">0.025</span>,</span>
-<span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"by"</span> <span class="op">=</span> <span class="st">"Collection period"</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="st">"Responses to survey"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res3</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Saturation point analysis of sample proportions</span></span>
 <span><span class="co">#&gt; ===============================================</span></span>
@@ -339,33 +291,31 @@ responses.</p>
 <span><span class="co">#&gt; Analysis based on: y </span></span>
 <span><span class="co">#&gt; Saturation achieved? Yes</span></span>
 <span><span class="co">#&gt; Saturation threshold of 0.025</span></span>
-<span><span class="co">#&gt; Responses collected from a sample size of 640</span></span>
+<span><span class="co">#&gt; Responses collected from a sample size of 470</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Data interval and overall sample proportions</span></span>
 <span><span class="co">#&gt; ============================================</span></span>
-<span><span class="co">#&gt;                      y: Responses to survey</span></span>
-<span><span class="co">#&gt; by: Collection period Not at all  Often   Once Rarely Sometimes</span></span>
-<span><span class="co">#&gt;               1           0.2623 0.0833 0.0463 0.3364    0.2716</span></span>
-<span><span class="co">#&gt;               2           0.2534 0.0753 0.0342 0.4041    0.2329</span></span>
-<span><span class="co">#&gt;               3           0.2353 0.0588 0.0235 0.4000    0.2824</span></span>
-<span><span class="co">#&gt;               Overall     0.2531 0.0750 0.0375 0.3688    0.2656</span></span>
+<span><span class="co">#&gt;                           y: Responses to survey</span></span>
+<span><span class="co">#&gt; by: Data collection period Not at all  Often   Once Rarely Sometimes</span></span>
+<span><span class="co">#&gt;                    1           0.2623 0.0833 0.0463 0.3364    0.2716</span></span>
+<span><span class="co">#&gt;                    2           0.2534 0.0753 0.0342 0.4041    0.2329</span></span>
+<span><span class="co">#&gt;                    Overall     0.2596 0.0809 0.0426 0.3574    0.2596</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Data interval and overall standard errors</span></span>
 <span><span class="co">#&gt; =========================================</span></span>
-<span><span class="co">#&gt;                      y: Responses to survey</span></span>
-<span><span class="co">#&gt; by: Collection period Not at all  Often   Once Rarely Sometimes</span></span>
-<span><span class="co">#&gt;               1           0.0244 0.0154 0.0117 0.0262    0.0247</span></span>
-<span><span class="co">#&gt;               2           0.0360 0.0218 0.0151 0.0406    0.0350</span></span>
-<span><span class="co">#&gt;               3           0.0325 0.0180 0.0116 0.0376    0.0345</span></span>
-<span><span class="co">#&gt;               Overall     0.0172 0.0104 0.0075 0.0191    0.0175</span></span>
+<span><span class="co">#&gt;                           y: Responses to survey</span></span>
+<span><span class="co">#&gt; by: Data collection period Not at all  Often   Once Rarely Sometimes</span></span>
+<span><span class="co">#&gt;                    1           0.0244 0.0154 0.0117 0.0262    0.0247</span></span>
+<span><span class="co">#&gt;                    2           0.0360 0.0218 0.0151 0.0406    0.0350</span></span>
+<span><span class="co">#&gt;                    Overall     0.0202 0.0126 0.0093 0.0221    0.0202</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Pooled standard errors?  No </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Pearson's Chi-squared test</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; data:  y: Responses to survey given by: Collection period</span></span>
-<span><span class="co">#&gt; X-squared = 5.4861, df = 8, p-value = 0.7046</span></span>
+<span><span class="co">#&gt; data:  y: Responses to survey given by: Data collection period</span></span>
+<span><span class="co">#&gt; X-squared = 2.3255, df = 4, p-value = 0.6761</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Response bias present? No</span></span>
 <span><span class="co">#&gt; Significance level: 0.05</span></span>
@@ -374,13 +324,77 @@ responses.</p>
 <span><span class="co">#&gt; Heterogeneity index</span></span>
 <span><span class="co">#&gt; ====================</span></span>
 <span><span class="co">#&gt;  Categories  Index</span></span>
-<span><span class="co">#&gt;  Not at all 0.0091</span></span>
-<span><span class="co">#&gt;       Often 0.0083</span></span>
-<span><span class="co">#&gt;        Once 0.0087</span></span>
-<span><span class="co">#&gt;      Rarely 0.0330</span></span>
-<span><span class="co">#&gt;   Sometimes 0.0185</span></span></code></pre></div>
+<span><span class="co">#&gt;  Not at all 0.0045</span></span>
+<span><span class="co">#&gt;       Often 0.0040</span></span>
+<span><span class="co">#&gt;        Once 0.0060</span></span>
+<span><span class="co">#&gt;      Rarely 0.0338</span></span>
+<span><span class="co">#&gt;   Sometimes 0.0194</span></span></code></pre></div>
+<p>The above Pearson’s <span class="math inline">\(\chi^{2}\)</span>
+test for independence shows that responses bias was not present with a
+non-significant p-value. Thus, signifying the responses collected during
+the first and second data collection waves are not statistically
+different. With no response bias being present, traditional standard
+errors for the overall sample proportions of the response categories
+were calculated.</p>
 </div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="saturation-thresholds">Saturation thresholds<a class="anchor" aria-label="anchor" href="#saturation-thresholds"></a>
+</h2>
+<p>The default saturation threshold in <a href="https://deboonstra.github.io/satpt/reference/satpt.html"><code>satpt::satpt()</code></a>
+is 0.025 because this threshold for standard errors leads to a
+confidence interval width of 0.1 around the sample proportions. More
+specifically, for a <span class="math inline">\(95\%\)</span> confidence
+interval around the sample proportions that has a margin of error
+(<strong>ME</strong>) of approximately</p>
+<p><span class="math display">\[
+ME = 1.96 \times \hat{\sigma}^{(w)}_{j} = 0.05
+\]</span></p>
+<p>and a total width of 0.1, the <em>saturation threshold</em>, should
+be defined as 0.025. The table below provides more <em>saturation
+thresholds</em> based on confidence intervals that have a width of
+0.1.</p>
+<table class="table table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:center;">
+Confidence level
+</th>
+<th style="text-align:center;">
+Saturation threshold
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+90%
+</td>
+<td style="text-align:center;">
+0.038
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+95%
+</td>
+<td style="text-align:center;">
+0.025
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+99%
+</td>
+<td style="text-align:center;">
+0.210
+</td>
+</tr>
+</tbody>
+</table>
+<p>The saturation threshold may be as small or as large as one wants.
+However, the threshold must never exceed 0.25 or be lower than 0 because
+the maximum standard error for any sample proportion is 0.25 when the
+sample proportion is 0.5.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
