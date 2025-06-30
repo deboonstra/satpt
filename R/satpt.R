@@ -163,14 +163,13 @@
 #' @rdname satpt
 #' @export
 satpt <- function(
-  y,
-  by,
-  exclude = c(NA, NaN),
-  alpha = 0.05,
-  threshold = 0.025,
-  dimnames = NULL,
-  ...
-) {
+    y,
+    by,
+    exclude = c(NA, NaN),
+    alpha = 0.05,
+    threshold = 0.025,
+    dimnames = NULL,
+    ...) {
   # Checking parameter types ####
   if (!inherits(x = y, what = "matrix")) {
     tmp <- try(expr = y <- char_matrix(x = y), silent = TRUE)
