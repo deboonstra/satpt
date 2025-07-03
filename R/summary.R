@@ -64,9 +64,10 @@
 #' @rdname summary.satpt
 #' @export
 summary.satpt <- function(
-    object,
-    digits = max(3, getOption("digits") - 3),
-    ...) {
+  object,
+  digits = max(3, getOption("digits") - 3),
+  ...
+) {
   # Check object type ####
   if (!methods::is(object, "satpt")) {
     stop("object must be of satpt type.")
