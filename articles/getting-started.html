@@ -140,12 +140,12 @@ error was less than 0.025. Thus, saturation of the response categories
 is achieved.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Analysis based on: y </span></span>
+<span><span class="co">#&gt; Analysis based on: q2 </span></span>
 <span><span class="co">#&gt; Saturation achieved?  Yes </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall Sample Proportions and Standard Errors</span></span>
 <span><span class="co">#&gt; ==============================================</span></span>
-<span><span class="co">#&gt;             y: y</span></span>
+<span><span class="co">#&gt;             y: q2</span></span>
 <span><span class="co">#&gt; Statistics   Not at all  Often   Once Rarely Sometimes</span></span>
 <span><span class="co">#&gt;   Proportion     0.2531 0.0750 0.0375 0.3688    0.2656</span></span>
 <span><span class="co">#&gt;   SE             0.0172 0.0104 0.0075 0.0191    0.0175</span></span></code></pre></div>
@@ -158,21 +158,21 @@ on the returned <code>satpt</code> object, as seen below.</p>
 <span><span class="co">#&gt; Saturation point analysis of sample proportions</span></span>
 <span><span class="co">#&gt; ===============================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Analysis based on: y </span></span>
+<span><span class="co">#&gt; Analysis based on: q2 </span></span>
 <span><span class="co">#&gt; Saturation achieved? Yes</span></span>
 <span><span class="co">#&gt; Saturation threshold of 0.025</span></span>
 <span><span class="co">#&gt; Responses collected from a sample size of 640</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall sample proportions</span></span>
 <span><span class="co">#&gt; ============================================</span></span>
-<span><span class="co">#&gt;          y: y</span></span>
+<span><span class="co">#&gt;          y: q2</span></span>
 <span><span class="co">#&gt;           Not at all Often   Once Rarely Sometimes</span></span>
 <span><span class="co">#&gt;   Overall     0.2531 0.075 0.0375 0.3688    0.2656</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall standard errors</span></span>
 <span><span class="co">#&gt; =========================================</span></span>
-<span><span class="co">#&gt;          y: y</span></span>
+<span><span class="co">#&gt;          y: q2</span></span>
 <span><span class="co">#&gt;           Not at all  Often   Once Rarely Sometimes</span></span>
 <span><span class="co">#&gt;   Overall     0.0172 0.0104 0.0075 0.0191    0.0175</span></span></code></pre></div>
 <p>The goal of <a href="https://deboonstra.github.io/satpt/reference/satpt.html"><code>summary()</code></a>
@@ -233,7 +233,7 @@ wave, as there was no “previous” data collected.</p>
 <span>  dimnames <span class="op">=</span> <span class="st">"Responses to survey"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Analysis based on: y </span></span>
+<span><span class="co">#&gt; Analysis based on: q2 </span></span>
 <span><span class="co">#&gt; Saturation achieved?  No </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall Sample Proportions and Standard Errors</span></span>
@@ -268,7 +268,7 @@ from <em>EIN</em> members who did not respond previously.</p>
 <span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"by"</span> <span class="op">=</span> <span class="st">"Data collection period"</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="st">"Responses to survey"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Analysis based on: y </span></span>
+<span><span class="co">#&gt; Analysis based on: q2 </span></span>
 <span><span class="co">#&gt; Saturation achieved?  Yes </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall Sample Proportions and Standard Errors</span></span>
@@ -286,7 +286,7 @@ analysis, including the test of independence of the responses.</p>
 <span><span class="co">#&gt; Saturation point analysis of sample proportions</span></span>
 <span><span class="co">#&gt; ===============================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Analysis based on: y </span></span>
+<span><span class="co">#&gt; Analysis based on: q2 </span></span>
 <span><span class="co">#&gt; Saturation achieved? Yes</span></span>
 <span><span class="co">#&gt; Saturation threshold of 0.025</span></span>
 <span><span class="co">#&gt; Responses collected from a sample size of 470</span></span>

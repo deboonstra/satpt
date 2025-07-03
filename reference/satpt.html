@@ -114,15 +114,17 @@ will create a contingency matrix to perform the test of independence on.</p></dd
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object with <code>S3</code> class <code>"satpt"</code> containing 12 elements. Multiple
-elemnts in <code>satpt</code> are <code>list</code> objects that are named after the elements in
-<code>y</code>. These named <code>list</code> objects are of most importance when examining select
-all apply questions.</p><dl><dt><code>threshold</code></dt>
+    <p>An object with <code>S3</code> class <code>"satpt"</code> containing 12 elements. The
+return elements in a <code>"satpt"</code> object are based on the response item that
+had the largest standard error. The <code>which_saturation</code> returned value
+indicates which response item had the largest standard error. This nature
+of <code>satpt</code> is of most important when determining saturation for select all
+apply questions.</p><dl><dt><code>threshold</code></dt>
 <dd><p>Saturation threshold applied to the standard errors of
 thesample proportions.</p></dd>
 
 <dt><code>saturation</code></dt>
-<dd><p>A logical value indicating whether response category
+<dd><p>A logical value indicating whether response item
 with the largest standard error has achieved saturation given the defined
 <code>threshold</code>. The value of <code>TRUE</code> indicates that saturation has been achieved
 while a value of <code>FALSE</code> indicates that saturation was not achieved and more
@@ -131,18 +133,20 @@ data is needed to achieve saturation.</p></dd>
 <dt><code>which_saturation</code></dt>
 <dd><p>A character value indicating which collection of
 responses within <code>y</code> determined saturation achievement. Generally, this is
-only of importance when examining select all apply questions.</p></dd>
+only of importance when examining select all apply questions. For
+multiple choice type of question, the returned value should just be the
+object name.</p></dd>
 
 <dt><code>counts</code></dt>
-<dd><p>A <code>list</code> of <code>matrix</code> objects containing the observed cell
+<dd><p>A <code>matrix</code> object containing the observed cell
 counts of the contigency table created by <code>y</code> and <code>by</code> if provided.</p></dd>
 
 <dt><code>phat</code></dt>
-<dd><p>A <code>list</code> of <code>matrix</code> objects containing the row-wise sample
+<dd><p>A <code>matrix</code> object containing the row-wise sample
 proportions for the observed contigency table (<code>counts</code>).</p></dd>
 
 <dt><code>se</code></dt>
-<dd><p>A <code>list</code> of <code>matrix</code> objects containing the standard errors for
+<dd><p>A <code>matrix</code> object containing the standard errors for
 the calculated sample proportions (<code>phat</code>).</p></dd>
 
 <dt><code>pooled_se</code></dt>
@@ -153,7 +157,7 @@ were calculated due to the presence of response bias.</p></dd>
 <dd><p>Significance level for the test for independence.</p></dd>
 
 <dt><code>test</code></dt>
-<dd><p>A <code>list</code> of <code>htest</code> objects produced by <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code>
+<dd><p>A <code>htest</code> object produced by <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code>
 or <code><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">stats::fisher.test()</a></code> containing the results from the test for
 independence.</p></dd>
 
@@ -161,7 +165,7 @@ independence.</p></dd>
 <dd><p>Total number of observations with a response provided.</p></dd>
 
 <dt><code>total</code></dt>
-<dd><p>A <code>list</code> of <code>data.frame</code> objects with 4 variables describing
+<dd><p>A <code>data.frame</code> object with 4 variables describing
 the overall collected sample. The <code>categories</code> variable provides the unique
 categories listed in <code>y</code>. While <code>counts</code>, <code>phat</code>, and <code>se</code> provide the
 overall cell counts, sample proportions, and standard errors for the
@@ -170,7 +174,7 @@ sample proportions are calculated based on the presence of response bias,
 which is detailed above.</p></dd>
 
 <dt><code>hindex</code></dt>
-<dd><p>A <code>list</code> of heterogeneity index values for the sample
+<dd><p>A vector of heterogeneity index values for the sample
 proportions calculated by mean absolute deviation.</p></dd>
 
 
@@ -210,11 +214,11 @@ periods (<code>by</code>). Fisher's Exact Test or the \(I \times J\) variant is
 implemented when the more than 20% of the expected cell counts are less than
 5. Otherwise Pearsons' \(\chi^2\) Test for Independence is implemented.</p>
 <p>When response bias is present the pooled standard errors of the overall
-sample proportions for each response category is reported, the pooled
+sample proportions for each response item is reported, the pooled
 standard errors account for the response bias. The heterogeneity index is
 defined as the mean absoluted difference of the sample proportions for each
-response category within each data collection period (<code>by</code>) relative to the
-overall sample proportions for each response category. This index reflects
+response item within each data collection period (<code>by</code>) relative to the
+overall sample proportions for each response item. This index reflects
 the average deviation of the data collection period proportions from the
 overall sample proportions. Smaller values indicate the sample proportions of
 the data collection periods are less dissimilar. This measure is of
@@ -223,7 +227,7 @@ for independence will not be conducted and the heterogeneity index will not
 be calculated. <code>satpt</code> assumes response bias is only possible when <code>by</code> is
 specified. Thus, there is no need to check for response bias when <code>by</code> is
 not specified.</p>
-<p>Determination of saturation is based on the the response category and/or
+<p>Determination of saturation is based on the the response item and/or
 collection of responses that has the largest standard error. If this largest
 standard error achieves saturation then all other categories or responses
 will achieve saturation. For select all apply questions, the collection of
@@ -238,7 +242,7 @@ closest to 0.5) will be used to determine saturation of all responses.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">stats::ftable()</a></code>, <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">stats::ftable()</a></code> <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">stats::chisq.test()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -247,12 +251,12 @@ closest to 0.5) will be used to determine saturation of all responses.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Assuming response bias is not a possiblity</span></span></span>
 <span class="r-in"><span><span class="fu">satpt</span><span class="fu">::</span><span class="fu">satpt</span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Analysis based on: y </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Analysis based on: q2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation achieved?  Yes </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overall Sample Proportions and Standard Errors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ==============================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             y: y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             y: q2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistics   Not at all  Often   Once Rarely Sometimes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Proportion     0.2531 0.0750 0.0375 0.3688    0.2656</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   SE             0.0172 0.0104 0.0075 0.0191    0.0175</span>
@@ -261,12 +265,12 @@ closest to 0.5) will be used to determine saturation of all responses.</p>
 <span class="r-in"><span><span class="co"># response bias is possible. For this example, response bias is not present,</span></span></span>
 <span class="r-in"><span><span class="co"># so the standard errors will be the same.</span></span></span>
 <span class="r-in"><span><span class="fu">satpt</span><span class="fu">::</span><span class="fu">satpt</span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Analysis based on: y </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Analysis based on: q2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation achieved?  Yes </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overall Sample Proportions and Standard Errors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ==============================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             y: y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             y: q2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistics   Not at all  Often   Once Rarely Sometimes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Proportion     0.2531 0.0750 0.0375 0.3688    0.2656</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   SE             0.0172 0.0104 0.0075 0.0191    0.0175</span>
@@ -291,15 +295,15 @@ closest to 0.5) will be used to determine saturation of all responses.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation point analysis of sample proportions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ===============================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Analysis based on: y </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Analysis based on: responses1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation achieved? Yes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation threshold of 0.025</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Responses collected from a sample size of 350</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data interval and overall sample proportions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ============================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          y: y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> by: by         A      B      C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          y: responses1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> by: wave       A      B      C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1       0.3840 0.4120 0.2040</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2       0.1500 0.0500 0.8000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Overall 0.3171 0.3086 0.3743</span>
@@ -307,8 +311,8 @@ closest to 0.5) will be used to determine saturation of all responses.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data interval and overall standard errors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> =========================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          y: y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> by: by         A      B      C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          y: responses1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> by: wave       A      B      C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1       0.0308 0.0311 0.0255</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2       0.0357 0.0218 0.0400</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Overall 0.0242 0.0231 0.0215</span>
@@ -317,7 +321,7 @@ closest to 0.5) will be used to determine saturation of all responses.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Pearson's Chi-squared test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> data:  y: y given by: by</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> data:  y: responses1 given by: wave</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X-squared = 110.46, df = 2, p-value &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Response bias present? Yes</span>

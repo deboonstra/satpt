@@ -67,9 +67,10 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the current released version of <code>satpt</code> from <a href="https://cran.r-project.org" class="external-link">CRAN</a> with</p>
+<p>You can install the current stable released version of <code>satpt</code> from <a href="https://cran.r-project.org" class="external-link">CRAN</a> with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"satpt"</span><span class="op">)</span></span></code></pre></div>
+<p><strong>when available on CRAN</strong>.</p>
 <div class="section level3">
 <h3 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
 </h3>
@@ -88,12 +89,12 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ein</span><span class="op">)</span> <span class="co"># load example ein data</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="reference/satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#&gt; Analysis based on: y </span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#&gt; Analysis based on: q2 </span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; Saturation achieved?  Yes </span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; Overall Sample Proportions and Standard Errors</span></span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; ==============================================</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;             y: y</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;             y: q2</span></span>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; Statistics   Not at all  Often   Once Rarely Sometimes</span></span>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt;   Proportion     0.2531 0.0750 0.0375 0.3688    0.2656</span></span>
 <span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt;   SE             0.0172 0.0104 0.0075 0.0191    0.0175</span></span></code></pre></div>
@@ -118,7 +119,7 @@
 <div class="section level2">
 <h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
 </h2>
-<p>To get started, first read the <a href="https://deboonstra.github.io/satpt/articles/getting-started.html"><em>Getting started with satpt</em></a> vignette. Then, read more about how <code>satpt</code> may handle <em>Select All Apply</em> question in the <a href="https://deboonstra.github.io/satpt/articles/select-all-apply.html"><em>Impelementing with select all apply questions</em></a> vignette.</p>
+<p>To get started, first read the <a href="https://deboonstra.github.io/satpt/articles/getting-started.html"><em>Getting started with satpt</em></a> vignette. Then, read more about how <code>satpt</code> may handle <em>Select All Apply</em> questions in the <a href="https://deboonstra.github.io/satpt/articles/select-all-apply.html"><em>Impelementing with select all apply questions</em></a> vignette.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="developers">
