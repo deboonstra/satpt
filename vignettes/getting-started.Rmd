@@ -147,7 +147,7 @@ The above Pearson's $\chi^{2}$ test for independence shows that responses bias w
 The default saturation threshold in [`satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) is 0.025 because this threshold for standard errors leads to a confidence interval width of 0.1 around the sample proportions. More specifically, for a $95\%$ confidence interval around the sample proportions that has a margin of error (**ME**) of approximately
 
 $$
-ME = 1.96 \times \hat{\sigma}^{(w)}_{j} = 0.05
+ME = 1.96 \times \text{SE} = 0.05
 $$
 
 and a total width of 0.1, the *saturation threshold*, should be defined as 0.025. The table below provides more *saturation thresholds* based on confidence intervals that have a width of 0.1.
