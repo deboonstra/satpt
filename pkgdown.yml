@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   getting-started: getting-started.html
   select-all-apply: select-all-apply.html
-last_built: 2025-07-03T20:16Z
+last_built: 2025-07-03T20:26Z
 urls:
   reference: https://deboonstra.github.io/satpt/reference
   article: https://deboonstra.github.io/satpt/articles
