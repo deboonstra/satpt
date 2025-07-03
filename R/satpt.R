@@ -167,13 +167,14 @@
 #' @rdname satpt
 #' @export
 satpt <- function(
-    y,
-    by,
-    exclude = c(NA, NaN),
-    alpha = 0.05,
-    threshold = 0.025,
-    dimnames = NULL,
-    ...) {
+  y,
+  by,
+  exclude = c(NA, NaN),
+  alpha = 0.05,
+  threshold = 0.025,
+  dimnames = NULL,
+  ...
+) {
   # Capture variable name as string for fallback column name ####
   var_name <- deparse(expr = substitute(expr = y))
   var_name <- gsub(
@@ -185,11 +186,11 @@ satpt <- function(
   # Checking parameter types ####
   if (is.atomic(x = y)) {
     tmp <- try(
-      expr = y <- char_matrix(y = y, cname = var_name),
+      expr = y <- satpt::char_matrix(y = y, cname = var_name),
       silent = TRUE
     )
   } else {
-    tmp <- try(expr = y <- char_matrix(y = y), silent = TRUE)
+    tmp <- try(expr = y <- satpt::char_matrix(y = y), silent = TRUE)
   }
   if (inherits(x = tmp, what = "try-error")) {
     stop(
@@ -210,7 +211,10 @@ satpt <- function(
       perl = FALSE
     )
     # by is transformed into a vector for ease of use
-    tmp <- try(expr = by <- as.character(char_matrix(y = by), silent = TRUE))
+    tmp <- try(
+      expr = by <- as.character(satpt::char_matrix(y = by)),
+      silent = TRUE
+    )
     if (inherits(x = tmp, what = "try-error")) {
       stop(
         paste0(
