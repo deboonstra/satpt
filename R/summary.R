@@ -74,11 +74,11 @@ summary.satpt <- function(
   }
 
   # Sample proportions ####
-  if (nrow(object$phat[[object$which_saturation]]) != 1) {
-    phat <- object$phat[[object$which_saturation]]
+  if (nrow(object$phat) != 1) {
+    phat <- object$phat
 
     ## Combining overall sample proportion with interval sample proportions ####
-    phat <- rbind(phat, object$total[[object$which_saturation]][, 3])
+    phat <- rbind(phat, object$total[, 3])
 
     ## Rounding ####
     phat <- apply(
@@ -91,15 +91,15 @@ summary.satpt <- function(
 
     ### Adjusting dimension names ####
     row.names(phat) <- c(
-      row.names(object$phat[[object$which_saturation]]),
+      row.names(object$phat),
       "Overall"
     )
-    colnames(phat) <- colnames(object$phat[[object$which_saturation]])
+    colnames(phat) <- colnames(object$phat)
     names(dimnames(phat)) <- names(
-      x = dimnames(object$phat[[object$which_saturation]])
+      x = dimnames(object$phat)
     )
   } else {
-    phat <- object$phat[[object$which_saturation]]
+    phat <- object$phat
 
     ## Rounding
     phat <- apply(
@@ -115,19 +115,19 @@ summary.satpt <- function(
 
     ### Adjusting dimension names ####
     row.names(phat) <- "Overall"
-    colnames(phat) <- colnames(object$phat[[object$which_saturation]])
+    colnames(phat) <- colnames(object$phat)
     names(dimnames(phat)) <- c(
       "",
-      names(dimnames(object$phat[[object$which_saturation]]))[2]
+      names(dimnames(object$phat))[2]
     )
   }
 
-  if (nrow(object$se[[object$which_saturation]]) != 1) {
+  if (nrow(object$se) != 1) {
     # Sample standard errors ####
-    se <- object$se[[object$which_saturation]]
+    se <- object$se
 
     ## Combining overall standard errors with interval standard errors ####
-    se <- rbind(se, object$total[[object$which_saturation]][, 4])
+    se <- rbind(se, object$total[, 4])
 
     ## Rounding
     se <- apply(
@@ -140,13 +140,13 @@ summary.satpt <- function(
 
     ### Adjusting dimension names ####
     row.names(se) <- c(
-      row.names(object$se[[object$which_saturation]]),
+      row.names(object$se),
       "Overall"
     )
-    colnames(se) <- colnames(object$se[[object$which_saturation]])
-    names(dimnames(se)) <- names(dimnames(object$se[[object$which_saturation]]))
+    colnames(se) <- colnames(object$se)
+    names(dimnames(se)) <- names(dimnames(object$se))
   } else {
-    se <- object$se[[object$which_saturation]]
+    se <- object$se
 
     ## Rounding
     se <- apply(
@@ -162,20 +162,20 @@ summary.satpt <- function(
 
     ### Adjusting dimension names ####
     row.names(se) <- "Overall"
-    colnames(se) <- colnames(object$se[[object$which_saturation]])
+    colnames(se) <- colnames(object$se)
     names(dimnames(se)) <- c(
       "",
-      names(dimnames(object$se[[object$which_saturation]]))[2]
+      names(dimnames(object$se))[2]
     )
   }
 
   # Heterogeneity index ####
   if (!is.null(object$hindex)) {
     hindex <- data.frame(
-      categories = names(object$hindex[[object$which_saturation]]),
+      categories = names(object$hindex),
       index = as.numeric(
         format(
-          round(x = object$hindex[[object$which_saturation]], digits = digits),
+          round(x = object$hindex, digits = digits),
           nsmall = digits
         )
       )
@@ -189,13 +189,13 @@ summary.satpt <- function(
   out$threshold <- object$threshold
   out$saturation <- ifelse(test = object$saturation, yes = "Yes", no = "No")
   out$which_saturation <- object$which_saturation
-  out$n <- object$n[names(object$n) == object$which_saturation]
+  out$n <- object$n
   out$phat <- phat
   out$se <- se
-  out$pooled_se <- object$pooled_se[names(object$n) == object$which_saturation]
+  out$pooled_se <- object$pooled_se
   out$alpha <- object$alpha
   if (!is.null(object$test)) {
-    out$test <- object$test[[object$which_saturation]]
+    out$test <- object$test
   } else {
     out$test <- object$test
   }

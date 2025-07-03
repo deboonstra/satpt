@@ -36,24 +36,24 @@ plot.satpt <- function(x, threshold = TRUE, ...) {
   }
 
   # Specifying default plotting parameters ####
-  x$total[[x$which_saturation]]
+  x$total
 
   ## Determining limit of y-axis ####
   se_max <- signif(
     abs(
-      signif(max(x$total[[x$which_saturation]]$se), digits = 1) -
-        max(x$total[[x$which_saturation]]$se)
+      signif(max(x$total$se), digits = 1) -
+        max(x$total$se)
     ) +
-      signif(max(x$total[[x$which_saturation]]$se), digits = 1),
+      signif(max(x$total$se), digits = 1),
     digits = 1
   )
   ylim_max <- max(x$threshold, se_max)
 
   ## Sepcifying plotting parameter ####
   barplot_args <- list(
-    height = x$total[[x$which_saturation]]$se,
-    names = x$total[[x$which_saturation]]$categories,
-    xlab = names(dimnames(x$phat[[x$which_saturation]]))[2],
+    height = x$total$se,
+    names = x$total$categories,
+    xlab = names(dimnames(x$phat))[2],
     ylab = "Standard errors",
     ylim = c(0, ylim_max),
     main = "Standard errors of overall sample proportions",

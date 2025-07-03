@@ -47,42 +47,46 @@ should \strong{not} be spectified because the \code{by} and \code{y} from argume
 will create a contingency matrix to perform the test of independence on.}
 }
 \value{
-An object with \code{S3} class \code{"satpt"} containing 12 elements. Multiple
-elemnts in \code{satpt} are \code{list} objects that are named after the elements in
-\code{y}. These named \code{list} objects are of most importance when examining select
-all apply questions.
+An object with \code{S3} class \code{"satpt"} containing 12 elements. The
+return elements in a \code{"satpt"} object are based on the response item that
+had the largest standard error. The \code{which_saturation} returned value
+indicates which response item had the largest standard error. This nature
+of \code{satpt} is of most important when determining saturation for select all
+apply questions.
 \describe{
 \item{\code{threshold}}{Saturation threshold applied to the standard errors of
 thesample proportions.}
-\item{\code{saturation}}{A logical value indicating whether response category
+\item{\code{saturation}}{A logical value indicating whether response item
 with the largest standard error has achieved saturation given the defined
 \code{threshold}. The value of \code{TRUE} indicates that saturation has been achieved
 while a value of \code{FALSE} indicates that saturation was not achieved and more
 data is needed to achieve saturation.}
 \item{\code{which_saturation}}{A character value indicating which collection of
 responses within \code{y} determined saturation achievement. Generally, this is
-only of importance when examining select all apply questions.}
-\item{\code{counts}}{A \code{list} of \code{matrix} objects containing the observed cell
+only of importance when examining select all apply questions. For
+multiple choice type of question, the returned value should just be the
+object name.}
+\item{\code{counts}}{A \code{matrix} object containing the observed cell
 counts of the contigency table created by \code{y} and \code{by} if provided.}
-\item{\code{phat}}{A \code{list} of \code{matrix} objects containing the row-wise sample
+\item{\code{phat}}{A \code{matrix} object containing the row-wise sample
 proportions for the observed contigency table (\code{counts}).}
-\item{\code{se}}{A \code{list} of \code{matrix} objects containing the standard errors for
+\item{\code{se}}{A \code{matrix} object containing the standard errors for
 the calculated sample proportions (\code{phat}).}
 \item{\code{pooled_se}}{A logical value indicating whether pooled standard errors
 were calculated due to the presence of response bias.}
 \item{\code{alpha}}{Significance level for the test for independence.}
-\item{\code{test}}{A \code{list} of \code{htest} objects produced by \code{\link[stats:chisq.test]{stats::chisq.test()}}
+\item{\code{test}}{A \code{htest} object produced by \code{\link[stats:chisq.test]{stats::chisq.test()}}
 or \code{\link[stats:fisher.test]{stats::fisher.test()}} containing the results from the test for
 independence.}
 \item{\code{n}}{Total number of observations with a response provided.}
-\item{\code{total}}{A \code{list} of \code{data.frame} objects with 4 variables describing
+\item{\code{total}}{A \code{data.frame} object with 4 variables describing
 the overall collected sample. The \code{categories} variable provides the unique
 categories listed in \code{y}. While \code{counts}, \code{phat}, and \code{se} provide the
 overall cell counts, sample proportions, and standard errors for the
 categories, respectively. The standard errors reported for the overall
 sample proportions are calculated based on the presence of response bias,
 which is detailed above.}
-\item{\code{hindex}}{A \code{list} of heterogeneity index values for the sample
+\item{\code{hindex}}{A vector of heterogeneity index values for the sample
 proportions calculated by mean absolute deviation.}
 }
 }
@@ -129,11 +133,11 @@ implemented when the more than 20\% of the expected cell counts are less than
 5. Otherwise Pearsons' \eqn{\chi^2} Test for Independence is implemented.
 
 When response bias is present the pooled standard errors of the overall
-sample proportions for each response category is reported, the pooled
+sample proportions for each response item is reported, the pooled
 standard errors account for the response bias. The heterogeneity index is
 defined as the mean absoluted difference of the sample proportions for each
-response category within each data collection period (\code{by}) relative to the
-overall sample proportions for each response category. This index reflects
+response item within each data collection period (\code{by}) relative to the
+overall sample proportions for each response item. This index reflects
 the average deviation of the data collection period proportions from the
 overall sample proportions. Smaller values indicate the sample proportions of
 the data collection periods are less dissimilar. This measure is of
@@ -143,7 +147,7 @@ be calculated. \code{satpt} assumes response bias is only possible when \code{by
 specified. Thus, there is no need to check for response bias when \code{by} is
 not specified.
 
-Determination of saturation is based on the the response category and/or
+Determination of saturation is based on the the response item and/or
 collection of responses that has the largest standard error. If this largest
 standard error achieves saturation then all other categories or responses
 will achieve saturation. For select all apply questions, the collection of
@@ -185,5 +189,5 @@ summary(res)
 
 }
 \seealso{
-\code{\link[stats:ftable]{stats::ftable()}}, \code{\link[stats:chisq.test]{stats::chisq.test()}}
+\code{\link[stats:ftable]{stats::ftable()}} \code{\link[stats:chisq.test]{stats::chisq.test()}}
 }

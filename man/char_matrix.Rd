@@ -4,12 +4,15 @@
 \alias{char_matrix}
 \title{Coerce Input to Character Matrix with Meaningful Column Names}
 \usage{
-char_matrix(x = x)
+char_matrix(y, cname = NULL)
 }
 \arguments{
-\item{x}{An object to be converted to a character matrix. Acceptable types
+\item{y}{An object to be converted to a character matrix. Acceptable types
 include \code{vector}, \code{factor}, \code{matrix}, \code{data.frame}, \code{data.table}, \code{tibble},
 or \code{list}.}
+
+\item{cname}{A character vector of column names. Default is \code{NULL}, which
+means \code{factor}s and \code{atomic} vectors will not be assigned a column name.}
 }
 \value{
 A \code{character} matrix with meaningful column names when possible.
@@ -26,10 +29,10 @@ method is defined for the object type. For \code{list}s, \code{NA} are appended 
 elements that have an object length less than the maximum object length.
 }
 \examples{
-char_matrix(x = 1:3)
-char_matrix(x = factor(x = c("a", "b", "c")))
-char_matrix(x = data.frame(a = 1:3, b = letters[1:3]))
-char_matrix(x = list(one = 1:3, two = 4:6))
+char_matrix(y = 1:3)
+char_matrix(y = factor(x = c("a", "b", "c")), cname = "ex_name")
+char_matrix(y = data.frame(a = 1:3, b = letters[1:3]))
+char_matrix(y = list(one = 1:3, two = 4:6))
 
 }
 \seealso{

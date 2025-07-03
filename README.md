@@ -13,12 +13,14 @@ responses from a survey using standard errors of sample proportions.
 
 ## Installation
 
-You can install the current released version of `satpt` from
+You can install the current stable released version of `satpt` from
 [CRAN](https://cran.r-project.org) with
 
 ``` r
 install.packages("satpt")
 ```
+
+**when available on CRAN**.
 
 ### Development version
 
@@ -43,12 +45,12 @@ res <- satpt::satpt(y = ein$q2, by = ein$wave)
 print(res)
 ```
 
-    #> Analysis based on: y 
+    #> Analysis based on: q2 
     #> Saturation achieved?  Yes 
     #> 
     #> Overall Sample Proportions and Standard Errors
     #> ==============================================
-    #>             y: y
+    #>             y: q2
     #> Statistics   Not at all  Often   Once Rarely Sometimes
     #>   Proportion     0.2531 0.0750 0.0375 0.3688    0.2656
     #>   SE             0.0172 0.0104 0.0075 0.0191    0.0175
@@ -84,6 +86,6 @@ account for response bias.
 To get started, first read the [*Getting started with
 satpt*](https://deboonstra.github.io/satpt/articles/getting-started.html)
 vignette. Then, read more about how `satpt` may handle *Select All
-Apply* question in the [*Impelementing with select all apply
+Apply* questions in the [*Impelementing with select all apply
 questions*](https://deboonstra.github.io/satpt/articles/select-all-apply.html)
 vignette.

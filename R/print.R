@@ -26,9 +26,9 @@ print.satpt <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   }
 
   # Creating printing object ####
-  phat <- x$total[[x$which_saturation]]$phat
+  phat <- x$total$phat
   phat <- format(round(x = phat, digits = digits), nsmall = digits)
-  se <- x$total[[x$which_saturation]]$se
+  se <- x$total$se
   se <- format(round(x = se, digits = digits), nsmall = digits)
   print_table <- matrix(
     data = as.numeric(c(phat, se)),
@@ -37,12 +37,12 @@ print.satpt <- function(x, digits = max(3, getOption("digits") - 3), ...) {
     byrow = TRUE,
     dimnames = list(
       c("Proportion", "SE"),
-      x$total[[x$which_saturation]]$categories
+      x$total$categories
     )
   )
   names(dimnames(print_table)) <- c(
     "Statistics",
-    names(dimnames(x$phat[[x$which_saturation]]))[2]
+    names(dimnames(x$phat))[2]
   )
 
   # Printing results ####

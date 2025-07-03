@@ -66,11 +66,11 @@
 #' 5. Otherwise Pearsons' \eqn{\chi^2} Test for Independence is implemented.
 #'
 #' When response bias is present the pooled standard errors of the overall
-#' sample proportions for each response category is reported, the pooled
+#' sample proportions for each response item is reported, the pooled
 #' standard errors account for the response bias. The heterogeneity index is
 #' defined as the mean absoluted difference of the sample proportions for each
-#' response category within each data collection period (`by`) relative to the
-#' overall sample proportions for each response category. This index reflects
+#' response item within each data collection period (`by`) relative to the
+#' overall sample proportions for each response item. This index reflects
 #' the average deviation of the data collection period proportions from the
 #' overall sample proportions. Smaller values indicate the sample proportions of
 #' the data collection periods are less dissimilar. This measure is of
@@ -80,49 +80,53 @@
 #' specified. Thus, there is no need to check for response bias when `by` is
 #' not specified.
 #'
-#' Determination of saturation is based on the the response category and/or
+#' Determination of saturation is based on the the response item and/or
 #' collection of responses that has the largest standard error. If this largest
 #' standard error achieves saturation then all other categories or responses
 #' will achieve saturation. For select all apply questions, the collection of
 #' responses that have the largest standard error (i.e., a sample proportion
 #' closest to 0.5) will be used to determine saturation of all responses.
 #'
-#' @return An object with `S3` class `"satpt"` containing 12 elements. Multiple
-#' elemnts in `satpt` are `list` objects that are named after the elements in
-#' `y`. These named `list` objects are of most importance when examining select
-#' all apply questions.
+#' @return An object with `S3` class `"satpt"` containing 12 elements. The
+#' return elements in a `"satpt"` object are based on the response item that
+#' had the largest standard error. The `which_saturation` returned value
+#' indicates which response item had the largest standard error. This nature
+#' of `satpt` is of most important when determining saturation for select all
+#' apply questions.
 #' \describe{
 #'  \item{`threshold`}{Saturation threshold applied to the standard errors of
 #'  thesample proportions.}
-#'  \item{`saturation`}{A logical value indicating whether response category
+#'  \item{`saturation`}{A logical value indicating whether response item
 #'  with the largest standard error has achieved saturation given the defined
 #' `threshold`. The value of `TRUE` indicates that saturation has been achieved
 #'  while a value of `FALSE` indicates that saturation was not achieved and more
 #'  data is needed to achieve saturation.}
 #'  \item{`which_saturation`}{A character value indicating which collection of
 #'  responses within `y` determined saturation achievement. Generally, this is
-#'  only of importance when examining select all apply questions.}
-#'  \item{`counts`}{A `list` of `matrix` objects containing the observed cell
+#'  only of importance when examining select all apply questions. For
+#'  multiple choice type of question, the returned value should just be the
+#'  object name.}
+#'  \item{`counts`}{A `matrix` object containing the observed cell
 #'  counts of the contigency table created by `y` and `by` if provided.}
-#'  \item{`phat`}{A `list` of `matrix` objects containing the row-wise sample
+#'  \item{`phat`}{A `matrix` object containing the row-wise sample
 #'  proportions for the observed contigency table (`counts`).}
-#'  \item{`se`}{A `list` of `matrix` objects containing the standard errors for
+#'  \item{`se`}{A `matrix` object containing the standard errors for
 #'  the calculated sample proportions (`phat`).}
 #'  \item{`pooled_se`}{A logical value indicating whether pooled standard errors
 #'  were calculated due to the presence of response bias.}
 #'  \item{`alpha`}{Significance level for the test for independence.}
-#'  \item{`test`}{A `list` of `htest` objects produced by [stats::chisq.test()]
+#'  \item{`test`}{A `htest` object produced by [stats::chisq.test()]
 #'  or [stats::fisher.test()] containing the results from the test for
 #'  independence.}
 #'  \item{`n`}{Total number of observations with a response provided.}
-#'  \item{`total`}{A `list` of `data.frame` objects with 4 variables describing
+#'  \item{`total`}{A `data.frame` object with 4 variables describing
 #'  the overall collected sample. The `categories` variable provides the unique
 #'  categories listed in `y`. While `counts`, `phat`, and `se` provide the
 #'  overall cell counts, sample proportions, and standard errors for the
 #'  categories, respectively. The standard errors reported for the overall
 #'  sample proportions are calculated based on the presence of response bias,
 #'  which is detailed above.}
-#'  \item{`hindex`}{A `list` of heterogeneity index values for the sample
+#'  \item{`hindex`}{A vector of heterogeneity index values for the sample
 #'  proportions calculated by mean absolute deviation.}
 #' }
 #'
@@ -130,7 +134,7 @@
 #' `hindex` when `by` is not specified. This is done because `satpt` assumes
 #' `by` is only specified when the data is collected in intervals.
 #'
-#' @seealso [stats::ftable()], [stats::chisq.test()]
+#' @seealso [stats::ftable()] [stats::chisq.test()]
 #'
 #' @examples
 #' data(ein)
@@ -171,25 +175,43 @@ satpt <- function(
   dimnames = NULL,
   ...
 ) {
+  # Capture variable name as string for fallback column name ####
+  var_name <- deparse(expr = substitute(expr = y))
+  var_name <- gsub(
+    x = var_name,
+    pattern = ".*\\$",
+    replacement = "",
+    perl = FALSE
+  )
   # Checking parameter types ####
-  if (!inherits(x = y, what = "matrix")) {
-    tmp <- try(expr = y <- char_matrix(x = y), silent = TRUE)
-    if (inherits(x = tmp, what = "try-error")) {
-      stop(
-        paste0(
-          "y must be a vector, matrix, data.frame, data.table, tibble, factor,",
-          " or list."
-        )
+  if (is.atomic(x = y)) {
+    tmp <- try(
+      expr = y <- char_matrix(y = y, cname = var_name),
+      silent = TRUE
+    )
+  } else {
+    tmp <- try(expr = y <- char_matrix(y = y), silent = TRUE)
+  }
+  if (inherits(x = tmp, what = "try-error")) {
+    stop(
+      paste0(
+        "y must be a vector, matrix, data.frame, data.table, tibble, factor,",
+        " or list."
       )
-    }
+    )
   }
 
   if (!missing(by)) {
-    # by is transformed into a vector for ease of use
-    tmp <- try(
-      expr = by <- as.character(x = char_matrix(x = by)),
-      silent = TRUE
+    # Capture variable name as string for fallback column name ####
+    var_name_by <- deparse(expr = substitute(expr = ein$wave))
+    var_name_by <- gsub(
+      x = var_name_by,
+      pattern = ".*\\$",
+      replacement = "",
+      perl = FALSE
     )
+    # by is transformed into a vector for ease of use
+    tmp <- try(expr = by <- as.character(char_matrix(y = by), silent = TRUE))
     if (inherits(x = tmp, what = "try-error")) {
       stop(
         paste0(
@@ -215,7 +237,7 @@ satpt <- function(
       threshold >= 0.25 ||
       threshold <= 0
   ) {
-    stop("threshold must be numeric between 0 and 1.")
+    stop("threshold must be numeric between 0 and 0.25.")
   }
 
   if (!is.null(dimnames)) {
@@ -277,7 +299,9 @@ satpt <- function(
         by_sort <- by[order(y[, j], by)]
 
         # Calculating counts ####
-        out <- stats::ftable(out ~ by_sort, exclude = exclude)
+        # by_sort is first in this list, so the analysis is perform on y (out)
+        # given by (by_sort)
+        out <- stats::ftable(by_sort, out, exclude = exclude)
 
         # Providing dimension names when provided ####
         tmp <- attributes(out)
@@ -291,15 +315,7 @@ satpt <- function(
           }
         } else {
           names(tmp$col.vars) <- paste0("y: ", colnames(y)[j])
-          names(tmp$row.vars) <- paste0(
-            "by: ",
-            gsub(
-              x = deparse(expr = substitute(expr = by)),
-              pattern = ".*\\$",
-              replacement = "",
-              perl = FALSE
-            )
-          )
+          names(tmp$row.vars) <- paste0("by: ", var_name_by)
         }
         attributes(out) <- tmp
 
@@ -361,9 +377,25 @@ satpt <- function(
         # Specifying default testing paremters ####
 
         ## Specifying testing parameters ####
-        test_args <- list(
-          x = z
-        )
+        if (pct_less5 < 0.2) {
+          # Arguemnts for chi-squared test
+          test_args <- list(
+            x = z,
+            correct = FALSE
+          )
+        } else {
+          # Arguments for Fisher's Exact test
+          if (any(dim(z) > 2)) {
+            test_args <- list(
+              x = z,
+              simulate.p.value = TRUE
+            )
+          } else {
+            test_args <- list(
+              x = z
+            )
+          }
+        }
 
         ## Pulling additional testing parameters from user ####
         new_test_args <- capture_dots()
@@ -526,20 +558,24 @@ satpt <- function(
   out$threshold <- threshold
   out$saturation <- saturation
   out$which_saturation <- which_saturation
-  out$counts <- counts
-  out$phat <- phat
-  out$se <- se
-  out$pooled_se <- unlist(pooled_se)
+  out$counts <- counts[[which_saturation]]
+  out$phat <- phat[[which_saturation]]
+  out$se <- se[[which_saturation]]
+  out$pooled_se <- unname(
+    unlist(pooled_se)[
+      names(unlist(pooled_se)) == which_saturation
+    ]
+  )
   out$alpha <- alpha
   if (all(!sapply(X = test, FUN = is.null))) {
-    out$test <- test
+    out$test <- test[[which_saturation]]
   } else {
     out$test <- NULL
   }
-  out$n <- total_obs
-  out$total <- total
+  out$n <- unname(total_obs[names(total_obs) == which_saturation])
+  out$total <- total[[which_saturation]]
   if (!is.null(hindex)) {
-    out$hindex <- hindex
+    out$hindex <- hindex[[which_saturation]]
   }
   return(structure(out, class = "satpt"))
 }

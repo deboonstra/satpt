@@ -22,11 +22,13 @@ knitr::opts_chunk$set(
 This *R* package identifies the saturation point of multinomial responses from a survey using standard errors of sample proportions.
 
 ## Installation
-You can install the current released version of `satpt` from [CRAN](https://cran.r-project.org) with
+You can install the current stable released version of `satpt` from [CRAN](https://cran.r-project.org) with
 
 ```{r, eval = FALSE}
 install.packages("satpt")
 ```
+
+**when available on CRAN**.
 
 ### Development version
 To get a bug fix or to use a feature from the development version, you can install the development version of `satpt` from [GitHub](https://github.com/deboonstra/satpt).
@@ -75,4 +77,4 @@ Presented below is a simplified version of the algorithm that is employed in `sa
 
 ## Learn more
 
-To get started, first read the [*Getting started with satpt*](https://deboonstra.github.io/satpt/articles/getting-started.html) vignette. Then, read more about how `satpt` may handle *Select All Apply* question in the [*Impelementing with select all apply questions*](https://deboonstra.github.io/satpt/articles/select-all-apply.html) vignette.
+To get started, first read the [*Getting started with satpt*](https://deboonstra.github.io/satpt/articles/getting-started.html) vignette. Then, read more about how `satpt` may handle *Select All Apply* questions in the [*Impelementing with select all apply questions*](https://deboonstra.github.io/satpt/articles/select-all-apply.html) vignette.
