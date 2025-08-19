@@ -2,9 +2,27 @@
 % Please edit documentation in R/char_matrix.R
 \name{char_matrix}
 \alias{char_matrix}
+\alias{char_matrix.default}
+\alias{char_matrix.factor}
+\alias{char_matrix.list}
+\alias{char_matrix.data.frame}
+\alias{char_matrix.data.table}
+\alias{char_matrix.matrix}
 \title{Coerce Input to Character Matrix with Meaningful Column Names}
 \usage{
 char_matrix(y, cname = NULL)
+
+\method{char_matrix}{default}(y, cname = NULL)
+
+\method{char_matrix}{factor}(y, cname = NULL)
+
+\method{char_matrix}{list}(y, cname = NULL)
+
+\method{char_matrix}{data.frame}(y, cname = NULL)
+
+\method{char_matrix}{data.table}(y, cname = NULL)
+
+\method{char_matrix}{matrix}(y, cname = NULL)
 }
 \arguments{
 \item{y}{An object to be converted to a character matrix. Acceptable types

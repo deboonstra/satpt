@@ -26,83 +26,113 @@
 #' char_matrix(y = list(one = 1:3, two = 4:6))
 #'
 #' @export
+#' @rdname char_matrix
 char_matrix <- function(y, cname = NULL) {
-  # Helper: Null-coalescing operator
-  `%||%` <- function(a, b) {
-    if (!is.null(x = a)) a else b
+  UseMethod("char_matrix")
+}
+
+#' @export
+#' @rdname char_matrix
+char_matrix.default <- function(y, cname = NULL) {
+  out <- matrix(data = as.character(x = y), ncol = 1)
+  if (!is.null(cname) && length(cname) == 1) {
+    colnames(x = out) <- cname
   }
 
-  # Handle factor or character vector ####
-  if (is.factor(x = y)) {
-    y <- as.character(x = y)
-  }
+  # Returning character matrix ####
+  return(out)
+}
 
-  # Simple vector to single-column character matrix ####
-  if (is.atomic(x = y) && is.vector(x = y)) {
-    out <- matrix(data = as.character(x = y), ncol = 1)
-    if (!is.null(cname) && length(cname) == 1) {
-      colnames(x = out) <- cname
+#' @export
+#' @rdname char_matrix
+char_matrix.factor <- function(y, cname = NULL) {
+  # Handle factor to character vector ####
+  y <- as.character(x = y)
+
+  # Character vector to character matrix ####
+  out <- char_matrix.default(y = y, cname = cname)
+
+  # Returning character matrix ####
+  return(out)
+}
+
+#' @export
+#' @rdname char_matrix
+char_matrix.list <- function(y, cname = NULL) {
+  # Creating padded character list ####
+  max_len <- max(sapply(X = y, FUN = length))
+  padded <- lapply(
+    X = y,
+    FUN = function(yy) {
+      col_char <- as.character(x = yy)
+      length(x = col_char) <- max_len # pads with NA automatically
+      return(col_char)
     }
-    return(out)
+  )
+
+  # Creating character matrix ####
+  out <- do.call(what = "cbind", args = padded)
+  if (!is.null(cname) && length(cname) == ncol(out)) {
+    colnames(x = out) <- cname
+  } else {
+    colnames(x = out) <- names(x = y) %||% paste0("V", seq_along(padded))
   }
 
-  # List input: handle unequal-length elements with padding ####
-  if (
-    is.list(x = y) && !inherits(x = y, what = c("data.frame", "data.table"))
-  ) {
-    # Creating padded character list ####
-    max_len <- max(sapply(X = y, FUN = length))
-    padded <- lapply(
-      X = y,
-      FUN = function(yy) {
-        col_char <- as.character(x = yy)
-        length(x = col_char) <- max_len # pads with NA automatically
-        return(col_char)
-      }
-    )
+  # Returning character matrix ####
+  return(out)
+}
 
-    # Creating character matrix ####
-    out <- do.call(what = "cbind", args = padded)
-    if (!is.null(cname) && length(cname) == ncol(out)) {
-      colnames(x = out) <- cname
-    } else {
-      colnames(x = out) <- names(x = y) %||% paste0("V", seq_along(padded))
-    }
-    return(out)
-  }
-
-  # data.frame, data.table, or tibble ####
-  if (inherits(x = y, what = c("data.frame", "data.table"))) {
-    out <- as.matrix(
-      x = data.frame(
-        lapply(X = y, FUN = as.character),
-        stringsAsFactors = FALSE
-      )
-    )
-    if (!is.null(cname) && length(cname) == ncol(out)) {
-      colnames(x = out) <- cname
-    } else {
-      colnames(x = out) <- colnames(x = y)
-    }
-    return(out)
-  }
-
-  # Matrix input ####
-  if (is.matrix(x = y)) {
-    out <- apply(X = y, MARGIN = c(1, 2), FUN = as.character)
-    if (!is.null(cname) && length(cname) == ncol(out)) {
-      colnames(x = out) <- cname
-    } else {
-      colnames(x = out) <- colnames(x = y)
-    }
-    return(out)
-  }
-
-  # Throwing an error if coercion fails ####
-  stop(
-    paste0(
-      "x must be a vector, matrix, data.frame, data.table, tibble, factor,",
-      " or list."
+#' @export
+#' @rdname char_matrix
+char_matrix.data.frame <- function(y, cname = NULL) {
+  # Obtaining character matrix ####
+  out <- as.matrix(
+    x = data.frame(
+      lapply(X = y, FUN = as.character),
+      stringsAsFactors = FALSE
     )
   )
+
+  # Assigning name ####
+  if (!is.null(cname) && length(cname) == ncol(out)) {
+    colnames(x = out) <- cname
+  } else {
+    colnames(x = out) <- colnames(x = y)
+  }
+
+  # Returning character matrix ####
+  return(out)
+}
+
+#' @export
+#' @rdname char_matrix
+char_matrix.data.table <- function(y, cname = NULL) {
+  # Getting character matrix based on data.frame ####
+  out <- char_matrix.data.frame(y = y, cname = cname)
+
+  # Returning character matrix ####
+  return(out)
+}
+
+#' @export
+#' @rdname char_matrix
+char_matrix.matrix <- function(y, cname = NULL) {
+  # Obtaining character matrix ####
+  out <- apply(X = y, MARGIN = c(1, 2), FUN = as.character)
+
+  # Assigning names ####
+  if (!is.null(cname) && length(cname) == ncol(out)) {
+    colnames(x = out) <- cname
+  } else {
+    colnames(x = out) <- colnames(x = y)
+  }
+
+  # Returning character matrix ####
+  return(out)
+}
+
+
+# Helper: Null-coalescing operator
+`%||%` <- function(a, b) {
+  if (!is.null(x = a)) a else b
 }
