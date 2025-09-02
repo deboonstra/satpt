@@ -160,15 +160,15 @@ The returned \code{satpt} object will contain \code{NULL} values for \code{test}
 \code{by} is only specified when the data is collected in intervals.
 }
 \examples{
-data(ein)
+data(diagnoses)
 
 # Assuming response bias is not a possiblity
-satpt::satpt(y = ein$q2)
+satpt::satpt(y = diagnoses$q2)
 
 # Examining saturation given data collected at different times and
 # response bias is possible. For this example, response bias is not present,
 # so the standard errors will be the same.
-satpt::satpt(y = ein$q2, by = ein$wave)
+satpt::satpt(y = diagnoses$q2, by = diagnoses$wave)
 
 # Creating an example, where response bias is present.
 

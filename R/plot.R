@@ -12,13 +12,13 @@
 #'
 #' @examples
 #' # loading data
-#' data(ein)
+#' data(diagnoses)
 #'
 #' # performing saturation point analysis
-#' fit1 <- satpt::satpt(y = ein$q2)
+#' fit1 <- satpt::satpt(y = diagnoses$q2)
 #' fit2 <- satpt::satpt(
-#'   y = ein$q2,
-#'   by = ein$wave,
+#'   y = diagnoses$q2,
+#'   by = diagnoses$wave,
 #'   dimnames = c("Response collected", "Collection period"),
 #'   threshold = 0.015
 #' )

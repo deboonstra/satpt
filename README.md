@@ -40,8 +40,8 @@ For basic usage of `satpt` simply specify the responses of the survey in
 
 ``` r
 library(satpt) # load package
-data(ein) # load example ein data
-res <- satpt::satpt(y = ein$q2, by = ein$wave)
+data(diagnoses) # load example diagnoses data
+res <- satpt::satpt(y = diagnoses$q2, by = diagnoses$wave)
 print(res)
 ```
 

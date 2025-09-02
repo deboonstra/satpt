@@ -43,14 +43,14 @@ remotes::install_github("deboonstra/satpt")
 For basic usage of `satpt` simply specify the responses of the survey in `y` and the data collection period information in `by`, as seen below. 
 ```{r, eval = FALSE}
 library(satpt) # load package
-data(ein) # load example ein data
-res <- satpt::satpt(y = ein$q2, by = ein$wave)
+data(diagnoses) # load example diagnoses data
+res <- satpt::satpt(y = diagnoses$q2, by = diagnoses$wave)
 print(res)
 ```
 
 ```{r, echo = FALSE}
-data(ein)
-res <- satpt::satpt(y = ein$q2, by = ein$wave)
+data(diagnoses)
+res <- satpt::satpt(y = diagnoses$q2, by = diagnoses$wave)
 print(res)
 ```
 

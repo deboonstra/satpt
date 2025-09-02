@@ -22,17 +22,17 @@ We'll start off by call the `library` function to `satpt` to obtain all the func
 library(satpt)
 ```
 
-and load in the example [*EIN*](https://deboonstra.github.io/satpt/reference/ein.html) data.
+and load in the example [*Difficult Diagnoses*](https://deboonstra.github.io/satpt/reference/diagnoses.html) data.
 
 ```{r}
-data(ein)
+data(diagnoses)
 ```
 
 When we examine the first six and last six of the responses to question one, we see the responses to this "select that all apply" question are separated by the vertical pipe operator (`"|"`). 
 
 ```{r}
-head(ein$q1)
-tail(ein$q1)
+head(diagnoses$q1)
+tail(diagnoses$q1)
 ```
 
 From the original survey, [*Difficult Diagnoses*](https://ein.idsociety.org/surveys/survey/166/), we know that the reported values relate to survery responses in this manner.
@@ -46,7 +46,7 @@ From the original survey, [*Difficult Diagnoses*](https://ein.idsociety.org/surv
 So, we need to split the string of reponses based on the vertical pipe delimiter for each response.
 
 ```{r}
-q1_split <- strsplit(x = ein$q1, split = "|", fixed = TRUE)
+q1_split <- strsplit(x = diagnoses$q1, split = "|", fixed = TRUE)
 ```
 
 With each response to the survey being represented as an element of character vectors in `q1`, we are going to create five indicator functions that denote whether one of the options were selected for a given response to the survey. We are transforming to indicator functions because the methodology proposed in the paper that accompanies this package demonstrates that "select all that apply" questions can be viewed a collection Poisson distributions. When each one of these distributions are conditioned on by the sum of Poisson distributions the result is a binomial distribution. So, the code below demonstrates one way to create these indicators functions for each of the possible response fields.
@@ -88,7 +88,7 @@ for (j in seq_len(ncol(q1))) {
 }
 ```
 
-The "select all that apply" response are now transformed into a collection of indicator functions, where the value `"Yes"` denotes that response field was selected and `"No"` denotes the response field was **not** selected. These responses were collected in different data collection periods due to non-response of previous collection periods. Thus, we must use the `wave` variable in the `ein` data, so we may conduct saturation point analysis on each of the response fields while controlling for potiental response bias.
+The "select all that apply" response are now transformed into a collection of indicator functions, where the value `"Yes"` denotes that response field was selected and `"No"` denotes the response field was **not** selected. These responses were collected in different data collection periods due to non-response of previous collection periods. Thus, we must use the `wave` variable in the `diagnoses` data, so we may conduct saturation point analysis on each of the response fields while controlling for potiental response bias.
 
 ```{r}
 str(q1)
@@ -98,7 +98,7 @@ Using the [`satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.
 ```{r}
 res <- satpt::satpt(
   y = q1,
-  by = ein$wave,
+  by = diagnoses$wave,
   dimnames = c(
     "by" = "Data collection period",
     "y" = "Responses to survey"

@@ -137,15 +137,15 @@
 #' @seealso [stats::ftable()] [stats::chisq.test()]
 #'
 #' @examples
-#' data(ein)
+#' data(diagnoses)
 #'
 #' # Assuming response bias is not a possiblity
-#' satpt::satpt(y = ein$q2)
+#' satpt::satpt(y = diagnoses$q2)
 #'
 #' # Examining saturation given data collected at different times and
 #' # response bias is possible. For this example, response bias is not present,
 #' # so the standard errors will be the same.
-#' satpt::satpt(y = ein$q2, by = ein$wave)
+#' satpt::satpt(y = diagnoses$q2, by = diagnoses$wave)
 #'
 #' # Creating an example, where response bias is present.
 #'
@@ -167,13 +167,14 @@
 #' @rdname satpt
 #' @export
 satpt <- function(
-    y,
-    by,
-    exclude = c(NA, NaN),
-    alpha = 0.05,
-    threshold = 0.025,
-    dimnames = NULL,
-    ...) {
+  y,
+  by,
+  exclude = c(NA, NaN),
+  alpha = 0.05,
+  threshold = 0.025,
+  dimnames = NULL,
+  ...
+) {
   # Capture variable name as string for fallback column name ####
   var_name <- deparse(expr = substitute(expr = y))
   var_name <- gsub(
@@ -202,7 +203,7 @@ satpt <- function(
 
   if (!missing(by)) {
     # Capture variable name as string for fallback column name ####
-    var_name_by <- deparse(expr = substitute(expr = ein$wave))
+    var_name_by <- deparse(expr = substitute(expr = by))
     var_name_by <- gsub(
       x = var_name_by,
       pattern = ".*\\$",

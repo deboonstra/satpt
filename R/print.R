@@ -8,14 +8,14 @@
 #' @inheritDotParams base::print
 #'
 #' @examples
-#' data(ein)
+#' data(diagnoses)
 #'
 #' # Examining saturation given data collected at different times and
 #' # response bias is possible. For this example, response bias is not present,
 #' # so the standard errors will be the same.
 #'
 #' # Saving analysis as R object and printing
-#' res <- satpt::satpt(y = ein$q2, by = ein$wave)
+#' res <- satpt::satpt(y = diagnoses$q2, by = diagnoses$wave)
 #' print(x = res, digits = 3)
 #'
 #' @export

@@ -1,10 +1,10 @@
-#' @title Emerging Infectious Network (EIN) survey data
+#' @title Emerging Infectious Network (EIN) Difficult Diagnoses survey data
 #'
 #' @description Responses to survey questions about advanced molecular
 #' diagnostic testing for infectious diseases presented to medical personnel
 #' who are members of EIN.
 #'
-#' @format ## `ein`
+#' @format ## `diagnoses`
 #' A `data.frame` with 643 observations and 3 variables.
 #' \describe{
 #'  \item{`wave`}{The data collect period the responses were collected
@@ -25,8 +25,8 @@
 #' }
 #'
 #' @source [Difficult Diagnoses](https://ein.idsociety.org/surveys/survey/166/)
-#' @usage data(ein)
+#' @usage data(diagnoses)
 #' @examples
-#' data(ein)
-#' str(ein)
-"ein"
+#' data(diagnoses)
+#' str(diagnoses)
+"diagnoses"

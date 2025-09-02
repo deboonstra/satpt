@@ -21,12 +21,12 @@ window.
 }
 \examples{
 # loading data
-data(ein)
+data(diagnoses)
 
 # performing saturation point analysis
 fit <- satpt::satpt(
-  y = ein$q2,
-  by = ein$wave,
+  y = diagnoses$q2,
+  by = diagnoses$wave,
   dimnames = c("Response collected", "Collection period")
 )
 

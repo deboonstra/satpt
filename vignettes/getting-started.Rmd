@@ -41,24 +41,24 @@ library(satpt)
 With the package installed and loaded into the current *R* environment, we may begin exploring the functionality of this package. 
 
 ## Basic usage of `satpt`
-To start, we will load in the example [*EIN*](https://deboonstra.github.io/satpt/reference/ein.html) data to work with.
+To start, we will load in the example [*Difficult Diagnoses*](https://deboonstra.github.io/satpt/reference/diagnoses.html) data to work with.
 
 ```{r}
 # Load EIN data
-data(ein)
-str(ein)
+data(diagnoses)
+str(diagnoses)
 ```
 
 We will start by examining whether the responses collected in the second question (`q2`) of the *EIN* data achieved saturation. 
 
 ```{r}
-levels(ein$q2)
+levels(diagnoses$q2)
 ```
 
 The `res` object below is a `satpt` object that contains the results of the saturation point analysis and is structurely a *R* `list` with twelve elements produced by main function `satpt::satpt()`. You may see the [documentation of `satpt::satpt()`](https://deboonstra.github.io/satpt/reference/satpt.html) for a detailed description of all the elements of a `satpt` object.
 
 ```{r}
-res <- satpt::satpt(y = ein$q2, threshold = 0.025)
+res <- satpt::satpt(y = diagnoses$q2, threshold = 0.025)
 ```
 
 For a basic examination of the saturation point analysis, you may simply print the results object. This will provide information of whether the maximum standard errors of the response categories are less than or equal to the saturation threshold along with sample proportions and standard errors of the response categories. In this example, the default saturation threshold of 0.025 was used and the maximum standard error was less than 0.025. Thus, saturation of the response categories is achieved. 
@@ -93,7 +93,7 @@ satpt::legend_right(
 There will be times the data collection process leads to responss with the potential of having response bias. Thus, when performing saturation point analysis we must test for response bias and if response bias is present, we must account for that bias in the saturation point analysis. One example where response could be present is collecting data in waves based on non-responses in the previous waves. The *EIN* data previously explored was collected in this manner. Presented below is the number of responses collected for the second question for each data collection `wave`.
 
 ```{r}
-stats::ftable(x = ein$wave)
+stats::ftable(x = diagnoses$wave)
 ```
 
 So, we are going to examine the responses collected in each wave for saturation, where the previous wave of responses will be included in the current wave and the *saturation threshold is 0.025*.
@@ -104,11 +104,11 @@ During the first data collection period, we are going to assume response bias is
 
 ```{r}
 # Subsetting the data to only include data collected during the first wave
-ein1 <- subset(x = ein, subset = wave == 1)
+diagnoses1 <- subset(x = diagnoses, subset = wave == 1)
 
 # Performing saturation point analysis
 res1 <- satpt::satpt(
-  y = ein1$q2,
+  y = diagnoses1$q2,
   threshold = 0.025,
   dimnames = "Responses to survey"
 )
@@ -122,12 +122,12 @@ The results from the first data collection period show that saturation was not a
 ```{r}
 # Subsetting the data to only include data collected during the first and second
 # waves of data
-ein2 <- subset(x = ein, subset = wave %in% c(1, 2))
+diagnoses2 <- subset(x = diagnoses, subset = wave %in% c(1, 2))
 
 # Performing saturation point analysis
 res2 <- satpt::satpt(
-  y = ein2$q2,
-  by = ein2$wave,
+  y = diagnoses2$q2,
+  by = diagnoses2$wave,
   threshold = 0.025,
   dimnames = c("by" = "Data collection period", "y" = "Responses to survey")
 )
