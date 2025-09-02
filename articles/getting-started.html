@@ -106,12 +106,12 @@ package.</p>
 <div class="section level3">
 <h3 id="basic-usage-of-satpt">Basic usage of <code>satpt</code><a class="anchor" aria-label="anchor" href="#basic-usage-of-satpt"></a>
 </h3>
-<p>To start, we will load in the example <a href="https://deboonstra.github.io/satpt/reference/ein.html"><em>EIN</em></a>
-data to work with.</p>
+<p>To start, we will load in the example <a href="https://deboonstra.github.io/satpt/reference/diagnoses.html"><em>Difficult
+Diagnoses</em></a> data to work with.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load EIN data</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ein</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ein</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    643 obs. of  3 variables:</span></span>
 <span><span class="co">#&gt;  $ wave: num  2 3 3 2 2 3 3 3 2 3 ...</span></span>
 <span><span class="co">#&gt;  $ q1  : chr  "Broadrange|Wholegenome|MNGS" "Broadrange|Wholegenome|MNGS" "Broadrange|MNGS" "Broadrange" ...</span></span>
@@ -120,7 +120,7 @@ data to work with.</p>
 second question (<code>q2</code>) of the <em>EIN</em> data achieved
 saturation.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">ein</span><span class="op">$</span><span class="va">q2</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">$</span><span class="va">q2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Not at all" "Once"       "Rarely"     "Sometimes"  "Often"</span></span></code></pre></div>
 <p>The <code>res</code> object below is a <code>satpt</code> object that
 contains the results of the saturation point analysis and is structurely
@@ -129,7 +129,7 @@ function <code><a href="../reference/satpt.html">satpt::satpt()</a></code>. You 
 of <code>satpt::satpt()</code></a> for a detailed description of all the
 elements of a <code>satpt</code> object.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, threshold <span class="op">=</span> <span class="fl">0.025</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">diagnoses</span><span class="op">$</span><span class="va">q2</span>, threshold <span class="op">=</span> <span class="fl">0.025</span><span class="op">)</span></span></code></pre></div>
 <p>For a basic examination of the saturation point analysis, you may
 simply print the results object. This will provide information of
 whether the maximum standard errors of the response categories are less
@@ -208,7 +208,7 @@ data previously explored was collected in this manner. Presented below
 is the number of responses collected for the second question for each
 data collection <code>wave</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">diagnoses</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span>
 <span><span class="co">#&gt; x   1   2   3</span></span>
 <span><span class="co">#&gt;              </span></span>
 <span><span class="co">#&gt;   324 147 172</span></span></code></pre></div>
@@ -224,11 +224,11 @@ response bias is not possible because the responses were
 wave, as there was no “previous” data collected.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Subsetting the data to only include data collected during the first wave</span></span>
-<span><span class="va">ein1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">ein</span>, subset <span class="op">=</span> <span class="va">wave</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">diagnoses1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">diagnoses</span>, subset <span class="op">=</span> <span class="va">wave</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Performing saturation point analysis</span></span>
 <span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span></span>
-<span>  y <span class="op">=</span> <span class="va">ein1</span><span class="op">$</span><span class="va">q2</span>,</span>
+<span>  y <span class="op">=</span> <span class="va">diagnoses1</span><span class="op">$</span><span class="va">q2</span>,</span>
 <span>  threshold <span class="op">=</span> <span class="fl">0.025</span>,</span>
 <span>  dimnames <span class="op">=</span> <span class="st">"Responses to survey"</span></span>
 <span><span class="op">)</span></span>
@@ -258,12 +258,12 @@ from <em>EIN</em> members who did not respond previously.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Subsetting the data to only include data collected during the first and second</span></span>
 <span><span class="co"># waves of data</span></span>
-<span><span class="va">ein2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">ein</span>, subset <span class="op">=</span> <span class="va">wave</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">diagnoses2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">diagnoses</span>, subset <span class="op">=</span> <span class="va">wave</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Performing saturation point analysis</span></span>
 <span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span></span>
-<span>  y <span class="op">=</span> <span class="va">ein2</span><span class="op">$</span><span class="va">q2</span>,</span>
-<span>  by <span class="op">=</span> <span class="va">ein2</span><span class="op">$</span><span class="va">wave</span>,</span>
+<span>  y <span class="op">=</span> <span class="va">diagnoses2</span><span class="op">$</span><span class="va">q2</span>,</span>
+<span>  by <span class="op">=</span> <span class="va">diagnoses2</span><span class="op">$</span><span class="va">wave</span>,</span>
 <span>  threshold <span class="op">=</span> <span class="fl">0.025</span>,</span>
 <span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"by"</span> <span class="op">=</span> <span class="st">"Data collection period"</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="st">"Responses to survey"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>

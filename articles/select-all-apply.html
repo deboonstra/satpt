@@ -88,20 +88,20 @@ for these types of questions.</p>
 <span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     simulate</span></span></code></pre></div>
-<p>and load in the example <a href="https://deboonstra.github.io/satpt/reference/ein.html"><em>EIN</em></a>
-data.</p>
+<p>and load in the example <a href="https://deboonstra.github.io/satpt/reference/diagnoses.html"><em>Difficult
+Diagnoses</em></a> data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ein</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">)</span></span></code></pre></div>
 <p>When we examine the first six and last six of the responses to
 question one, we see the responses to this “select that all apply”
 question are separated by the vertical pipe operator
 (<code>"|"</code>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ein</span><span class="op">$</span><span class="va">q1</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">$</span><span class="va">q1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Broadrange|Wholegenome|MNGS" "Broadrange|Wholegenome|MNGS"</span></span>
 <span><span class="co">#&gt; [3] "Broadrange|MNGS"             "Broadrange"                 </span></span>
 <span><span class="co">#&gt; [5] "MNGS"                        "Broadrange|Other"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">ein</span><span class="op">$</span><span class="va">q1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">$</span><span class="va">q1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Broadrange"                  "Broadrange"                 </span></span>
 <span><span class="co">#&gt; [3] "Broadrange"                  "Broadrange|MNGS"            </span></span>
 <span><span class="co">#&gt; [5] "Broadrange|Wholegenome|MNGS" "None"</span></span></code></pre></div>
@@ -124,7 +124,7 @@ responses in this manner.</p>
 <p>So, we need to split the string of reponses based on the vertical
 pipe delimiter for each response.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">q1_split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q1</span>, split <span class="op">=</span> <span class="st">"|"</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">q1_split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">diagnoses</span><span class="op">$</span><span class="va">q1</span>, split <span class="op">=</span> <span class="st">"|"</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>With each response to the survey being represented as an element of
 character vectors in <code>q1</code>, we are going to create five
 indicator functions that denote whether one of the options were selected
@@ -178,9 +178,9 @@ denotes that response field was selected and <code>"No"</code> denotes
 the response field was <strong>not</strong> selected. These responses
 were collected in different data collection periods due to non-response
 of previous collection periods. Thus, we must use the <code>wave</code>
-variable in the <code>ein</code> data, so we may conduct saturation
-point analysis on each of the response fields while controlling for
-potiental response bias.</p>
+variable in the <code>diagnoses</code> data, so we may conduct
+saturation point analysis on each of the response fields while
+controlling for potiental response bias.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    643 obs. of  5 variables:</span></span>
@@ -195,7 +195,7 @@ will perform the saturation point analysis.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span></span>
 <span>  y <span class="op">=</span> <span class="va">q1</span>,</span>
-<span>  by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span>,</span>
+<span>  by <span class="op">=</span> <span class="va">diagnoses</span><span class="op">$</span><span class="va">wave</span>,</span>
 <span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"by"</span> <span class="op">=</span> <span class="st">"Data collection period"</span>,</span>
 <span>    <span class="st">"y"</span> <span class="op">=</span> <span class="st">"Responses to survey"</span></span>

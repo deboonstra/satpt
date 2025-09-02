@@ -77,14 +77,14 @@ Default is <code>max(3, getOption("digits") - 3)</code>.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ein</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Examining saturation given data collected at different times and</span></span></span>
 <span class="r-in"><span><span class="co"># response bias is possible. For this example, response bias is not present,</span></span></span>
 <span class="r-in"><span><span class="co"># so the standard errors will be the same.</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Saving analysis as R object and printing</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">q2</span>, by <span class="op">=</span> <span class="va">ein</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">diagnoses</span><span class="op">$</span><span class="va">q2</span>, by <span class="op">=</span> <span class="va">diagnoses</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">res</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Analysis based on: q2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Saturation achieved?  Yes </span>
