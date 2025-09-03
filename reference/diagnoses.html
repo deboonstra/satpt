@@ -65,26 +65,28 @@ who are members of EIN.</p>
 <h3 id="diagnoses"><code>diagnoses</code><a class="anchor" aria-label="anchor" href="#diagnoses"></a></h3>
 
 
-<p>A <code>data.frame</code> with 643 observations and 3 variables.</p><dl><dt><code>wave</code></dt>
-<dd><p>The data collect period the responses were collected
-during.</p></dd>
+<p>A <code>list</code> with 3 objects that each have a length of 643.</p><dl><dt><code>wave</code></dt>
+<dd><p>A <code>numeric</code> vector that lists of the data collect period when
+the responses were collected during.</p></dd>
 
 <dt><code>q1</code></dt>
-<dd><p>The responses to the types of advanced molecular
-diagnostic tests that have been ordered or used. This is an example of
-responses based on select that all apply data collection process. Possible
-values are <em>Broad range 16S rRNA gene sequencing</em> (<code>Broadrange</code>), <em>Whole
-genome sequencing</em> (<code>Wholegenome</code>), <em>Metagenomic next-generation sequencing</em>
-(<code>MNGS</code>), <em>None of the above</em> (<code>None</code>), and <em>Other</em> (<code>Other</code>), where the
-data values are listed within the parentheses. When multiple responses are
-present the data values are separated by <code>"|"</code>.</p></dd>
+<dd><p>A <code>character</code> vector that lists the responses to the types of
+advanced molecular diagnostic tests that have been ordered or used. This is
+an example of responses based on select that all apply data collection
+process. Possible values are <em>Broad range 16S rRNA gene sequencing</em>
+(<code>Broadrange</code>), <em>Whole genome sequencing</em> (<code>Wholegenome</code>),
+<em>Metagenomic next-generation sequencing</em> (<code>MNGS</code>), <em>None of the above</em>
+(<code>None</code>), and <em>Other</em> (<code>Other</code>), where the data values are listed within
+the parentheses. When multiple responses are present the data values are
+separated by <code>"|"</code>.</p></dd>
 
 <dt><code>q2</code></dt>
-<dd><p>The responses to how often within the past two years
-advanced molecular diagnostic testing was performed. Possible values are
-<em>Not at all</em>, <em>Once</em>, <em>Rarely</em> (quarterly or less often), <em>Sometimes</em>
-(monthly), and <em>Often</em> (weekly). This is an example of where the responses
-collected come from the multinomial distribution.</p></dd>
+<dd><p>A <code>factor</code> with 5 levels for the responses to how often within
+the past two years advanced molecular diagnostic testing was performed.
+Possible values are <em>Not at all</em>, <em>Once</em>, <em>Rarely</em>
+(quarterly or less often), <em>Sometimes</em> (monthly), and <em>Often</em> (weekly).
+This is an example of where the responses collected come from the multiple
+choice question.</p></dd>
 
 
 </dl></div>
@@ -99,9 +101,9 @@ collected come from the multinomial distribution.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	643 obs. of  3 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ wave: num  2 3 3 2 2 3 3 3 2 3 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ q1  : chr  "Broadrange|Wholegenome|MNGS" "Broadrange|Wholegenome|MNGS" "Broadrange|MNGS" "Broadrange" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ wave: num [1:643] 2 3 3 2 2 3 3 3 2 3 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ q1  : chr [1:643] "Broadrange|Wholegenome|MNGS" "Broadrange|Wholegenome|MNGS" "Broadrange|MNGS" "Broadrange" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ q2  : Factor w/ 5 levels "Not at all","Once",..: 4 5 4 2 3 3 3 3 4 4 ...</span>
 </code></pre></div>
     </div>

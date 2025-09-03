@@ -71,55 +71,39 @@
 
     
     
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<p>You can install the current released version of <code>satpt</code>
-from <a href="https://cran.r-project.org" class="external-link">CRAN</a> with</p>
+<p>With the package installed and loaded into the current <em>R</em>
+environment, we may begin exploring the functionality of this package
+through examples.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"satpt"</span><span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
-</h3>
-<p>To get a bug fix or to use a feature from the development version,
-you can install the development version of <code>satpt</code> from <a href="https://github.com/deboonstra/satpt" class="external-link">GitHub</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"deboonstra/satpt"</span><span class="op">)</span></span></code></pre></div>
-<p>Next, call the <code>library</code> function to <code>satpt</code> to
-obtain all the functionality of the package.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://deboonstra.github.io/satpt/">satpt</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'satpt'</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     simulate</span></span></code></pre></div>
-</div>
-</div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>With the package installed and loaded into the current <em>R</em>
-environment, we may begin exploring the functionality of this
-package.</p>
 <div class="section level3">
 <h3 id="basic-usage-of-satpt">Basic usage of <code>satpt</code><a class="anchor" aria-label="anchor" href="#basic-usage-of-satpt"></a>
 </h3>
 <p>To start, we will load in the example <a href="https://deboonstra.github.io/satpt/reference/diagnoses.html"><em>Difficult
 Diagnoses</em></a> data to work with.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Load EIN data</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load diagnoses data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    643 obs. of  3 variables:</span></span>
-<span><span class="co">#&gt;  $ wave: num  2 3 3 2 2 3 3 3 2 3 ...</span></span>
-<span><span class="co">#&gt;  $ q1  : chr  "Broadrange|Wholegenome|MNGS" "Broadrange|Wholegenome|MNGS" "Broadrange|MNGS" "Broadrange" ...</span></span>
-<span><span class="co">#&gt;  $ q2  : Factor w/ 5 levels "Not at all","Once",..: 4 5 4 2 3 3 3 3 4 4 ...</span></span></code></pre></div>
+<span><span class="co">#&gt; List of 3</span></span>
+<span><span class="co">#&gt;  $ wave: num [1:643] 2 3 3 2 2 3 3 3 2 3 ...</span></span>
+<span><span class="co">#&gt;  $ q1  : chr [1:643] "Broadrange|Wholegenome|MNGS" "Broadrange|Wholegenome|MNGS" "Broadrange|MNGS" "Broadrange" ...</span></span>
+<span><span class="co">#&gt;  $ q2  : Factor w/ 5 levels "Not at all","Once",..: 4 5 4 2 3 3 3 3 4 4 ...</span></span>
+<span></span>
+<span><span class="co">## Turn diagnoses data into data.frame</span></span>
+<span><span class="va">diagnoses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"cbind.data.frame"</span>, args <span class="op">=</span> <span class="va">diagnoses</span><span class="op">)</span></span></code></pre></div>
 <p>We will start by examining whether the responses collected in the
-second question (<code>q2</code>) of the <em>EIN</em> data achieved
-saturation.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+second question (<code>q2</code>) of the <em>diagnoses</em> data
+achieved saturation.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">diagnoses</span><span class="op">$</span><span class="va">q2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Not at all" "Once"       "Rarely"     "Sometimes"  "Often"</span></span></code></pre></div>
 <p>The <code>res</code> object below is a <code>satpt</code> object that
@@ -128,7 +112,7 @@ a <em>R</em> <code>list</code> with twelve elements produced by main
 function <code><a href="../reference/satpt.html">satpt::satpt()</a></code>. You may see the <a href="https://deboonstra.github.io/satpt/reference/satpt.html">documentation
 of <code>satpt::satpt()</code></a> for a detailed description of all the
 elements of a <code>satpt</code> object.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">diagnoses</span><span class="op">$</span><span class="va">q2</span>, threshold <span class="op">=</span> <span class="fl">0.025</span><span class="op">)</span></span></code></pre></div>
 <p>For a basic examination of the saturation point analysis, you may
 simply print the results object. This will provide information of
@@ -138,7 +122,7 @@ and standard errors of the response categories. In this example, the
 default saturation threshold of 0.025 was used and the maximum standard
 error was less than 0.025. Thus, saturation of the response categories
 is achieved.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Analysis based on: q2 </span></span>
 <span><span class="co">#&gt; Saturation achieved?  Yes </span></span>
@@ -152,7 +136,7 @@ is achieved.</p>
 <p>When a more detailed look at the analysis is warranted, simply call
 <a href="https://deboonstra.github.io/satpt/reference/satpt.html"><code>summary()</code></a>
 on the returned <code>satpt</code> object, as seen below.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Saturation point analysis of sample proportions</span></span>
@@ -184,7 +168,7 @@ plotting the standard errors of the overall sample proportions for each
 response category in relation to the saturation threshold. With all the
 standard errors falling below the saturation threshold, we would say
 that we have achieved saturation for these responses.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>oma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="co"># adding legend</span></span>
@@ -193,21 +177,21 @@ that we have achieved saturation for these responses.</p>
 <span>  col <span class="op">=</span> <span class="st">"firebrick"</span>, lty <span class="op">=</span> <span class="fl">3</span>, lwd <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  cex <span class="op">=</span> <span class="fl">0.75</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/unnamed-chunk-10-1.png" width="700" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/unnamed-chunk-8-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="possibility-of-response-bias">Possibility of response bias<a class="anchor" aria-label="anchor" href="#possibility-of-response-bias"></a>
 </h3>
-<p>There will be times the data collection process leads to responss
+<p>There will be times the data collection process leads to responses
 with the potential of having response bias. Thus, when performing
 saturation point analysis we must test for response bias and if response
 bias is present, we must account for that bias in the saturation point
 analysis. One example where response could be present is collecting data
-in waves based on non-responses in the previous waves. The <em>EIN</em>
-data previously explored was collected in this manner. Presented below
-is the number of responses collected for the second question for each
-data collection <code>wave</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+in waves based on non-responses in the previous waves. The
+<em>diagnoses</em> data previously explored was collected in this
+manner. Presented below is the number of responses collected for the
+second question for each data collection <code>wave</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">diagnoses</span><span class="op">$</span><span class="va">wave</span><span class="op">)</span></span>
 <span><span class="co">#&gt; x   1   2   3</span></span>
 <span><span class="co">#&gt;              </span></span>
@@ -222,7 +206,7 @@ current wave and the <em>saturation threshold is 0.025</em>.</p>
 response bias is not possible because the responses were
 <strong>not</strong> collected due to non-responses in the previous
 wave, as there was no “previous” data collected.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Subsetting the data to only include data collected during the first wave</span></span>
 <span><span class="va">diagnoses1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">diagnoses</span>, subset <span class="op">=</span> <span class="va">wave</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
@@ -255,10 +239,13 @@ must account for the possibility of response bias by specifying the
 <code>by</code> argument in <a href="https://deboonstra.github.io/satpt/reference/satpt.html"><code>satpt::satpt()</code></a>
 because the responses collected during the second wave include responses
 from <em>EIN</em> members who did not respond previously.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Subsetting the data to only include data collected during the first and second</span></span>
 <span><span class="co"># waves of data</span></span>
-<span><span class="va">diagnoses2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">diagnoses</span>, subset <span class="op">=</span> <span class="va">wave</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">diagnoses2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"cbind.data.frame"</span>, args <span class="op">=</span> <span class="va">diagnoses</span><span class="op">)</span>,</span>
+<span>  subset <span class="op">=</span> <span class="va">wave</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Performing saturation point analysis</span></span>
 <span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu">satpt</span><span class="fu">::</span><span class="fu"><a href="../reference/satpt.html">satpt</a></span><span class="op">(</span></span>
@@ -280,7 +267,7 @@ from <em>EIN</em> members who did not respond previously.</p>
 <p>With the inclusion of the responses from the second data collection,
 saturation is achieved. We can take a look at the summary of the
 analysis, including the test of independence of the responses.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Saturation point analysis of sample proportions</span></span>
