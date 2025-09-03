@@ -243,7 +243,7 @@ from <em>EIN</em> members who did not respond previously.</p>
 <code class="sourceCode R"><span><span class="co"># Subsetting the data to only include data collected during the first and second</span></span>
 <span><span class="co"># waves of data</span></span>
 <span><span class="va">diagnoses2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"cbind.data.frame"</span>, args <span class="op">=</span> <span class="va">diagnoses</span><span class="op">)</span>,</span>
+<span>  x <span class="op">=</span> <span class="va">diagnoses</span>,</span>
 <span>  subset <span class="op">=</span> <span class="va">wave</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
