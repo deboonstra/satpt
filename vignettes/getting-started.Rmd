@@ -109,7 +109,7 @@ The results from the first data collection period show that saturation was not a
 # Subsetting the data to only include data collected during the first and second
 # waves of data
 diagnoses2 <- subset(
-  x = do.call(what = "cbind.data.frame", args = diagnoses),
+  x = diagnoses,
   subset = wave %in% c(1, 2)
 )
 
