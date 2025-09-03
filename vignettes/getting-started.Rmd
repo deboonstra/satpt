@@ -15,41 +15,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Installation
-
-You can install the current released version of `satpt` from [CRAN](https://cran.r-project.org) with
-
-```{r, eval = FALSE}
-install.packages("satpt")
-```
-
-## Development version
-To get a bug fix or to use a feature from the development version, you can install the development version of `satpt` from [GitHub](https://github.com/deboonstra/satpt).
-
-```{r, eval = FALSE}
-# install.packages("remotes")
-remotes::install_github("deboonstra/satpt")
-```
-
-Next, call the `library` function to `satpt` to obtain all the functionality of the package.
+With the package installed and loaded into the current *R* environment, we may begin exploring the functionality of this package through examples.
 
 ```{r}
 library(satpt)
 ```
 
 # Examples
-With the package installed and loaded into the current *R* environment, we may begin exploring the functionality of this package. 
 
 ## Basic usage of `satpt`
 To start, we will load in the example [*Difficult Diagnoses*](https://deboonstra.github.io/satpt/reference/diagnoses.html) data to work with.
 
 ```{r}
-# Load EIN data
+# Load diagnoses data
 data(diagnoses)
 str(diagnoses)
+
+## Turn diagnoses data into data.frame
+diagnoses <- do.call(what = "cbind.data.frame", args = diagnoses)
 ```
 
-We will start by examining whether the responses collected in the second question (`q2`) of the *EIN* data achieved saturation. 
+We will start by examining whether the responses collected in the second question (`q2`) of the *diagnoses* data achieved saturation. 
 
 ```{r}
 levels(diagnoses$q2)
@@ -90,7 +76,7 @@ satpt::legend_right(
 
 ## Possibility of response bias
 
-There will be times the data collection process leads to responss with the potential of having response bias. Thus, when performing saturation point analysis we must test for response bias and if response bias is present, we must account for that bias in the saturation point analysis. One example where response could be present is collecting data in waves based on non-responses in the previous waves. The *EIN* data previously explored was collected in this manner. Presented below is the number of responses collected for the second question for each data collection `wave`.
+There will be times the data collection process leads to responses with the potential of having response bias. Thus, when performing saturation point analysis we must test for response bias and if response bias is present, we must account for that bias in the saturation point analysis. One example where response could be present is collecting data in waves based on non-responses in the previous waves. The *diagnoses* data previously explored was collected in this manner. Presented below is the number of responses collected for the second question for each data collection `wave`.
 
 ```{r}
 stats::ftable(x = diagnoses$wave)
@@ -122,7 +108,10 @@ The results from the first data collection period show that saturation was not a
 ```{r}
 # Subsetting the data to only include data collected during the first and second
 # waves of data
-diagnoses2 <- subset(x = diagnoses, subset = wave %in% c(1, 2))
+diagnoses2 <- subset(
+  x = do.call(what = "cbind.data.frame", args = diagnoses),
+  subset = wave %in% c(1, 2)
+)
 
 # Performing saturation point analysis
 res2 <- satpt::satpt(

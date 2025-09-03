@@ -7,23 +7,25 @@
 \format{
 \subsection{\code{diagnoses}}{
 
-A \code{data.frame} with 643 observations and 3 variables.
+A \code{list} with 3 objects that each have a length of 643.
 \describe{
-\item{\code{wave}}{The data collect period the responses were collected
-during.}
-\item{\code{q1}}{The responses to the types of advanced molecular
-diagnostic tests that have been ordered or used. This is an example of
-responses based on select that all apply data collection process. Possible
-values are \emph{Broad range 16S rRNA gene sequencing} (\code{Broadrange}), \emph{Whole
-genome sequencing} (\code{Wholegenome}), \emph{Metagenomic next-generation sequencing}
-(\code{MNGS}), \emph{None of the above} (\code{None}), and \emph{Other} (\code{Other}), where the
-data values are listed within the parentheses. When multiple responses are
-present the data values are separated by \code{"|"}.}
-\item{\code{q2}}{The responses to how often within the past two years
-advanced molecular diagnostic testing was performed. Possible values are
-\emph{Not at all}, \emph{Once}, \emph{Rarely} (quarterly or less often), \emph{Sometimes}
-(monthly), and \emph{Often} (weekly). This is an example of where the responses
-collected come from the multinomial distribution.}
+\item{\code{wave}}{A \code{numeric} vector that lists of the data collect period when
+the responses were collected during.}
+\item{\code{q1}}{A \code{character} vector that lists the responses to the types of
+advanced molecular diagnostic tests that have been ordered or used. This is
+an example of responses based on select that all apply data collection
+process. Possible values are \emph{Broad range 16S rRNA gene sequencing}
+(\code{Broadrange}), \emph{Whole genome sequencing} (\code{Wholegenome}),
+\emph{Metagenomic next-generation sequencing} (\code{MNGS}), \emph{None of the above}
+(\code{None}), and \emph{Other} (\code{Other}), where the data values are listed within
+the parentheses. When multiple responses are present the data values are
+separated by \code{"|"}.}
+\item{\code{q2}}{A \code{factor} with 5 levels for the responses to how often within
+the past two years advanced molecular diagnostic testing was performed.
+Possible values are \emph{Not at all}, \emph{Once}, \emph{Rarely}
+(quarterly or less often), \emph{Sometimes} (monthly), and \emph{Often} (weekly).
+This is an example of where the responses collected come from the multiple
+choice question.}
 }
 }
 }
